@@ -1,0 +1,6 @@
+{
+  "name": "ROMAS Chocolates – Spreading Happiness",
+  "description": "Premium dynamic website for ROMAS chocolates, baking compounds, chocolate buttons, and luxury confectionery collections.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

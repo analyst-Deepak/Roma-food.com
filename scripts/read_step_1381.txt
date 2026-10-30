@@ -1,0 +1,64 @@
+Created At: 2026-10-30T14:26:25+05:30
+Completed At: 2026-10-30T14:26:25+05:30
+Showing lines 60-120 of 167
+60: 
+61:   return (
+62:     <section id="menu" className="py-24 sm:py-36 bg-white text-[#381A0E] select-none">
+63:       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14">
+64:         
+65:         {/* Section Header */}
+66:         <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
+67:           <span
+68:             className="text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] block mb-2"
+69:             style={{ fontFamily: "'Inter', sans-serif" }}
+70:           >
+71:             OUR SELECTION
+72:           </span>
+73: 
+74:           <h2
+75:             className="text-5xl sm:text-7xl lg:text-8xl font-bold uppercase tracking-tight text-[#381A0E] leading-[0.9]"
+76:             style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
+77:           >
+78:             OUR PRODUCT
+79:             <br />
+80:             RANGE
+81:           </h2>
+82:         </div>
+83: 
+84:         {/* 6 Grid Cards exactly matching coffee-gr8r */}
+85:         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+86:           {menuItems.map((item, index) => (
+87:             <motion.div
+88:               key={item.id}
+89:               initial={{ opacity: 0, y: 30 }}
+90:               whileInView={{ opacity: 1, y: 0 }}
+91:               viewport={{ once: true, margin: '-50px' }}
+92:               transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+93:               whileHover={{ y: -8 }}
+94:               className="group bg-white rounded-3xl overflow-hidden p-6 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between border border-[#381A0E]/10"
+95:             >
+96:               <div>
+97:                 {/* Image */}
+98:                 <div className="rounded-2xl overflow-hidden bg-[#FAF8F5] aspect-square relative mb-6">
+99:                   <img
+100:                     src={item.image}
+101:                     alt={item.name}
+102:                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+103:                   />
+104:                   <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-[#381A0E] text-[#FEE8B4] text-[10px] font-black uppercase tracking-wider">
+105:                     {item.tag}
+106:                   </div>
+107:                 </div>
+108: 
+109:                 {/* Name & Price */}
+110:                 <div className="flex items-start justify-between gap-3 mb-2">
+111:                   <h3
+112:                     className="text-2xl font-bold uppercase tracking-tight text-[#381A0E] leading-snug group-hover:text-[#8C4724] transition-colors"
+113:                     style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
+114:                   >
+115:                     {item.name}
+116:                   </h3>
+117:                   <span
+118:                     className="text-base font-black text-[#381A0E] shrink-0 font-mono"
+119:                   >
+120:                     {item.price.split(' ')[0]}

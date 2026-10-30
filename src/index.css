@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Bayon', 'Cabin Condensed', Impact, sans-serif;
+  --font-serif: 'Cabin Condensed', Impact, sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  
+  /* Coffee-Gr8r Exact Palette */
+  --color-gr8r-brown: #381A0E;
+  --color-gr8r-brown-dark: #241108;
+  --color-gr8r-brown-light: #49291C;
+  --color-gr8r-yellow: #F9BD03;
+  --color-gr8r-yellow-hover: #E5AC00;
+  --color-gr8r-cream: #FEE8B4;
+  --color-gr8r-cream-light: #FFF5DD;
+  --color-gr8r-offwhite: #F8F5F1;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    color: #381A0E;
+    background-color: #381A0E;
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Custom scrollbar matching coffee-gr8r */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #381A0E;
+}
+::-webkit-scrollbar-thumb {
+  background: #F9BD03;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #E5AC00;
+}
+
+/* Infinite Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 24s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Floating animation for cups & badges */
+@keyframes floatCup {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(1deg);
+  }
+}
+
+@keyframes floatCupLeft {
+  0%, 100% {
+    transform: translateY(0px) rotate(-6deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(-4deg);
+  }
+}
+
+@keyframes floatCupRight {
+  0%, 100% {
+    transform: translateY(0px) rotate(6deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(8deg);
+  }
+}
+
+.animate-float-cup {
+  animation: floatCup 5s ease-in-out infinite;
+}
+
+.animate-float-left {
+  animation: floatCupLeft 6s ease-in-out infinite;
+}
+
+.animate-float-right {
+  animation: floatCupRight 5.5s ease-in-out infinite;
+}

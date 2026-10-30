@@ -1,0 +1,56 @@
+Created At: 2026-10-30T14:26:37+05:30
+Completed At: 2026-10-30T14:26:37+05:30
+Showing lines 115-167 of 167
+115:                     {item.name}
+116:                   </h3>
+117:                   <span
+118:                     className="text-base font-black text-[#381A0E] shrink-0 font-mono"
+119:                   >
+120:                     {item.price.split(' ')[0]}
+121:                   </span>
+122:                 </div>
+123: 
+124:                 <p className="text-xs text-[#381A0E]/70 font-light leading-relaxed mb-4">
+125:                   {item.desc}
+126:                 </p>
+127:               </div>
+128: 
+129:               {/* Action Button */}
+130:               <div className="pt-4 border-t border-[#381A0E]/10 flex items-center justify-between">
+131:                 <span className="text-[11px] font-mono text-[#8C4724] uppercase font-bold">
+132:                   {item.price.split('/')[1] ? `Pack: ${item.price.split('/')[1]}` : 'Ready to Ship'}
+133:                 </span>
+134: 
+135:                 <motion.button
+136:                   whileHover={{ scale: 1.1 }}
+137:                   whileTap={{ scale: 0.9 }}
+138:                   onClick={() => onSelectItem(item)}
+139:                   className="w-10 h-10 rounded-full bg-[#381A0E] hover:bg-[#F9BD03] text-[#FEE8B4] hover:text-[#1C0E07] flex items-center justify-center transition-colors cursor-pointer"
+140:                   aria-label={`Select ${item.name}`}
+141:                 >
+142:                   <Plus className="w-4 h-4" />
+143:                 </motion.button>
+144:               </div>
+145:             </motion.div>
+146:           ))}
+147:         </div>
+148: 
+149:         {/* Big Explore Full Menu Button */}
+150:         <div className="mt-16 text-center">
+151:           <motion.a
+152:             href="#contact"
+153:             whileHover={{ scale: 1.05 }}
+154:             whileTap={{ scale: 0.95 }}
+155:             className="inline-flex items-center gap-3 px-9 py-4 rounded-full bg-[#F9BD03] hover:bg-[#E5AC00] text-[#1C0E07] text-xs font-black uppercase tracking-wider transition-colors shadow-lg cursor-pointer"
+156:             style={{ fontFamily: "'Inter', sans-serif" }}
+157:           >
+158:             <span>EXPLORE FULL MENU & SAMPLES</span>
+159:             <ArrowRight className="w-4 h-4" />
+160:           </motion.a>
+161:         </div>
+162: 
+163:       </div>
+164:     </section>
+165:   );
+166: };
+167: 

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash('C:/Program Files/Google/Chrome/Application/chrome.exe' --headless --disable-gpu --hide-scrollbars --no-sandbox --window-size=1440,3600 --virtual-time-budget=9000 --screenshot=C:/Users/LENOVO/AppData/Local/Temp/claude/c--Users-LENOVO-Downloads-romas-chocolates---spreading-happiness/d51bb3a6-3df1-4459-8dfa-b0fca7238a23/scratchpad/romas-home.png http://localhost:3000/)",
+      "WebFetch(domain:www.morde.com)",
+      "Bash(cd \"c:/Users/LENOVO/Downloads/romas-chocolates-–-spreading-happiness\" && mkdir -p public/assets/images && cp src/assets/images/*.jpg public/assets/images/ && echo \"=== Copied. public/assets/images now: ===\" && ls -la public/assets/images/)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\LENOVO\\Downloads\\romas-chocolates-–-spreading-happiness\\src\\assets\\images"
+    ]
+  }
+}
