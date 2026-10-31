@@ -39,7 +39,7 @@ export const Gr8rBranches: React.FC = () => {
           </span>
 
           <h2
-            className="text-5xl sm:text-7xl lg:text-8xl font-bold uppercase tracking-tight text-[#381A0E] leading-[0.9]"
+            className="text-4xl sm:text-7xl lg:text-8xl font-bold uppercase tracking-tight text-[#381A0E] leading-[0.9]"
             style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
           >
             CRAFTED FOR

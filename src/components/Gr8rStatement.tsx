@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export const Gr8rStatement: React.FC = () => {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -9,11 +9,17 @@ export const Gr8rStatement: React.FC = () => {
   const meterRef = useRef<HTMLElement>(null);
   const panelsRef = useRef<(HTMLElement | null)[]>([]);
 
+  // On phones, skip the heavy scroll-scrub video entirely for a fast, lag-free load.
+  const [isMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
+  );
+
   useEffect(() => {
-    // 1920x1080, 10.04s, 241 frames, all-intra — every frame is a keyframe, which is why a scroll scrub can land on an exact frame instantly.
-    const VIDEO_URL =
-      'https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/45567745-d826-44a2-a5ce-7ef670944e60.mp4';
-    const FALLBACK_URL = '/assets/video/cast_and_render.mp4';
+    // Chocolate-bar crushing sequence, all-intra (every frame a keyframe) so the scroll scrub lands on an exact frame instantly. Portrait clip on phones, landscape on desktop.
+    const VIDEO_URL = isMobile
+      ? '/assets/video/choco_crush_mobile.mp4'
+      : '/assets/video/choco_crush.mp4';
+    const FALLBACK_URL = VIDEO_URL;
 
     const track = trackRef.current;
     const clip = clipRef.current;
@@ -223,7 +229,7 @@ export const Gr8rStatement: React.FC = () => {
       window.removeEventListener('scroll', readScroll);
       window.removeEventListener('resize', readScroll);
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <section
@@ -231,8 +237,8 @@ export const Gr8rStatement: React.FC = () => {
       ref={trackRef}
       className="cnr-track relative z-10 w-full select-none"
       style={{
-        height: '520vh',
-        minHeight: '3000px',
+        height: isMobile ? '300vh' : '520vh',
+        minHeight: isMobile ? '1700px' : '3000px',
         backgroundColor: '#edecea',
       }}
     >
@@ -502,7 +508,7 @@ export const Gr8rStatement: React.FC = () => {
           </p>
         </div>
 
-        {/* 2. Fixed Background Video Stage */}
+        {/* 2. Fixed Background Video Stage — chocolate-bar crushing scrub */}
         <div className="cnr-stage">
           <video
             ref={clipRef}

@@ -42,50 +42,59 @@ export const LegalPage: React.FC<LegalPageProps> = ({
 
   const activeTabConfig = tabs.find((t) => t.id === currentTab) || tabs[0];
 
-  // Motion animation presets
+  // Motion animation presets — smooth premium easing
+  const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.08,
+        staggerChildren: 0.12,
+        delayChildren: 0.06,
       },
     },
     exit: {
       opacity: 0,
-      y: -20,
-      transition: { duration: 0.2 },
+      y: -16,
+      transition: { duration: 0.3, ease: EASE },
     },
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 26 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
-        ease: 'easeOut',
+        duration: 0.65,
+        ease: EASE,
       },
     },
   };
 
   const titleVariants: Variants = {
-    hidden: { opacity: 0, y: 35, scale: 0.98 },
+    hidden: { opacity: 0, y: 40, scale: 0.96, filter: 'blur(8px)' },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
+      filter: 'blur(0px)',
       transition: {
-        duration: 0.75,
-        ease: 'easeOut',
+        duration: 0.85,
+        ease: EASE,
       },
     },
   };
 
+  // Cascades each policy's body sections in one after another
+  const sectionGroupVariants: Variants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.12, delayChildren: 0.04 } },
+  };
+
   return (
-    <div className="min-h-screen bg-white text-[#381A0E] flex flex-col font-sans selection:bg-[#F9BD03] selection:text-[#381A0E]">
+    <div className="min-h-screen bg-[#FBF8F3] text-[#381A0E] flex flex-col font-sans selection:bg-[#F9BD03] selection:text-[#381A0E]">
       
       {/* 1. Exact Coffee-Gr8r Solid Header Bar */}
       <Gr8rNavbar
@@ -152,6 +161,13 @@ export const LegalPage: React.FC<LegalPageProps> = ({
               {activeTabConfig.title}
             </motion.h1>
 
+            {/* Gold accent divider */}
+            <motion.div
+              variants={itemVariants}
+              className="mx-auto mb-6 h-[3px] w-20 sm:w-28 origin-center rounded-full bg-gradient-to-r from-transparent via-[#C8912B] to-transparent"
+              aria-hidden="true"
+            />
+
             {/* Centered Date in Tracked Uppercase */}
             <motion.p
               variants={itemVariants}
@@ -163,7 +179,10 @@ export const LegalPage: React.FC<LegalPageProps> = ({
 
             {/* TAB 1: TERMS & CONDITIONS */}
             {currentTab === 'terms' && (
-              <div className="space-y-8 sm:space-y-10 text-base sm:text-lg text-[#381A0E]/85 leading-relaxed">
+              <motion.div
+                variants={sectionGroupVariants}
+                className="space-y-8 sm:space-y-10 text-base sm:text-lg text-[#381A0E]/85 leading-relaxed"
+              >
                 
                 {/* Introductory Paragraph */}
                 <motion.p variants={itemVariants} className="font-normal text-[#381A0E]/90">
@@ -264,12 +283,15 @@ export const LegalPage: React.FC<LegalPageProps> = ({
                   </p>
                 </motion.div>
 
-              </div>
+              </motion.div>
             )}
 
             {/* TAB 2: PRIVACY POLICY */}
             {currentTab === 'privacy' && (
-              <div className="space-y-8 sm:space-y-10 text-base sm:text-lg text-[#381A0E]/85 leading-relaxed">
+              <motion.div
+                variants={sectionGroupVariants}
+                className="space-y-8 sm:space-y-10 text-base sm:text-lg text-[#381A0E]/85 leading-relaxed"
+              >
                 
                 {/* Intro */}
                 <motion.p variants={itemVariants} className="font-normal text-[#381A0E]/90">
@@ -371,12 +393,15 @@ export const LegalPage: React.FC<LegalPageProps> = ({
                   </p>
                 </motion.div>
 
-              </div>
+              </motion.div>
             )}
 
             {/* TAB 3: COOKIE POLICY */}
             {currentTab === 'cookie' && (
-              <div className="space-y-8 sm:space-y-10 text-base sm:text-lg text-[#381A0E]/85 leading-relaxed">
+              <motion.div
+                variants={sectionGroupVariants}
+                className="space-y-8 sm:space-y-10 text-base sm:text-lg text-[#381A0E]/85 leading-relaxed"
+              >
                 
                 {/* Intro */}
                 <motion.p variants={itemVariants} className="font-normal text-[#381A0E]/90">
@@ -424,7 +449,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({
                   </p>
                 </motion.div>
 
-              </div>
+              </motion.div>
             )}
 
           </motion.div>
