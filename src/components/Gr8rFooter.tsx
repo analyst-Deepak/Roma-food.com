@@ -5,9 +5,7 @@ import {
   Phone,
   Mail,
   MapPin,
-  Clock,
   ShieldCheck,
-  Sparkles,
   ArrowRight,
   Briefcase,
   Instagram,
@@ -236,10 +234,6 @@ export const Gr8rFooter: React.FC<Gr8rFooterProps> = ({
                   {COMPANY_INFO.email}
                 </a>
               </li>
-              <li className="flex items-center gap-3 text-xs text-[#FEE8B4]/60 pt-1">
-                <Clock className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>Mon – Sat: 9:00 AM – 7:30 PM IST</span>
-              </li>
             </ul>
 
             {/* Quick WhatsApp Inquiry Pill Button */}
@@ -312,7 +306,6 @@ export const Gr8rFooter: React.FC<Gr8rFooterProps> = ({
                     onClick={onOpenBrandGuide}
                     className="text-xs font-bold uppercase tracking-wider text-[#F9BD03] hover:text-[#ffffff] transition-colors flex items-center gap-1.5 cursor-pointer"
                   >
-                    <Sparkles className="w-3.5 h-3.5 text-[#F9BD03]" />
                     <span>OFFICIAL BRAND STANDARDS</span>
                   </button>
                 </li>

@@ -43,7 +43,6 @@ export const ChocolateExperience: React.FC = () => {
           {/* Left Column: Editorial Headline & Narrative */}
           <Reveal className="lg:col-span-7">
             <div className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.3em] text-[#8C4724] mb-5">
-              <Sparkles className="w-4 h-4 text-[#C59B27]" />
               <span>Sensorial Alchemy</span>
             </div>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChefHat, Clock, Sparkles, ArrowRight, X, Check, BookOpen } from 'lucide-react';
+import { ChefHat, Clock, ArrowRight, X, Check, BookOpen } from 'lucide-react';
 import { CHEF_RECIPES } from '../data/products';
 import { ChefRecipe } from '../types';
 import { Reveal } from './Reveal';
@@ -136,7 +136,6 @@ export const ChefMasterclasses: React.FC<ChefMasterclassesProps> = ({
             {/* Ingredients & Formulation */}
             <div className="mt-8 pt-6 border-t border-[#1A0A04]/10 space-y-4">
               <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-[#8C4724] flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#D4AF37]" />
                 <span>Ingredients & Metric Quantities</span>
               </h4>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-[#1A0A04]">

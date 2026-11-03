@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles } from 'lucide-react';
 
 interface PageWipeTransitionProps {
   isWiping: boolean;
@@ -113,7 +112,6 @@ export const PageWipeTransition: React.FC<PageWipeTransitionProps> = ({
             <div className="text-center px-6 py-5 rounded-3xl bg-white/90 backdrop-blur-md border border-[#C59B27]/30 shadow-[0_20px_50px_rgba(42,14,4,0.15)] max-w-sm mx-auto">
               {/* Emblem Spark */}
               <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#FAF8F5] border border-[#C59B27]/40 text-[#C59B27] mb-3 shadow-inner">
-                <Sparkles className="w-5 h-5 animate-pulse" />
               </div>
 
               {/* Brand Wordmark */}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShieldCheck, Award, Heart, Sparkles, MapPin, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Award, Heart, MapPin, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { COMPANY_INFO, IMAGES } from '../data/products';
 import { MotionReveal } from './MotionReveal';
 import { RomasLogo } from './RomasLogo';
@@ -118,7 +118,6 @@ export const BrandStory: React.FC<BrandStoryProps> = ({ onContactClick }) => {
               >
                 <div className="md:col-span-8 space-y-4">
                   <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#C59B27]">
-                    <Sparkles className="w-4 h-4" />
                     <span>{milestones[activeMilestone].tagline}</span>
                   </div>
                   

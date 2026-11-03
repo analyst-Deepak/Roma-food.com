@@ -8,7 +8,7 @@ export const COMPANY_INFO = {
   corporateOffice: 'Sf-8, Shyam Plaza, Opp. Bus Stand, Pandri, Raipur (C.G.)',
   address: '154/1, Dhamtari Road, Kurod, Dhamtari - 493663, Chhattisgarh, India',
   phone: '+91-9098229454',
-  email: 'customercare@romasfood.com',
+  email: 'Sales@romasfood.com',
   hrEmail: 'Hr@roomafoods.com',
   website: 'www.romasfood.com',
   fssaiNumber: '10526005000033',

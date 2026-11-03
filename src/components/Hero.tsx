@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ChevronRight, Sparkles } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { IMAGES } from '../data/products';
 
 interface HeroProps {
@@ -79,7 +79,6 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick, onRequestSampleBox }
             onClick={onRequestSampleBox}
             className="w-full sm:w-auto px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-[0.18em] text-[#381305] bg-white hover:bg-white/60 border border-[#381305]/15 hover:border-[#C59B27] rounded-full transition-all duration-300 shadow-sm flex items-center justify-center gap-2 cursor-pointer"
           >
-            <Sparkles className="w-4 h-4 text-[#C59B27]" />
             <span>Order Trade Sample Kit</span>
           </button>
         </motion.div>

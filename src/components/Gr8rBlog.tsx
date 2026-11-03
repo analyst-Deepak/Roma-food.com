@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface VisionPillar {
   id: string;
@@ -145,7 +145,6 @@ export const Gr8rBlog: React.FC = () => {
               {/* Interactive Hover State: Frosted Glass Vision Card */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#1C0E07]/95 via-[#1C0E07]/85 to-[#1C0E07]/50 p-6 sm:p-7 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out z-30 backdrop-blur-sm pointer-events-none sm:pointer-events-auto">
                 <div className="inline-flex items-center gap-1.5 mb-2">
-                  <Sparkles className="w-3.5 h-3.5 text-[#C5222A]" />
                   <span className="text-[10px] font-black uppercase tracking-[0.22em] text-[#C5222A]">
                     {pillar.subtitle}
                   </span>

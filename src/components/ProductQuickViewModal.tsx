@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Check, Sparkles, ChefHat, FileText, Send, Droplets, Flame } from 'lucide-react';
+import { X, Check, ChefHat, FileText, Send, Droplets, Flame } from 'lucide-react';
 import { Product } from '../types';
 
 interface ProductQuickViewModalProps {
@@ -160,7 +160,6 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
             {/* Features */}
             <div>
               <h4 className="text-xs font-bold uppercase tracking-wider text-[#8C4724] mb-2 flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-[#C59B27]" />
                 <span>Professional Confectionery Highlights</span>
               </h4>
               <ul className="space-y-1.5">
@@ -224,7 +223,6 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({
                 }}
                 className="flex-1 py-3.5 px-5 text-xs font-bold uppercase tracking-wider text-[#140602] bg-gradient-to-r from-[#F3E5AB] via-[#D4AF37] to-[#C59B27] hover:brightness-105 rounded-full transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
               >
-                <Sparkles className="w-4 h-4" />
                 <span>Request Sample Pack</span>
               </button>
 

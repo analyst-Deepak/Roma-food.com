@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Trash2, Sparkles, Send, CheckCircle2, PackageCheck } from 'lucide-react';
+import { X, Trash2, Send, CheckCircle2, PackageCheck } from 'lucide-react';
 import { Product } from '../types';
 
 interface SampleInquiryDrawerProps {
@@ -71,7 +71,6 @@ export const SampleInquiryDrawer: React.FC<SampleInquiryDrawerProps> = ({
               {/* Header */}
               <div className="p-6 bg-[#FAF8F5] text-[#2A0E04] flex items-center justify-between border-b border-[#381305]/10">
                 <div className="flex items-center gap-3">
-                  <Sparkles className="w-5 h-5 text-[#C59B27]" />
                   <div>
                     <h3 className="font-serif text-2xl font-bold text-[#2A0E04]">Sample Tasting Bag</h3>
                     <p className="text-xs text-[#2A0E04]/60 mt-0.5 font-light">

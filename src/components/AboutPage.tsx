@@ -4,7 +4,6 @@ import {
   ShieldCheck,
   Building2,
   Factory,
-  Sparkles,
   Award,
   Users,
   Compass,
@@ -22,6 +21,50 @@ interface AboutPageProps {
   onOpenReservation: () => void;
   onNavigateHome: () => void;
 }
+
+/* Decorative glossy 3D chocolate splash (pure inline SVG — no external asset). */
+const ChocolateSplash: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 200 200" className={className} aria-hidden="true">
+    <defs>
+      <radialGradient id="choc3d" cx="40%" cy="30%" r="78%">
+        <stop offset="0%" stopColor="#A6693A" />
+        <stop offset="45%" stopColor="#6B3B1C" />
+        <stop offset="100%" stopColor="#38200E" />
+      </radialGradient>
+      <filter id="chocShadow" x="-30%" y="-30%" width="160%" height="160%">
+        <feDropShadow dx="0" dy="6" stdDeviation="6" floodColor="#2A1308" floodOpacity="0.45" />
+      </filter>
+    </defs>
+    <g filter="url(#chocShadow)" fill="url(#choc3d)">
+      {/* Flung droplets radiating outward */}
+      {[
+        { t: 'translate(100,62) rotate(0) scale(1.1)' },
+        { t: 'translate(127,73) rotate(45) scale(0.9)' },
+        { t: 'translate(138,100) rotate(90) scale(1.15)' },
+        { t: 'translate(127,127) rotate(135) scale(0.85)' },
+        { t: 'translate(100,138) rotate(180) scale(1.2)' },
+        { t: 'translate(73,127) rotate(225) scale(0.9)' },
+        { t: 'translate(62,100) rotate(270) scale(1.0)' },
+        { t: 'translate(73,73) rotate(315) scale(0.95)' },
+      ].map((d, i) => (
+        <path key={i} transform={d.t} d="M0 0 C 7 -8 7 -22 0 -30 C -7 -22 -7 -8 0 0 Z" />
+      ))}
+      {/* Central irregular splat body */}
+      <path d="M100 60 C 120 58 122 78 138 76 C 130 94 150 102 136 116 C 124 110 128 134 108 132 C 102 118 82 136 76 120 C 84 102 60 108 66 90 C 76 78 60 68 80 66 C 94 72 84 56 100 60 Z" />
+      {/* Scattered micro-droplets */}
+      <circle cx="100" cy="20" r="6" />
+      <circle cx="162" cy="52" r="5" />
+      <circle cx="180" cy="112" r="4" />
+      <circle cx="150" cy="168" r="6" />
+      <circle cx="94" cy="184" r="4" />
+      <circle cx="44" cy="162" r="5" />
+      <circle cx="20" cy="104" r="5" />
+      <circle cx="40" cy="42" r="4" />
+    </g>
+    {/* Specular gloss highlight for the 3D sheen */}
+    <ellipse cx="86" cy="84" rx="20" ry="11" fill="#FFFFFF" opacity="0.18" transform="rotate(-30 86 84)" />
+  </svg>
+);
 
 export const AboutPage: React.FC<AboutPageProps> = ({
   onOpenReservation,
@@ -109,7 +152,6 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             transition={{ duration: 0.5 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-md mb-5"
           >
-            <Sparkles className="w-4 h-4 text-[#F9BD03]" />
             <span className="text-[11px] font-black uppercase tracking-[0.24em] text-[#F9BD03]">
               ROMA FOODS — ABOUT US
             </span>
@@ -134,7 +176,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] block mb-2">
-              POINT 01 / VERIFIED ENTITY
+              VERIFIED ENTITY
             </span>
             <h2
               className="text-3xl sm:text-5xl font-bold uppercase tracking-tight text-[#381A0E] leading-tight"
@@ -243,7 +285,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             {/* Story Text */}
             <div>
               <span className="text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] block mb-2">
-                POINT 02 / HERITAGE & CRAFT
+                HERITAGE & CRAFT
               </span>
               <h2
                 className="text-3xl sm:text-5xl font-bold uppercase tracking-tight text-[#381A0E] leading-tight mb-6"
@@ -317,11 +359,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       {/* =========================================================================
           POINT 3: VISION & MISSION
           ========================================================================= */}
-      <section className="py-20 sm:py-28 bg-[#FFFFFF] border-b border-[#381A0E]/10">
+      <section className="relative overflow-hidden py-20 sm:py-28 bg-[#FFFFFF] border-b border-[#381A0E]/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] block mb-2">
-              POINT 03 / PURPOSE & PATH
+              PURPOSE & PATH
             </span>
             <h2
               className="text-3xl sm:text-5xl font-bold uppercase tracking-tight text-[#381A0E] leading-tight"
@@ -339,23 +381,43 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             {/* Ambient Background Warm Accent Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-48 bg-[#F9BD03]/5 rounded-full blur-[100px] pointer-events-none" />
 
+            {/* Decorative 3D Chocolate Splash — top-right */}
+            <motion.div
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-20 -right-10 sm:-right-24 lg:-right-32 w-40 sm:w-60 lg:w-72 z-0 drop-shadow-xl"
+              animate={{ y: [0, -12, 0], rotate: [0, 5, 0] }}
+              transition={{ repeat: Infinity, duration: 8, ease: 'easeInOut' }}
+            >
+              <ChocolateSplash className="w-full h-auto" />
+            </motion.div>
+
+            {/* Decorative 3D Chocolate Splash — bottom-left */}
+            <motion.div
+              aria-hidden="true"
+              className="pointer-events-none absolute -bottom-20 -left-10 sm:-left-24 lg:-left-32 w-36 sm:w-52 lg:w-64 z-0 drop-shadow-xl"
+              animate={{ y: [0, 10, 0], rotate: [0, -6, 0] }}
+              transition={{ repeat: Infinity, duration: 9, ease: 'easeInOut', delay: 0.6 }}
+            >
+              <ChocolateSplash className="w-full h-auto rotate-[135deg]" />
+            </motion.div>
+
             {/* Vision Column (Unboxed, Motion On Scroll) */}
             <motion.div
               initial={{ opacity: 0, y: 35 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.25 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="relative md:pr-8 lg:pr-12"
+              className="relative rounded-3xl p-7 sm:p-9 bg-gradient-to-br from-[#FFF6EC] via-[#FFE6CC] to-[#FFCC97] border border-[#FFB877]/50 shadow-[0_20px_45px_-18px_rgba(255,160,80,0.55)]"
             >
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-12 h-12 rounded-2xl bg-[#C5222A]/10 text-[#C5222A] flex items-center justify-center shadow-sm">
+                <div className="w-12 h-12 rounded-2xl bg-white/70 text-[#BC5A12] flex items-center justify-center shadow-sm">
                   <Compass className="w-6 h-6" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-black uppercase tracking-[0.25em] text-[#C5222A] block">
+                  <span className="text-[11px] font-black uppercase tracking-[0.25em] text-[#BC5A12] block">
                     OUR VISION
                   </span>
-                  <span className="text-[10px] text-[#381A0E]/50 font-medium">WHAT WE ASPIRE TO BUILD</span>
+                  <span className="text-[10px] text-[#381A0E]/55 font-medium">WHAT WE ASPIRE TO BUILD</span>
                 </div>
               </div>
 
@@ -366,12 +428,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 Real, World-Class Chocolate Made in India
               </h3>
 
-              <p className="text-base sm:text-lg text-[#381A0E]/80 font-normal leading-relaxed">
+              <p className="text-base sm:text-lg text-[#381A0E]/85 font-normal leading-relaxed">
                 Our vision is to provide every baker, pastry chef, and chocolate lover across India with pure, international-quality chocolate. Crafted with authentic cocoa butter, honest ingredients, and 100% vegetarian goodness.
               </p>
 
-              <div className="mt-6 flex items-center gap-2 text-xs font-semibold text-[#C5222A]">
-                <span className="w-8 h-0.5 bg-[#C5222A] rounded-full" />
+              <div className="mt-6 flex items-center gap-2 text-xs font-semibold text-[#BC5A12]">
+                <span className="w-8 h-0.5 bg-[#BC5A12] rounded-full" />
                 <span>100% Pure Cocoa • Indian Craftsmanship</span>
               </div>
             </motion.div>
@@ -382,17 +444,17 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.25 }}
               transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="relative md:pl-8 lg:pl-12 md:border-l md:border-[#381A0E]/12"
+              className="relative rounded-3xl p-7 sm:p-9 bg-gradient-to-br from-[#FFEAD4] via-[#FFD2A6] to-[#FFA95E] border border-[#FF9D4D]/50 shadow-[0_20px_45px_-18px_rgba(255,140,50,0.55)]"
             >
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-12 h-12 rounded-2xl bg-[#8C4724]/10 text-[#8C4724] flex items-center justify-center shadow-sm">
+                <div className="w-12 h-12 rounded-2xl bg-white/70 text-[#A8450D] flex items-center justify-center shadow-sm">
                   <Heart className="w-6 h-6" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-black uppercase tracking-[0.25em] text-[#8C4724] block">
+                  <span className="text-[11px] font-black uppercase tracking-[0.25em] text-[#A8450D] block">
                     OUR MISSION
                   </span>
-                  <span className="text-[10px] text-[#381A0E]/50 font-medium">WHAT WE DO EVERY DAY</span>
+                  <span className="text-[10px] text-[#381A0E]/55 font-medium">WHAT WE DO EVERY DAY</span>
                 </div>
               </div>
 
@@ -403,12 +465,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 Spreading Happiness with Every Sweet Creation
               </h3>
 
-              <p className="text-base sm:text-lg text-[#381A0E]/80 font-normal leading-relaxed">
+              <p className="text-base sm:text-lg text-[#381A0E]/85 font-normal leading-relaxed">
                 Our mission is to craft chocolates that bring joy to every home and help bakeries, hotels, and chefs succeed. We deliver rich taste, smooth melt, and dependable quality so every dessert turns into a memorable celebration.
               </p>
 
-              <div className="mt-6 flex items-center gap-2 text-xs font-semibold text-[#8C4724]">
-                <span className="w-8 h-0.5 bg-[#8C4724] rounded-full" />
+              <div className="mt-6 flex items-center gap-2 text-xs font-semibold text-[#A8450D]">
+                <span className="w-8 h-0.5 bg-[#A8450D] rounded-full" />
                 <span>Reliable Melt & Shine • Spreading Sweet Smiles</span>
               </div>
             </motion.div>
@@ -461,11 +523,35 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       {/* =========================================================================
           POINT 4: LEADERSHIP / MANAGEMENT
           ========================================================================= */}
-      <section className="py-20 sm:py-28 bg-[#FAF8F5] border-b border-[#381A0E]/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden py-20 sm:py-28 bg-[#FAF8F5] border-b border-[#381A0E]/10">
+        {/* Decorative floating chocolate — right side */}
+        <motion.img
+          src="/assets/chocolate/floating_choc_piece.webp"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          className="pointer-events-none absolute top-10 -right-14 sm:right-0 lg:right-8 w-40 sm:w-56 lg:w-64 z-0 drop-shadow-[0_28px_28px_rgba(42,19,8,0.28)] select-none"
+          animate={{ y: [0, -14, 0], rotate: [0, 5, 0] }}
+          transition={{ repeat: Infinity, duration: 8, ease: 'easeInOut' }}
+        />
+
+        {/* Decorative floating chocolate — left side */}
+        <motion.img
+          src="/assets/chocolate/floating_choc_piece.webp"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          className="pointer-events-none absolute bottom-6 -left-14 sm:left-0 lg:left-8 w-32 sm:w-44 lg:w-52 z-0 -scale-x-100 drop-shadow-[0_28px_28px_rgba(42,19,8,0.28)] select-none"
+          animate={{ y: [0, 12, 0], rotate: [0, -6, 0] }}
+          transition={{ repeat: Infinity, duration: 9, ease: 'easeInOut', delay: 0.5 }}
+        />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] block mb-2">
-              POINT 04 / GOVERNANCE & STEWARDSHIP
+              GOVERNANCE & STEWARDSHIP
             </span>
             <h2
               className="text-3xl sm:text-5xl font-bold uppercase tracking-tight text-[#381A0E] leading-tight"
@@ -480,42 +566,68 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 max-w-4xl mx-auto">
-            {leadershipTeam.map((leader, idx) => (
-              <motion.div
-                key={leader.name}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: idx * 0.15 }}
-                className="bg-white rounded-3xl p-6 sm:p-8 border border-[#381A0E]/15 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C4724] block mb-1">
-                    AUTHORIZED PARTNER
-                  </span>
+            {leadershipTeam.map((leader, idx) => {
+              const initials = leader.name
+                .split(' ')
+                .slice(0, 2)
+                .map((w) => w[0])
+                .join('');
+              return (
+                <motion.div
+                  key={leader.name}
+                  initial={{ opacity: 0, y: 25 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: idx * 0.15 }}
+                  className="group relative overflow-hidden bg-white rounded-3xl p-6 sm:p-8 border border-[#381A0E]/12 shadow-sm hover:shadow-[0_28px_55px_-20px_rgba(140,71,36,0.45)] hover:border-[#F9BD03]/50 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
+                >
+                  {/* Top gold accent bar on hover */}
+                  <div className="absolute top-0 left-0 h-1 w-full origin-left scale-x-0 group-hover:scale-x-100 bg-gradient-to-r from-[#8C4724] via-[#F9BD03] to-[#8C4724] transition-transform duration-500" />
 
-                  <h3
-                    className="text-2xl font-bold uppercase text-[#381A0E] tracking-tight leading-snug mb-1"
-                    style={{ fontFamily: "'Cabin Condensed', sans-serif" }}
-                  >
-                    {leader.name}
-                  </h3>
+                  {/* Soft warm glow on hover */}
+                  <div className="pointer-events-none absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[#F9BD03]/0 group-hover:bg-[#F9BD03]/15 blur-3xl transition-colors duration-500" />
 
-                  <p className="text-xs font-semibold text-[#8C4724] mb-3">
-                    {leader.role}
-                  </p>
+                  <div className="relative">
+                    {/* Monogram Avatar + Partner Chip */}
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#381A0E] to-[#8C4724] text-[#F9BD03] flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-105 group-hover:shadow-lg transition-all duration-300 shrink-0"
+                        style={{ fontFamily: "'Cabin Condensed', sans-serif" }}
+                      >
+                        {initials}
+                      </div>
+                      <span className="text-[10px] font-black uppercase tracking-widest text-[#8C4724] bg-[#FAF0E4] border border-[#EADBCC] px-2.5 py-1 rounded-full">
+                        Authorized Partner
+                      </span>
+                    </div>
 
-                  <p className="text-xs text-[#381A0E]/80 font-light leading-relaxed">
-                    {leader.responsibilities}
-                  </p>
-                </div>
+                    <h3
+                      className="text-2xl font-bold uppercase text-[#381A0E] tracking-tight leading-snug mb-1 group-hover:text-[#8C4724] transition-colors"
+                      style={{ fontFamily: "'Cabin Condensed', sans-serif" }}
+                    >
+                      {leader.name}
+                    </h3>
 
-                <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-[11px] text-[#381A0E]/60">
-                  <span>Resident of Chhattisgarh, India</span>
-                  <span className="font-semibold text-emerald-700">Verified Partner</span>
-                </div>
-              </motion.div>
-            ))}
+                    <p className="text-xs font-semibold text-[#8C4724] mb-3">
+                      {leader.role}
+                    </p>
+
+                    <p className="text-xs text-[#381A0E]/80 font-light leading-relaxed">
+                      {leader.responsibilities}
+                    </p>
+                  </div>
+
+                  <div className="relative mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-[11px] text-[#381A0E]/60">
+                    <span>Resident of Chhattisgarh, India</span>
+                    <span className="font-semibold text-emerald-700 flex items-center gap-1">
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 2l2.39 1.75 2.96-.02 1.08 2.76 2.76 1.08-.02 2.96L23 12l-1.75 2.39.02 2.96-2.76 1.08-1.08 2.76-2.96-.02L12 23l-2.39-1.75-2.96.02-1.08-2.76-2.76-1.08.02-2.96L1 12l1.75-2.39-.02-2.96 2.76-1.08 1.08-2.76 2.96.02L12 2zm-1.2 13.2l5.66-5.66-1.41-1.41-4.25 4.24-2.12-2.12-1.41 1.41 3.53 3.54z" />
+                      </svg>
+                      Verified Partner
+                    </span>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>

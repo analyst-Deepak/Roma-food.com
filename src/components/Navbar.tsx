@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ShoppingBag, Sparkles, BookOpen, ChevronRight } from 'lucide-react';
+import { Menu, X, ShoppingBag, BookOpen, ChevronRight } from 'lucide-react';
 import { RomasLogo } from './RomasLogo';
 import { COMPANY_INFO } from '../data/products';
 
@@ -155,7 +155,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                 className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#140602] bg-gradient-to-r from-[#FAD674] via-[#E6C280] to-[#C59B27] hover:brightness-105 rounded-full shadow-sm cursor-pointer"
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#381305]" />
                 <span className="hidden sm:inline">Trade Concierge</span>
                 <span className="sm:hidden">Trade</span>
               </motion.a>

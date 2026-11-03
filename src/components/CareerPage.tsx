@@ -13,6 +13,8 @@ import {
   MessageCircle,
   Mail,
   Loader2,
+  Upload,
+  FileText,
   ChefHat,
   Factory,
   Megaphone,
@@ -255,6 +257,47 @@ export const CareerPage: React.FC<CareerPageProps> = ({
     agree: false,
   });
 
+  // Premium role dropdown state
+  const [roleOpen, setRoleOpen] = useState(false);
+  const [customRole, setCustomRole] = useState(false);
+
+  // Resume file upload state
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadMsg, setUploadMsg] = useState('');
+
+  const handleResumeFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      setUploadMsg('File is larger than 5MB — please paste a link below instead.');
+      return;
+    }
+    setResumeFile(file);
+    setUploadMsg('');
+
+    if (!supabase) {
+      setUploadMsg('File selected. Please also paste a link below or email the PDF to be safe.');
+      return;
+    }
+    try {
+      setUploading(true);
+      const ext = file.name.split('.').pop() || 'pdf';
+      const path = `applications/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+      const { error } = await supabase.storage
+        .from('resumes')
+        .upload(path, file, { upsert: false, contentType: file.type });
+      if (error) throw error;
+      const { data } = supabase.storage.from('resumes').getPublicUrl(path);
+      setForm((prev) => ({ ...prev, resume: data.publicUrl }));
+      setUploadMsg('Uploaded successfully ✓');
+    } catch {
+      setUploadMsg('Direct upload unavailable — please paste a link below or email your PDF.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
   useEffect(() => {
     document.title = 'Careers at ROMAS Chocolates | Roma Foods';
   }, []);
@@ -309,6 +352,7 @@ export const CareerPage: React.FC<CareerPageProps> = ({
 
   const applyFor = (title: string) => {
     setForm((prev) => ({ ...prev, position: title }));
+    setCustomRole(false);
     scrollToRef(formRef);
   };
 
@@ -431,7 +475,6 @@ export const CareerPage: React.FC<CareerPageProps> = ({
                 transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
                 className="inline-flex text-[#C8912B]"
               >
-                <Sparkles className="w-3.5 h-3.5 fill-[#C8912B]/25" />
               </motion.span>
               <span className="text-[11px] sm:text-xs font-black tracking-[0.25em] uppercase text-[#8C4724]">
                 Build a Career with ROMAS
@@ -449,7 +492,7 @@ export const CareerPage: React.FC<CareerPageProps> = ({
                   className="block text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold uppercase tracking-tight text-[#381A0E] leading-[0.92]"
                   style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
                 >
-                  Crafting Happiness
+                  We Make Happiness
                 </motion.span>
               </span>
 
@@ -462,7 +505,7 @@ export const CareerPage: React.FC<CareerPageProps> = ({
                   className="block text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold uppercase tracking-tight leading-[0.92] bg-gradient-to-r from-[#8C4724] via-[#B86226] to-[#8C4724] bg-clip-text text-transparent"
                   style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
                 >
-                  Takes Craftspeople
+                  With Great People
                 </motion.span>
               </span>
             </h1>
@@ -548,7 +591,6 @@ export const CareerPage: React.FC<CareerPageProps> = ({
                 transition={{ duration: 0.5, ease: EASE }}
                 className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F7EFE6] border border-[#381A0E]/10 text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] mb-3"
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#C8912B]" />
                 <span>Why ROMAS</span>
               </motion.span>
 
@@ -850,7 +892,6 @@ export const CareerPage: React.FC<CareerPageProps> = ({
             <div className="mt-12 rounded-3xl bg-gradient-to-br from-[#381A0E] to-[#250F07] text-[#FEE8B4] p-7 sm:p-9 border border-[#F9BD03]/25 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="max-w-xl text-center md:text-left">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F9BD03]/15 text-[#F9BD03] text-[11px] font-bold uppercase tracking-wider mb-3">
-                  <Sparkles className="w-3.5 h-3.5" />
                   <span>Spontaneous Application</span>
                 </div>
                 <h3
@@ -998,21 +1039,116 @@ export const CareerPage: React.FC<CareerPageProps> = ({
                     <label className="block text-xs font-bold uppercase tracking-wider text-[#381A0E] mb-2">
                       Role Applied For *
                     </label>
-                    <select
-                      name="position"
-                      required
-                      value={form.position}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-[#FBF8F3] text-sm text-[#2A0E04] focus:outline-none focus:border-[#C8912B]"
-                    >
-                      <option value="">Select a role…</option>
-                      {openings.map((j) => (
-                        <option key={j.title} value={j.title}>
-                          {j.title} ({j.dept})
-                        </option>
-                      ))}
-                      <option value="Open Application">Open Application</option>
-                    </select>
+
+                    {/* Premium custom dropdown */}
+                    <div className="relative">
+                      <button
+                        type="button"
+                        onClick={() => setRoleOpen((o) => !o)}
+                        className={`w-full flex items-center justify-between gap-2 px-4 py-3 rounded-xl border bg-[#FBF8F3] text-sm text-left transition-all ${
+                          roleOpen ? 'border-[#C8912B] ring-2 ring-[#C8912B]/20' : 'border-gray-200 hover:border-[#C8912B]/60'
+                        } ${customRole || form.position ? 'text-[#2A0E04] font-medium' : 'text-gray-400'}`}
+                      >
+                        <span className="truncate">
+                          {customRole
+                            ? 'Other (type manually)'
+                            : form.position
+                            ? (() => {
+                                const m = openings.find((j) => j.title === form.position);
+                                return m ? `${m.title} (${m.dept})` : form.position;
+                              })()
+                            : 'Select a role…'}
+                        </span>
+                        <ChevronDown
+                          className={`w-4 h-4 shrink-0 text-[#8C4724] transition-transform duration-200 ${roleOpen ? 'rotate-180' : ''}`}
+                        />
+                      </button>
+
+                      <AnimatePresence>
+                        {roleOpen && (
+                          <>
+                            {/* click-away layer */}
+                            <div className="fixed inset-0 z-30" onClick={() => setRoleOpen(false)} />
+                            <motion.ul
+                              initial={{ opacity: 0, y: -6, scale: 0.98 }}
+                              animate={{ opacity: 1, y: 0, scale: 1 }}
+                              exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                              transition={{ duration: 0.16, ease: EASE }}
+                              className="absolute z-40 mt-2 w-full max-h-72 overflow-y-auto rounded-xl border border-gray-200 bg-white shadow-[0_18px_40px_-14px_rgba(42,19,8,0.35)] p-1.5"
+                            >
+                              {openings.map((j) => {
+                                const active = !customRole && form.position === j.title;
+                                return (
+                                  <li key={j.title}>
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setForm((prev) => ({ ...prev, position: j.title }));
+                                        setCustomRole(false);
+                                        setRoleOpen(false);
+                                      }}
+                                      className={`w-full text-left px-3 py-2.5 rounded-lg text-sm transition-colors ${
+                                        active
+                                          ? 'bg-[#FAF0E4] text-[#8C4724] font-semibold'
+                                          : 'text-[#2A0E04] hover:bg-[#FBF8F3]'
+                                      }`}
+                                    >
+                                      {j.title}{' '}
+                                      <span className="text-gray-400 font-normal">({j.dept})</span>
+                                    </button>
+                                  </li>
+                                );
+                              })}
+                              <li>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setForm((prev) => ({ ...prev, position: 'Open Application' }));
+                                    setCustomRole(false);
+                                    setRoleOpen(false);
+                                  }}
+                                  className={`w-full text-left px-3 py-2.5 rounded-lg text-sm transition-colors ${
+                                    !customRole && form.position === 'Open Application'
+                                      ? 'bg-[#FAF0E4] text-[#8C4724] font-semibold'
+                                      : 'text-[#2A0E04] hover:bg-[#FBF8F3]'
+                                  }`}
+                                >
+                                  Open Application
+                                </button>
+                              </li>
+                              <li className="mt-1 pt-1 border-t border-gray-100">
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setCustomRole(true);
+                                    setForm((prev) => ({ ...prev, position: '' }));
+                                    setRoleOpen(false);
+                                  }}
+                                  className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
+                                    customRole ? 'bg-[#FAF0E4] text-[#8C4724]' : 'text-[#8C4724] hover:bg-[#FBF8F3]'
+                                  }`}
+                                >
+                                  ✎ Other (type manually)
+                                </button>
+                              </li>
+                            </motion.ul>
+                          </>
+                        )}
+                      </AnimatePresence>
+                    </div>
+
+                    {/* Manual role input (shown when "Other" chosen) */}
+                    {customRole && (
+                      <input
+                        type="text"
+                        name="position"
+                        autoFocus
+                        value={form.position}
+                        onChange={handleChange}
+                        placeholder="Type the role you're applying for…"
+                        className="mt-2 w-full px-4 py-3 rounded-xl border border-[#C8912B]/50 bg-[#FBF8F3] text-sm text-[#2A0E04] focus:outline-none focus:border-[#C8912B] focus:ring-2 focus:ring-[#C8912B]/20"
+                      />
+                    )}
                   </div>
                 </div>
 
@@ -1058,8 +1194,59 @@ export const CareerPage: React.FC<CareerPageProps> = ({
 
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-[#381A0E] mb-2">
-                    Resume / Portfolio Link (Google Drive, LinkedIn, Dropbox)
+                    Resume / Portfolio
                   </label>
+
+                  {/* File Upload Dropzone */}
+                  <label
+                    className={`flex items-center gap-3 w-full px-4 py-3.5 rounded-xl border-2 border-dashed cursor-pointer transition-all ${
+                      resumeFile
+                        ? 'border-[#C8912B]/60 bg-[#FAF0E4]'
+                        : 'border-gray-300 bg-[#FBF8F3] hover:border-[#C8912B]/60 hover:bg-[#FAF0E4]/40'
+                    }`}
+                  >
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx"
+                      onChange={handleResumeFile}
+                      className="hidden"
+                    />
+                    <span className="w-10 h-10 rounded-full bg-white border border-[#C8912B]/30 flex items-center justify-center text-[#8C4724] shrink-0">
+                      {uploading ? (
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                      ) : resumeFile ? (
+                        <FileText className="w-5 h-5" />
+                      ) : (
+                        <Upload className="w-5 h-5" />
+                      )}
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-sm font-semibold text-[#2A0E04] truncate">
+                        {resumeFile ? resumeFile.name : 'Upload your CV (PDF / DOC)'}
+                      </span>
+                      <span className="block text-[11px] text-[#381A0E]/55">
+                        {uploading
+                          ? 'Uploading…'
+                          : resumeFile
+                          ? 'Tap to replace file'
+                          : 'Click to browse · Max 5MB'}
+                      </span>
+                    </span>
+                  </label>
+
+                  {uploadMsg && (
+                    <p className="text-[11px] mt-1.5 font-medium text-[#8C4724]">{uploadMsg}</p>
+                  )}
+
+                  {/* OR divider */}
+                  <div className="flex items-center gap-3 my-3">
+                    <span className="h-px flex-1 bg-gray-200" />
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                      Or paste a link
+                    </span>
+                    <span className="h-px flex-1 bg-gray-200" />
+                  </div>
+
                   <input
                     type="url"
                     name="resume"
