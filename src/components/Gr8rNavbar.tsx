@@ -104,6 +104,19 @@ export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
 
           {/* Wishlist, Cart & Motion Overlay Menu */}
           <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* Mobile-only SHOP quick link */}
+            <button
+              onClick={(e) => handleLinkClick(e, 'shop')}
+              className={`md:hidden shrink-0 text-[11px] font-black tracking-widest uppercase px-3 py-1.5 rounded-full select-none cursor-pointer transition-all ${
+                currentPage === 'shop'
+                  ? 'bg-[#F9BD03] text-[#1C0E07] shadow-sm'
+                  : 'text-[#FEE8B4] border border-[#F9BD03]/35 hover:text-[#F9BD03]'
+              }`}
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
+              Shop
+            </button>
+
             {/* Wishlist (Heart) Trigger Button */}
             <button
               onClick={() => setIsWishlistOpen(true)}

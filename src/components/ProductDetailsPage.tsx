@@ -9,6 +9,7 @@ import {
   ShieldCheck,
   Check,
   ChevronRight,
+  ChevronLeft,
   ArrowLeft,
   MapPin,
   Lock,
@@ -76,6 +77,24 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
     setTimeout(() => {
       setAddedAnimation(false);
     }, 1500);
+  };
+
+  // Gallery navigation (used by arrows + mobile swipe)
+  const showPrevImage = () =>
+    setSelectedImageIndex((i) => (i - 1 + galleryImages.length) % galleryImages.length);
+  const showNextImage = () =>
+    setSelectedImageIndex((i) => (i + 1) % galleryImages.length);
+
+  const touchStartXRef = React.useRef<number | null>(null);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartXRef.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartXRef.current;
+    if (deltaX > 40) showPrevImage();
+    else if (deltaX < -40) showNextImage();
+    touchStartXRef.current = null;
   };
 
   const handleBuyNowWhatsApp = () => {
@@ -177,7 +196,11 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
             </div>
 
             {/* Main Image Stage */}
-            <div className="relative flex-1 rounded-lg border border-gray-200 p-6 bg-white flex items-center justify-center min-h-[360px] sm:min-h-[460px] group shadow-sm">
+            <div
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              className="relative flex-1 rounded-lg border border-gray-200 p-6 bg-white flex items-center justify-center min-h-[360px] sm:min-h-[460px] group shadow-sm touch-pan-y select-none"
+            >
               {/* Wishlist & Share Buttons */}
               <div className="absolute top-3 right-3 flex flex-col gap-2 z-10">
                 <button
@@ -221,6 +244,42 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
                 alt={product.name}
                 className="max-h-[380px] sm:max-h-[440px] w-auto object-contain filter drop-shadow-xl transition-transform duration-300 group-hover:scale-105"
               />
+
+              {/* Prev / Next Arrow Buttons (swipe on mobile, click on desktop) */}
+              {galleryImages.length > 1 && (
+                <>
+                  <button
+                    onClick={showPrevImage}
+                    aria-label="Previous image"
+                    className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 hover:bg-white shadow-md border border-gray-200 flex items-center justify-center text-gray-700 hover:text-[#8C4724] transition-all cursor-pointer active:scale-90"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={showNextImage}
+                    aria-label="Next image"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 hover:bg-white shadow-md border border-gray-200 flex items-center justify-center text-gray-700 hover:text-[#8C4724] transition-all cursor-pointer active:scale-90"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+
+                  {/* Dot Indicators */}
+                  <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
+                    {galleryImages.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setSelectedImageIndex(idx)}
+                        aria-label={`Go to image ${idx + 1}`}
+                        className={`rounded-full transition-all cursor-pointer ${
+                          selectedImageIndex === idx
+                            ? 'w-5 h-1.5 bg-[#8C4724]'
+                            : 'w-1.5 h-1.5 bg-gray-300 hover:bg-gray-400'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
 
               <span className="absolute bottom-3 text-[11px] text-gray-400 font-medium">
                 Roll over image to zoom in

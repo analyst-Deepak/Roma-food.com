@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Lock, ShieldCheck } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { CustomerOrderDetails } from '../types/ecommerce';
 
 interface CartDrawerProps {
   onNavigateToShop?: () => void;
 }
+
+// Official ROMAS / Roma Foods WhatsApp business number (+91 70008 60127)
+const WHATSAPP_NUMBER = '917000860127';
 
 export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToShop }) => {
   const {
@@ -62,7 +66,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToShop }) => {
     message += `Please confirm my order and share UPI / payment link. Thank you!`;
 
     const encoded = encodeURIComponent(message);
-    window.open(`https://wa.me/919098229454?text=${encoded}`, '_blank');
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, '_blank');
   };
 
   const handleDirectSubmitOrder = (e: React.FormEvent) => {
@@ -255,58 +259,87 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToShop }) => {
 
               {/* Drawer Footer & Actions */}
               {cart.length > 0 && (
-                <div className="p-5 border-t border-neutral-200 bg-[#FAF8F5] space-y-3">
-                  {/* Bill Breakdown */}
-                  <div className="space-y-1.5 text-xs text-neutral-600">
-                    <div className="flex justify-between">
-                      <span>Items Subtotal:</span>
-                      <span className="font-mono text-[#2A1308] font-bold">₹{cartTotal}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Insulated Thermal Packaging:</span>
-                      <span className="text-emerald-700 font-bold uppercase text-[10px]">
-                        FREE
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Express Shipping (Pan-India):</span>
-                      <span className="font-mono font-bold">
-                        {shippingCost === 0 ? (
-                          <span className="text-emerald-700 uppercase text-[10px]">FREE</span>
-                        ) : (
-                          `₹${shippingCost}`
-                        )}
-                      </span>
-                    </div>
-                    <div className="pt-2 border-t border-neutral-200 flex justify-between items-baseline">
-                      <span className="text-sm font-bold text-[#2A1308]">Total to Pay:</span>
-                      <span className="text-2xl font-black text-[#2A1308] font-mono">
-                        ₹{grandTotal}
-                      </span>
+                <div className="border-t border-neutral-200 bg-[#FAF8F5]">
+                  {/* Bill Breakdown Card */}
+                  <div className="p-5 pb-3">
+                    <div className="rounded-2xl bg-white border border-neutral-200 shadow-sm p-4 space-y-2 text-xs text-neutral-600">
+                      <div className="flex justify-between">
+                        <span>Items Subtotal ({cartCount})</span>
+                        <span className="font-mono text-[#2A1308] font-semibold">₹{cartTotal}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>Insulated Thermal Packaging</span>
+                        <span className="text-emerald-700 font-bold uppercase text-[10px]">Free</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>Express Shipping (Pan-India)</span>
+                        <span className="font-mono font-bold">
+                          {shippingCost === 0 ? (
+                            <span className="text-emerald-700 uppercase text-[10px]">Free</span>
+                          ) : (
+                            `₹${shippingCost}`
+                          )}
+                        </span>
+                      </div>
+                      <div className="pt-2.5 mt-0.5 border-t border-dashed border-neutral-300 flex justify-between items-end">
+                        <div>
+                          <span className="text-sm font-bold text-[#2A1308] block">Total to Pay</span>
+                          <span className="text-[10px] text-neutral-400">Inclusive of all taxes</span>
+                        </div>
+                        <span className="text-2xl font-black text-[#2A1308] font-mono leading-none">
+                          ₹{grandTotal}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Primary WhatsApp Order Button */}
-                  <button
-                    onClick={handleWhatsAppCheckout}
-                    className="w-full py-3.5 px-4 rounded-full font-black text-xs uppercase tracking-wider bg-emerald-600 hover:bg-emerald-500 text-white shadow-md transition-all flex items-center justify-center gap-2.5 active:scale-95 cursor-pointer"
-                  >
-                    <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                      <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.592 2.654-.696c1.004.577 1.764.787 2.806.787 3.182 0 5.768-2.587 5.768-5.766.001-3.187-2.575-5.77-5.768-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.062-1.118-.073-.284-.09-.646-.226-1.114-.429-1.964-.848-3.238-2.822-3.336-2.952-.097-.13-.799-1.062-.799-2.025 0-.962.505-1.436.684-1.631.18-.195.392-.244.523-.244.131 0 .261.002.375.008.12.006.28-.046.438.334.162.388.553 1.349.602 1.448.049.098.082.213.016.343-.065.13-.098.21-.195.324-.098.115-.205.257-.293.345-.098.098-.2.205-.086.401.114.195.508.839 1.09 1.358.749.667 1.38.874 1.576.972.195.098.31.082.424-.049.115-.13.491-.571.622-.767.13-.195.261-.163.441-.098.18.065 1.144.54 1.34.638.196.098.327.147.376.229.049.082.049.475-.095.88z" />
-                    </svg>
-                    <span>Instant WhatsApp Order (+91-9098229454)</span>
-                  </button>
+                  {/* Action Buttons */}
+                  <div className="px-5 space-y-2.5">
+                    {/* Primary Secure Checkout Button */}
+                    <button
+                      onClick={() => setIsCheckoutModalOpen(true)}
+                      className="w-full py-3.5 px-4 rounded-xl font-black text-xs uppercase tracking-wider bg-[#2A1308] hover:bg-[#3D1D0F] text-white shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
+                    >
+                      <Lock className="w-4 h-4 text-[#F9BD03]" />
+                      <span>Proceed to Secure Checkout · ₹{grandTotal}</span>
+                    </button>
 
-                  {/* Secondary Direct Address Checkout Button */}
-                  <button
-                    onClick={() => setIsCheckoutModalOpen(true)}
-                    className="w-full py-2.5 px-4 rounded-full font-bold text-xs uppercase tracking-wider bg-neutral-100 text-[#2A1308] hover:bg-neutral-200 border border-neutral-300 transition-all flex items-center justify-center gap-2 cursor-pointer"
-                  >
-                    <span>Enter Delivery Address / Pay via UPI & COD</span>
-                  </button>
+                    {/* Secondary WhatsApp Order Button */}
+                    <button
+                      onClick={handleWhatsAppCheckout}
+                      className="w-full py-3 px-4 rounded-xl font-bold text-xs uppercase tracking-wider bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition-all flex items-center justify-center gap-2.5 active:scale-95 cursor-pointer"
+                    >
+                      <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.592 2.654-.696c1.004.577 1.764.787 2.806.787 3.182 0 5.768-2.587 5.768-5.766.001-3.187-2.575-5.77-5.768-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.062-1.118-.073-.284-.09-.646-.226-1.114-.429-1.964-.848-3.238-2.822-3.336-2.952-.097-.13-.799-1.062-.799-2.025 0-.962.505-1.436.684-1.631.18-.195.392-.244.523-.244.131 0 .261.002.375.008.12.006.28-.046.438.334.162.388.553 1.349.602 1.448.049.098.082.213.016.343-.065.13-.098.21-.195.324-.098.115-.205.257-.293.345-.098.098-.2.205-.086.401.114.195.508.839 1.09 1.358.749.667 1.38.874 1.576.972.195.098.31.082.424-.049.115-.13.491-.571.622-.767.13-.195.261-.163.441-.098.18.065 1.144.54 1.34.638.196.098.327.147.376.229.049.082.049.475-.095.88z" />
+                      </svg>
+                      <span>Instant WhatsApp Order</span>
+                    </button>
+                  </div>
 
-                  <div className="flex items-center justify-between text-[10px] text-neutral-500 pt-1">
-                    <span>🛡️ FSSAI Lic. 10526005000033</span>
+                  {/* Secure Payments Trust Strip */}
+                  <div className="px-5 pt-3.5 pb-2">
+                    <div className="flex items-center justify-center gap-1.5 text-[10px] font-bold text-neutral-500 mb-2">
+                      <Lock className="w-3 h-3 text-emerald-600" />
+                      <span className="uppercase tracking-wider">100% Secure Payments</span>
+                    </div>
+                    <div className="flex items-center justify-center gap-1.5 flex-wrap">
+                      {['UPI', 'VISA', 'Mastercard', 'RuPay', 'COD'].map((pm) => (
+                        <span
+                          key={pm}
+                          className="px-2 py-1 rounded-md bg-white border border-neutral-200 text-[9px] font-black uppercase tracking-wider text-neutral-600 shadow-2xs"
+                        >
+                          {pm}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Footer Meta */}
+                  <div className="px-5 pb-4 pt-1 flex items-center justify-between text-[10px] text-neutral-500">
+                    <span className="flex items-center gap-1">
+                      <ShieldCheck className="w-3 h-3 text-[#8C4724]" />
+                      FSSAI Lic. 10526005000033
+                    </span>
                     <button
                       onClick={clearCart}
                       className="hover:text-red-500 underline cursor-pointer"
@@ -505,13 +538,18 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToShop }) => {
                   </div>
 
                   {/* Summary & Submit */}
-                  <div className="pt-2">
+                  <div className="pt-2 space-y-2.5">
                     <button
                       type="submit"
-                      className="w-full py-3.5 px-4 rounded-full font-black text-xs uppercase tracking-wider bg-[#F9BD03] hover:bg-amber-400 text-[#1C0E07] transition-all cursor-pointer shadow-md"
+                      className="w-full py-3.5 px-4 rounded-xl font-black text-xs uppercase tracking-wider bg-[#F9BD03] hover:bg-amber-400 text-[#1C0E07] transition-all cursor-pointer shadow-md flex items-center justify-center gap-2"
                     >
-                      Confirm Order &bull; ₹{grandTotal}
+                      <Lock className="w-4 h-4" />
+                      <span>Pay Securely &bull; ₹{grandTotal}</span>
                     </button>
+                    <div className="flex items-center justify-center gap-1.5 text-[10px] text-neutral-500">
+                      <ShieldCheck className="w-3 h-3 text-emerald-600" />
+                      <span>256-bit encrypted · UPI · Cards · RuPay · COD</span>
+                    </div>
                   </div>
                 </form>
               )}

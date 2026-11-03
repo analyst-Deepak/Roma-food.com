@@ -490,15 +490,6 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                 className="bg-white rounded-3xl p-6 sm:p-8 border border-[#381A0E]/15 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between"
               >
                 <div>
-                  {/* Photo with Verified Badge */}
-                  <div className="relative aspect-[4/5] rounded-2xl overflow-hidden mb-6 bg-[#381A0E]/5 border border-[#381A0E]/10">
-                    <img
-                      src={leader.image}
-                      alt={leader.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-
                   <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C4724] block mb-1">
                     AUTHORIZED PARTNER
                   </span>

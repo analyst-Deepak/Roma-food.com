@@ -322,8 +322,11 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
           <motion.img
             src={product.image}
             alt={product.name}
+            width={640}
+            height={640}
             className="relative max-h-full max-w-[95%] w-auto object-contain filter drop-shadow-[0_16px_25px_rgba(42,19,8,0.22)] transition-transform duration-300 group-hover:scale-108 group-hover:-translate-y-1.5"
             loading="lazy"
+            decoding="async"
           />
         </div>
 
