@@ -17,6 +17,7 @@ import { CareerPage } from './components/CareerPage';
 import { AdminPage } from './components/AdminPage';
 import { ShopPage } from './components/ShopPage';
 import { ProductDetailsPage } from './components/ProductDetailsPage';
+import { CartPage } from './components/CartPage';
 import { ECOMMERCE_PRODUCTS } from './data/ecommerceProducts';
 import { EcommerceProduct } from './types/ecommerce';
 import { CartDrawer } from './components/CartDrawer';
@@ -27,7 +28,7 @@ import { SampleInquiryDrawer } from './components/SampleInquiryDrawer';
 import { FloatingWhatsAppWidget } from './components/FloatingWhatsAppWidget';
 import { ChatbotWidget } from './components/ChatbotWidget';
 
-export type AppRoute = 'home' | 'shop' | 'product' | 'about' | 'terms' | 'privacy' | 'cookie' | 'career' | 'admin';
+export type AppRoute = 'home' | 'shop' | 'product' | 'cart' | 'about' | 'terms' | 'privacy' | 'cookie' | 'career' | 'admin';
 
 export default function App() {
   // Parse route from window.location.pathname and hash
@@ -36,6 +37,9 @@ export default function App() {
     const rawHash = window.location.hash.toLowerCase().replace(/^#/, '');
 
     // 1. Pathname matches
+    if (rawPath === '/cart' || rawPath === '/bag' || rawPath === '/checkout') {
+      return { route: 'cart' };
+    }
     if (rawPath === '/product' || rawPath.startsWith('/product/')) {
       return { route: 'product' };
     }
@@ -62,6 +66,9 @@ export default function App() {
     }
 
     // 2. Hash-based matches
+    if (rawHash === 'cart' || rawHash === 'bag') {
+      return { route: 'cart' };
+    }
     if (rawHash.startsWith('product')) {
       return { route: 'product' };
     }
@@ -129,6 +136,8 @@ export default function App() {
   useEffect(() => {
     if (currentRoute === 'product' && selectedProduct) {
       document.title = `${selectedProduct.name} | ROMAS Chocolates`;
+    } else if (currentRoute === 'cart') {
+      document.title = 'Shopping Cart | ROMAS Chocolates';
     } else if (currentRoute === 'shop') {
       document.title = 'Shop Authentic 3D Chocolates | ROMAS Chocolates';
     } else if (currentRoute === 'privacy') {
@@ -159,6 +168,10 @@ export default function App() {
 
   const handleNavigateShop = () => {
     navigateTo('/shop', 'shop');
+  };
+
+  const handleNavigateCart = () => {
+    navigateTo('/cart', 'cart');
   };
 
   const handleOpenProduct = (prod: EcommerceProduct) => {
@@ -232,18 +245,22 @@ export default function App() {
   const isLegalRoute = currentRoute === 'terms' || currentRoute === 'privacy' || currentRoute === 'cookie';
   const isCareerRoute = currentRoute === 'career';
   const isAdminRoute = currentRoute === 'admin';
+  const isCartRoute = currentRoute === 'cart';
 
   return (
     <CartProvider>
       <div className="min-h-screen bg-[#381A0E] text-[#FEE8B4] flex flex-col font-sans selection:bg-[#F9BD03] selection:text-[#381A0E] antialiased">
         
-        {/* 1. Show Main Navbar on Home, Shop and About pages (Career/Admin pages render their own) */}
-        {!isLegalRoute && !isCareerRoute && !isAdminRoute && (
+        {/* 1. Show Main Navbar on Home, Shop and About pages (Cart, Career, Admin, Legal render their own) */}
+        {!isLegalRoute && !isCareerRoute && !isAdminRoute && !isCartRoute && (
           <Gr8rNavbar
             onOpenReservation={() => setIsSampleBagOpen(true)}
+            onNavigateCart={handleNavigateCart}
             onNavigate={(id) => {
               if (id === 'shop') {
                 handleNavigateShop();
+              } else if (id === 'cart') {
+                handleNavigateCart();
               } else if (id === 'about') {
                 handleNavigateAbout();
               } else if (id === 'home') {
@@ -258,6 +275,16 @@ export default function App() {
 
         {/* Main Content Layout based on Current Active Route */}
         <main className="flex-1 w-full">
+          {/* Dedicated Full Screen Professional E-Commerce Cart Page (Flipkart / Amazon Layout) */}
+          {currentRoute === 'cart' && (
+            <CartPage
+              onNavigateHome={(id) => handleNavigateHome(id)}
+              onNavigateShop={handleNavigateShop}
+              onSelectProduct={handleOpenProduct}
+              onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
+              onOpenLegal={handleNavigateLegal}
+            />
+          )}
           {/* Dedicated Legal Routes (for Meta API / WhatsApp Cloud API verification) */}
           {isLegalRoute && (
             <LegalPage
@@ -277,6 +304,7 @@ export default function App() {
               onBack={() => navigateTo('/shop', 'shop')}
               onNavigateHome={(id) => handleNavigateHome(id)}
               onNavigateShop={handleNavigateShop}
+              onNavigateCart={handleNavigateCart}
               onSelectProduct={handleOpenProduct}
               onOpenReservation={() => setIsSampleBagOpen(true)}
               onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
@@ -361,11 +389,6 @@ export default function App() {
           setIsSampleBagOpen(false);
           handleNavigateHome('contact');
         }}
-      />
-
-      {/* Direct E-Commerce Shopping Cart Drawer */}
-      <CartDrawer
-        onNavigateToShop={handleNavigateShop}
       />
 
       {/* Direct E-Commerce Wishlist (Heart) Drawer */}

@@ -29,6 +29,7 @@ interface ProductDetailsPageProps {
   onBack: () => void;
   onNavigateHome: (sectionId?: string) => void;
   onNavigateShop: () => void;
+  onNavigateCart?: () => void;
   onSelectProduct?: (product: EcommerceProduct) => void;
   onOpenReservation?: () => void;
   onOpenBrandGuide?: () => void;
@@ -40,12 +41,15 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
   onBack,
   onNavigateHome,
   onNavigateShop,
+  onNavigateCart,
   onSelectProduct,
   onOpenReservation,
   onOpenBrandGuide,
   onOpenLegal,
 }) => {
-  const { addToCart, setIsCartOpen, isWishlisted, toggleWishlist, setIsWishlistOpen } = useCart();
+  const { cart, addToCart, isWishlisted, toggleWishlist } = useCart();
+  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const isInCart = cart.some((item) => item.product.id === product.id);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState(product.weight);
@@ -72,11 +76,19 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
   const savings = (product.mrp - unitPrice) * quantity;
 
   const handleAddToCart = () => {
+    if (isInCart && onNavigateCart) {
+      onNavigateCart();
+      return;
+    }
     addToCart(product, quantity);
-    setAddedAnimation(true);
-    setTimeout(() => {
-      setAddedAnimation(false);
-    }, 1500);
+    if (onNavigateCart) {
+      onNavigateCart();
+    } else {
+      setAddedAnimation(true);
+      setTimeout(() => {
+        setAddedAnimation(false);
+      }, 1500);
+    }
   };
 
   // Gallery navigation (used by arrows + mobile swipe)
@@ -131,7 +143,7 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
   const relatedProducts = ECOMMERCE_PRODUCTS.filter((p) => p.id !== product.id).slice(0, 4);
 
   return (
-    <div className="min-h-screen bg-white text-[#0F1111] flex flex-col font-sans pt-24 sm:pt-28">
+    <div className="min-h-screen bg-white text-[#0F1111] flex flex-col font-sans pt-24 sm:pt-28 pb-20 sm:pb-0">
       {/* Top Breadcrumbs & Back Navigation Bar */}
       <div className="border-b border-gray-200 bg-[#FAFAFA]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between text-xs text-gray-600">
@@ -155,13 +167,25 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
             </span>
           </div>
 
-          <button
-            onClick={onBack}
-            className="inline-flex items-center gap-1 px-3 py-1 rounded border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-medium transition-colors shadow-sm cursor-pointer shrink-0 ml-3"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to All Products</span>
-          </button>
+          <div className="flex items-center gap-2.5 ml-3 shrink-0">
+            {onNavigateCart && (
+              <button
+                onClick={onNavigateCart}
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded border border-gray-300 bg-white hover:bg-gray-50 text-gray-800 text-xs font-semibold transition-colors shadow-xs cursor-pointer"
+                title="View Shopping Cart"
+              >
+                <ShoppingCart className="w-3.5 h-3.5 text-[#2874F0]" />
+                <span>Cart ({cartCount})</span>
+              </button>
+            )}
+            <button
+              onClick={onBack}
+              className="inline-flex items-center gap-1 px-3 py-1 rounded border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-medium transition-colors shadow-sm cursor-pointer shrink-0"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Back to All Products</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -546,13 +570,17 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
 
               {/* Action Buttons: Add to Cart & Buy Now */}
               <div className="space-y-2 pt-1">
-                {/* Yellow Add to Cart Button */}
+                {/* Yellow Add to Cart Button (Flipkart Style: Add to Cart / Go to Cart) */}
                 <button
                   onClick={handleAddToCart}
-                  className="w-full py-2.5 px-4 rounded-full bg-[#FFD814] hover:bg-[#F7CA00] text-[#0F1111] font-semibold text-xs transition-all shadow-sm active:scale-98 cursor-pointer flex items-center justify-center gap-2"
+                  className={`w-full py-2.5 px-4 rounded-full font-bold text-xs uppercase tracking-wider transition-all shadow-sm active:scale-98 cursor-pointer flex items-center justify-center gap-2 ${
+                    isInCart
+                      ? 'bg-[#2874F0] hover:bg-[#1C5EC7] text-white shadow-md'
+                      : 'bg-[#FFD814] hover:bg-[#F7CA00] text-[#0F1111]'
+                  }`}
                 >
                   <ShoppingCart className="w-4 h-4" />
-                  <span>{addedAnimation ? 'Item Added to Cart!' : 'Add to Cart'}</span>
+                  <span>{isInCart ? 'Go to Cart' : addedAnimation ? 'Added to Cart!' : 'Add to Cart'}</span>
                 </button>
 
                 {/* Orange Buy Now Button */}
@@ -601,14 +629,6 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
                   <span className="font-medium text-gray-900">Secure transaction</span>
                 </div>
               </div>
-
-              {/* Add to Wishlist Button */}
-              <button
-                onClick={() => setIsWishlisted(!isWishlisted)}
-                className="w-full py-2 px-4 rounded-lg bg-[#E7E9EC] hover:bg-[#D5D9D9] border border-[#D5D9D9] text-[#0F1111] text-xs font-medium transition-colors cursor-pointer"
-              >
-                {isWishlisted ? '✓ Added to Wish List' : 'Add to Wish List'}
-              </button>
             </div>
           </div>
 
@@ -754,6 +774,29 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
         onNavigate={(id) => onNavigateHome(id)}
         onOpenLegal={onOpenLegal}
       />
+
+      {/* Mobile Sticky Bottom Action Bar (Flipkart / Amazon Style) */}
+      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-gray-200 px-3 py-2.5 shadow-[0_-4px_16px_rgba(0,0,0,0.1)] flex items-center gap-2">
+        <button
+          onClick={handleAddToCart}
+          className={`flex-1 py-3 px-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-all shadow-xs active:scale-98 cursor-pointer flex items-center justify-center gap-1.5 ${
+            isInCart
+              ? 'bg-[#2874F0] text-white shadow-md'
+              : 'bg-[#FFD814] hover:bg-[#F7CA00] text-[#0F1111]'
+          }`}
+        >
+          <ShoppingCart className="w-4 h-4" />
+          <span className="truncate">{isInCart ? 'Go to Cart' : 'Add to Cart'}</span>
+        </button>
+
+        <button
+          onClick={handleBuyNowWhatsApp}
+          className="flex-1 py-3 px-3 rounded-xl bg-[#FFA41C] hover:bg-[#FA8900] text-[#0F1111] font-bold text-xs uppercase tracking-wider transition-all shadow-xs active:scale-98 cursor-pointer flex items-center justify-center gap-1.5"
+        >
+          <Zap className="w-4 h-4 fill-black shrink-0" />
+          <span className="truncate">Buy Now &bull; ₹{totalPrice}</span>
+        </button>
+      </div>
     </div>
   );
 };

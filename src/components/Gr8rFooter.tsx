@@ -347,7 +347,11 @@ export const Gr8rFooter: React.FC<Gr8rFooterProps> = ({
 
         {/* Bottom Legal, Certification & Copyright Bar */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#FEE8B4]/50">
-          <p>© 2026 ROMAS CHOCOLATES (ROMA FOODS). ALL RIGHTS RESERVED.</p>
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
+            <span>© 2026 ROMAS CHOCOLATES (ROMA FOODS). ALL RIGHTS RESERVED.</span>
+            <span>•</span>
+            <span className="text-[#F9BD03] font-bold tracking-wider uppercase">DEVELOPED BY DEEPAK SAHU</span>
+          </div>
           
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-[11px] font-medium">
             <a

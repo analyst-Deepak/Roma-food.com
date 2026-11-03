@@ -81,7 +81,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [wishlist]);
 
-  // Cart operations
+  // Cart operations (Direct Full-Screen E-Commerce Flow, No Side Drawer)
   const addToCart = (product: EcommerceProduct, quantity = 1) => {
     setCart((prev) => {
       const existing = prev.find((item) => item.product.id === product.id);
@@ -94,7 +94,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       return [...prev, { product, quantity }];
     });
-    setIsCartOpen(true);
   };
 
   const updateQuantity = (productId: string, delta: number) => {

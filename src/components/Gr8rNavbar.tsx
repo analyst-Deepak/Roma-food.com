@@ -7,12 +7,14 @@ import { useCart } from '../context/CartContext';
 interface Gr8rNavbarProps {
   onOpenReservation?: () => void;
   onNavigate?: (id: string) => void;
+  onNavigateCart?: () => void;
   currentPage?: string;
   variant?: 'floating' | 'solid';
 }
 
 export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
   onNavigate,
+  onNavigateCart,
   currentPage = 'home',
   variant = 'floating',
 }) => {
@@ -138,9 +140,15 @@ export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
               )}
             </button>
 
-            {/* Cart Drawer Trigger Button */}
+            {/* Cart Trigger Button (Navigates to Full-Screen Cart Page) */}
             <button
-              onClick={() => setIsCartOpen(true)}
+              onClick={() => {
+                if (onNavigateCart) {
+                  onNavigateCart();
+                } else {
+                  setIsCartOpen(true);
+                }
+              }}
               aria-label={`Open shopping bag (${cartCount} items)`}
               className="relative w-8 h-8 sm:w-9 sm:h-9 shrink-0 rounded-full bg-[#1C0E07]/90 hover:bg-gr8r-yellow border border-gr8r-yellow/35 transition-all duration-200 flex items-center justify-center cursor-pointer shadow-md active:scale-95 group"
             >
@@ -152,11 +160,15 @@ export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
               )}
             </button>
 
-            {/* Cart Total (desktop only, shown alongside the bag button) */}
+            {/* Cart Total (desktop only, shown alongside the bag button, clickable) */}
             {cartTotal > 0 && (
-              <span className="hidden sm:inline text-xs font-bold font-mono text-gr8r-cream">
+              <button
+                onClick={() => onNavigateCart?.()}
+                className="hidden sm:inline text-xs font-bold font-mono text-gr8r-cream hover:text-[#F9BD03] cursor-pointer transition-colors"
+                title="View Shopping Cart"
+              >
                 ₹{cartTotal}
-              </span>
+              </button>
             )}
 
             <MotionOverlayMenu

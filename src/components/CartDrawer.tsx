@@ -6,12 +6,65 @@ import { CustomerOrderDetails } from '../types/ecommerce';
 
 interface CartDrawerProps {
   onNavigateToShop?: () => void;
+  onNavigateCart?: () => void;
 }
 
 // Official ROMAS / Roma Foods WhatsApp business number (+91 70008 60127)
 const WHATSAPP_NUMBER = '917000860127';
 
-export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToShop }) => {
+// Official Flipkart-style Empty Cart Illustration
+const FlipkartEmptyCartIllustration: React.FC<{ className?: string }> = ({ className = 'w-44 h-32' }) => (
+  <svg
+    viewBox="0 0 220 160"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    aria-hidden="true"
+  >
+    {/* Floor ground shadow */}
+    <ellipse cx="110" cy="142" rx="75" ry="4" fill="#EAEAEA" />
+    <line x1="40" y1="140" x2="180" y2="140" stroke="#F0F0F0" strokeWidth="2" strokeLinecap="round" />
+
+    {/* Blue product container sitting in the cart */}
+    <rect x="100" y="62" width="24" height="26" rx="4" fill="#2874F0" />
+    <rect x="104" y="58" width="16" height="6" rx="2" fill="#1C5EC7" />
+    <circle cx="112" cy="73" r="3" fill="#60A5FA" />
+
+    {/* Cart Handle Bar */}
+    <rect x="68" y="65" width="16" height="6" rx="3" fill="#B0B7C3" />
+    <path
+      d="M74 68 L86 68 L96 98"
+      stroke="#CBD5E1"
+      strokeWidth="4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+
+    {/* Cart Basket Body */}
+    <path
+      d="M92 78 L152 78 C155 78 157 80 156 83 L147 118 C146 121 143 123 140 123 L102 123 C99 123 96 121 95 118 L88 83 C87 80 89 78 92 78 Z"
+      fill="#ECEFF3"
+      stroke="#D5D9E2"
+      strokeWidth="3"
+      strokeLinejoin="round"
+    />
+
+    {/* Basket inner cute face */}
+    <rect x="110" y="93" width="3.5" height="9" rx="1.75" fill="#9CA3AF" />
+    <rect x="127" y="93" width="3.5" height="9" rx="1.75" fill="#9CA3AF" />
+    <rect x="115" y="108" width="11" height="3" rx="1.5" fill="#9CA3AF" />
+
+    {/* Left Wheel */}
+    <circle cx="102" cy="133" r="8" fill="#E2E8F0" stroke="#94A3B8" strokeWidth="2.5" />
+    <circle cx="102" cy="133" r="3" fill="#64748B" />
+
+    {/* Right Wheel */}
+    <circle cx="138" cy="133" r="8" fill="#E2E8F0" stroke="#94A3B8" strokeWidth="2.5" />
+    <circle cx="138" cy="133" r="3" fill="#64748B" />
+  </svg>
+);
+
+export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToShop, onNavigateCart }) => {
   const {
     cart,
     isCartOpen,
@@ -128,6 +181,23 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToShop }) => {
                 </button>
               </div>
 
+              {/* View Full E-Commerce Cart Page Link */}
+              {onNavigateCart && cart.length > 0 && (
+                <button
+                  onClick={() => {
+                    setIsCartOpen(false);
+                    onNavigateCart();
+                  }}
+                  className="w-full py-2.5 px-5 bg-amber-50 hover:bg-amber-100 text-amber-950 border-b border-amber-200/80 text-xs font-bold flex items-center justify-between cursor-pointer transition-colors"
+                >
+                  <span className="flex items-center gap-2">
+                    <span className="text-sm">⚡</span>
+                    <span className="uppercase tracking-wider">Open Full-Screen Cart Page</span>
+                  </span>
+                  <span className="text-amber-800 font-bold">Details & Coupons →</span>
+                </button>
+              )}
+
               {/* Free Shipping Progress Indicator */}
               <div className="px-5 py-3 bg-[#FAF8F5] border-b border-neutral-200 text-xs">
                 {cartTotal >= freeShippingThreshold ? (
@@ -154,15 +224,13 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToShop }) => {
               {/* Cart Items List */}
               <div className="flex-1 overflow-y-auto p-5 space-y-4">
                 {cart.length === 0 ? (
-                  <div className="h-full flex flex-col items-center justify-center text-center py-12 px-4">
-                    <div className="w-20 h-20 rounded-full bg-neutral-100 border border-neutral-200 flex items-center justify-center text-4xl mb-4">
-                      🛍️
-                    </div>
-                    <h3 className="text-lg font-bold text-[#2A1308] uppercase tracking-wider mb-1">
-                      Your Bag is Empty
+                  <div className="h-full flex flex-col items-center justify-center text-center py-10 px-4">
+                    <FlipkartEmptyCartIllustration className="w-44 h-32 mx-auto filter drop-shadow-2xs mb-2" />
+                    <h3 className="text-lg font-medium text-neutral-800 mt-2 mb-1">
+                      Your cart is empty!
                     </h3>
-                    <p className="text-xs text-neutral-600 max-w-xs mb-6">
-                      Discover our artisan 3D chocolate slabs, couvertures, and hazelnut pralines freshly tempered at Kurod Works.
+                    <p className="text-xs text-neutral-500 max-w-xs mb-6">
+                      Explore our handcrafted chocolate slabs, couvertures & nut pralines.
                     </p>
                     <button
                       onClick={() => {
@@ -174,9 +242,9 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToShop }) => {
                           if (el) el.scrollIntoView({ behavior: 'smooth' });
                         }
                       }}
-                      className="px-6 py-2.5 rounded-full bg-[#2A1308] text-white font-black text-xs uppercase tracking-wider hover:bg-[#F9BD03] hover:text-[#1C0E07] transition-colors cursor-pointer shadow-md"
+                      className="px-12 py-2.5 rounded-xs bg-[#2874F0] hover:bg-[#1C5EC7] text-white font-medium text-xs uppercase tracking-wider transition-all shadow-xs cursor-pointer active:scale-98"
                     >
-                      Browse 3D Chocolates
+                      Shop now
                     </button>
                   </div>
                 ) : (
@@ -295,6 +363,20 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToShop }) => {
 
                   {/* Action Buttons */}
                   <div className="px-5 space-y-2.5">
+                    {/* View Full Cart Page Button */}
+                    {onNavigateCart && (
+                      <button
+                        onClick={() => {
+                          setIsCartOpen(false);
+                          onNavigateCart();
+                        }}
+                        className="w-full py-2.5 px-4 rounded-xl font-bold text-xs uppercase tracking-wider bg-neutral-100 hover:bg-neutral-200 text-[#2A1308] border border-neutral-300 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                      >
+                        <span>Open Full-Screen Cart & Apply Coupons</span>
+                        <span>→</span>
+                      </button>
+                    )}
+
                     {/* Primary Secure Checkout Button */}
                     <button
                       onClick={() => setIsCheckoutModalOpen(true)}

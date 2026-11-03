@@ -313,6 +313,20 @@ export const MotionOverlayMenu: React.FC<MotionOverlayMenuProps> = ({
                 exit="exit"
                 className="fixed inset-0 z-[9999] overflow-hidden flex flex-col justify-between text-[#FEE8B4] bg-[#160A04] selection:bg-[#F9BD03] selection:text-[#160A04]"
               >
+                {/* Scoped CSS to completely eliminate any scrollbars on the overlay */}
+                <style>{`
+                  .no-menu-scrollbar {
+                    scrollbar-width: none !important;
+                    -ms-overflow-style: none !important;
+                  }
+                  .no-menu-scrollbar::-webkit-scrollbar {
+                    display: none !important;
+                    width: 0 !important;
+                    height: 0 !important;
+                    background: transparent !important;
+                  }
+                `}</style>
+
                 {/* Ambient Golden Chocolate Glow Effect */}
                 <div
                   aria-hidden="true"
@@ -320,7 +334,7 @@ export const MotionOverlayMenu: React.FC<MotionOverlayMenuProps> = ({
                 />
 
                 {/* Top Header Bar Inside Overlay */}
-                <header className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 pt-6 pb-4 flex items-center justify-between border-b border-[#FEE8B4]/10">
+                <header className="relative z-10 shrink-0 w-full max-w-7xl mx-auto px-6 sm:px-10 py-3 sm:py-4 flex items-center justify-between border-b border-[#FEE8B4]/10">
                   <div
                     onClick={() => {
                       closeMenu();
@@ -331,7 +345,7 @@ export const MotionOverlayMenu: React.FC<MotionOverlayMenuProps> = ({
                     <img
                       src="/assets/romas-logo-gold.png"
                       alt="ROMAS Spreading Happiness"
-                      className="h-9 sm:h-11 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(249,189,3,0.35)]"
+                      className="h-7 sm:h-9 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(249,189,3,0.35)]"
                     />
                   </div>
 
@@ -339,7 +353,7 @@ export const MotionOverlayMenu: React.FC<MotionOverlayMenuProps> = ({
                   <button
                     type="button"
                     onClick={closeMenu}
-                    className="flex items-center gap-3 p-1 rounded-full cursor-pointer select-none text-[#FEE8B4] hover:text-[#F9BD03] transition-colors"
+                    className="flex items-center gap-2.5 p-1 rounded-full cursor-pointer select-none text-[#FEE8B4] hover:text-[#F9BD03] transition-colors"
                   >
                     <span
                       className="text-xs font-black tracking-widest uppercase hidden sm:inline-block leading-none"
@@ -347,16 +361,16 @@ export const MotionOverlayMenu: React.FC<MotionOverlayMenuProps> = ({
                     >
                       Close
                     </span>
-                    <span className="w-10 h-10 rounded-full flex flex-col items-end justify-center gap-[5px] px-[11px] bg-[#F9BD03]/25 border border-[#F9BD03]/50 text-[#F9BD03] shadow-[0_0_15px_rgba(249,189,3,0.3)]">
+                    <span className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex flex-col items-end justify-center gap-[4.5px] px-[10px] bg-[#F9BD03]/25 border border-[#F9BD03]/50 text-[#F9BD03] shadow-[0_0_15px_rgba(249,189,3,0.3)]">
                       <motion.span
                         className="block h-[2px] rounded-full bg-current origin-center"
-                        style={{ width: 18 }}
+                        style={{ width: 17 }}
                         variants={topVariants}
                         animate="open"
                       />
                       <motion.span
                         className="block h-[2px] rounded-full bg-current origin-center"
-                        style={{ width: 18 }}
+                        style={{ width: 17 }}
                         variants={bottomVariants}
                         animate="open"
                       />
@@ -365,9 +379,9 @@ export const MotionOverlayMenu: React.FC<MotionOverlayMenuProps> = ({
                 </header>
 
                 {/* Main Navigation Links Area with Staggered Blur + Slide */}
-                <div className="relative z-10 flex-1 flex flex-col justify-center max-w-7xl w-full mx-auto px-6 sm:px-12 py-8 overflow-y-auto">
-                  <nav aria-label="Overlay main navigation">
-                    <ul className="flex flex-col gap-2 sm:gap-3 list-none p-0 m-0">
+                <div className="relative z-10 flex-1 min-h-0 flex flex-col max-w-7xl w-full mx-auto px-6 sm:px-12 md:px-16 py-2 overflow-y-auto no-menu-scrollbar">
+                  <nav aria-label="Overlay main navigation" className="my-auto w-full max-w-4xl py-2">
+                    <ul className="flex flex-col gap-1 sm:gap-2 md:gap-2.5 list-none p-0 m-0">
                       {links.map((item, i) => {
                         const isHovered = hovered === i;
                         const dimmed = hovered !== null && !isHovered;
@@ -387,29 +401,53 @@ export const MotionOverlayMenu: React.FC<MotionOverlayMenuProps> = ({
                               }}
                               onPointerLeave={() => setHovered(null)}
                               animate={{
-                                x: isHovered ? 18 : 0,
-                                opacity: dimmed ? 0.32 : 1,
+                                x: isHovered ? 14 : 0,
+                                opacity: dimmed ? 0.35 : 1,
                               }}
                               transition={{
                                 type: 'spring',
-                                stiffness: 320,
-                                damping: 28,
-                                mass: 0.7,
+                                stiffness: 350,
+                                damping: 30,
+                                mass: 0.6,
                               }}
-                              className="w-full text-left inline-flex items-baseline gap-4 sm:gap-8 text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase text-[#FEE8B4] hover:text-[#F9BD03] transition-colors py-1 cursor-pointer select-none group"
-                              style={{ fontFamily: "'Cabin Condensed', 'Bayon', 'Inter', Impact, sans-serif" }}
+                              className="w-full text-left inline-flex items-center gap-3 sm:gap-5 py-0.5 sm:py-1 cursor-pointer select-none group transition-colors"
                             >
                               {/* Number Badge (01, 02, etc.) */}
                               <span
-                                className="text-base sm:text-2xl font-mono font-bold tracking-widest text-[#F9BD03] select-none shrink-0"
-                                style={{ transform: 'translateY(-0.3em)' }}
+                                className="font-mono font-bold tracking-widest text-[#F9BD03]/80 group-hover:text-[#F9BD03] select-none shrink-0"
+                                style={{ fontSize: 'clamp(0.7rem, 1.4vh, 1rem)' }}
                               >
                                 {pad(i + 1)}
                               </span>
-                              {/* Link Label */}
-                              <span className="tracking-tight transition-transform duration-300">
+                              {/* Link Label with fluid responsive sizing so it never overflows 100vh */}
+                              <span
+                                className="font-black uppercase tracking-tight text-[#FEE8B4] group-hover:text-[#F9BD03] transition-colors inline-flex items-center"
+                                style={{
+                                  fontSize: 'clamp(1.35rem, 3.8vh, 3.25rem)',
+                                  lineHeight: 1.1,
+                                  fontFamily: "'Cabin Condensed', 'Bayon', 'Inter', Impact, sans-serif",
+                                }}
+                              >
                                 {item.label}
+                                {item.badge && (
+                                  <span className="ml-3 px-2 py-0.5 text-[9px] sm:text-[10px] font-mono font-bold tracking-wider uppercase bg-[#F9BD03] text-[#160A04] rounded-full shadow-[0_0_10px_rgba(249,189,3,0.35)]">
+                                    {item.badge}
+                                  </span>
+                                )}
                               </span>
+
+                              {/* Sleek Golden Accent Arrow that appears on hover */}
+                              <motion.span
+                                initial={false}
+                                animate={{
+                                  opacity: isHovered ? 1 : 0,
+                                  x: isHovered ? 0 : -8,
+                                }}
+                                transition={{ duration: 0.18 }}
+                                className="hidden sm:inline-block text-[#F9BD03] text-xl sm:text-2xl font-bold ml-3"
+                              >
+                                →
+                              </motion.span>
                             </motion.button>
                           </motion.li>
                         );
@@ -419,20 +457,22 @@ export const MotionOverlayMenu: React.FC<MotionOverlayMenuProps> = ({
                 </div>
 
                 {/* Footer Section Inside Overlay */}
-                <footer className="relative z-10 max-w-7xl w-full mx-auto px-6 sm:px-12 pb-8 pt-4">
+                <footer className="relative z-10 shrink-0 max-w-7xl w-full mx-auto px-6 sm:px-12 pb-4 pt-2">
                   {/* Expanding Divider Line */}
                   <motion.div
                     variants={dividerVariants}
-                    className="h-[1px] w-full bg-[#FEE8B4]/20 origin-left mb-6"
+                    className="h-[1px] w-full bg-[#FEE8B4]/15 origin-left mb-3 sm:mb-4"
                   />
 
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs font-medium text-[#FEE8B4]/70">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs font-medium text-[#FEE8B4]/70">
                     <motion.div custom={0} variants={footerVariants}>
-                      <span>© 2026 ROMAS CHOCOLATES (ROMA FOODS). DHAMTARI WORKS.</span>
+                      <span className="text-[10px] sm:text-xs tracking-wider text-[#FEE8B4]/60">
+                        © 2026 ROMAS CHOCOLATES (ROMA FOODS). DHAMTARI WORKS.
+                      </span>
                     </motion.div>
 
                     {/* Secondary Quick Links with Animated Underline */}
-                    <ul className="flex flex-wrap items-center gap-4 sm:gap-6 list-none m-0 p-0">
+                    <ul className="flex flex-wrap items-center gap-3 sm:gap-5 list-none m-0 p-0">
                       {secondary.map((sec, j) => (
                         <motion.li key={sec.label} custom={j + 1} variants={footerVariants}>
                           <a
@@ -446,7 +486,7 @@ export const MotionOverlayMenu: React.FC<MotionOverlayMenuProps> = ({
                                 window.location.href = sec.href;
                               }
                             }}
-                            className="relative group text-[#FEE8B4]/80 hover:text-[#F9BD03] transition-colors pb-1"
+                            className="relative group text-[10px] sm:text-xs text-[#FEE8B4]/75 hover:text-[#F9BD03] transition-colors pb-0.5"
                           >
                             <span>{sec.label}</span>
                             <span className="absolute left-0 right-0 bottom-0 h-[1.5px] bg-[#F9BD03] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-out" />
