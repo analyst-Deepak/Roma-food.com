@@ -211,7 +211,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({
                     2. ORDERS & PURCHASES
                   </h2>
                   <p className="text-sm sm:text-base text-[#381A0E]/80 leading-relaxed">
-                    All bulk couverture orders, trade inquiries, and insulated sample box requests are subject to manufacturing availability and confirmation from our Dhamtari Works dispatch unit. We reserve the right to accept, modify, or cancel a request when freight conditions or supply thresholds require.
+                    All bulk couverture orders, wholesale inquiries, and insulated sample box requests are subject to manufacturing availability and confirmation from our Dhamtari Works dispatch unit. We reserve the right to accept, modify, or cancel a request when freight conditions or supply thresholds require.
                   </p>
                 </motion.div>
 
@@ -224,7 +224,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({
                     3. USER REGISTRATION & COMMUNICATIONS
                   </h2>
                   <p className="text-sm sm:text-base text-[#381A0E]/80 leading-relaxed">
-                    By submitting a trade inquiry or pastry chef request, you consent to receive direct commercial updates, batch analysis reports, and airway bills from our concierge via email, SMS, or the WhatsApp Business Cloud API (+91 9098229454). You may opt out of promotional messages at any time.
+                    By submitting a wholesale inquiry or pastry chef request, you consent to receive direct commercial updates, batch analysis reports, and airway bills from our concierge via email, SMS, or the WhatsApp Business Cloud API (+91 9098229454). You may opt out of promotional messages at any time.
                   </p>
                 </motion.div>
 
@@ -250,7 +250,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({
                     5. META API & DATA PRIVACY COMPLIANCE
                   </h2>
                   <p className="text-sm sm:text-base text-[#381A0E]/80 leading-relaxed">
-                    Our platform integrates with Meta Platforms (including the WhatsApp Cloud API) to facilitate rapid B2B trade support. We operate in strict conformity with Meta Developer Data Policies and India&apos;s Digital Personal Data Protection (DPDP) Act 2023. We do not sell or monetize personal communications.
+                    Our platform integrates with Meta Platforms (including the WhatsApp Cloud API) to facilitate rapid B2B wholesale support. We operate in strict conformity with Meta Developer Data Policies and India&apos;s Digital Personal Data Protection (DPDP) Act 2023. We do not sell or monetize personal communications.
                   </p>
                 </motion.div>
 
@@ -307,7 +307,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({
                     1. INFORMATION WE COLLECT
                   </h2>
                   <p className="text-sm sm:text-base text-[#381A0E]/80 leading-relaxed">
-                    When you contact our trade desk, request complimentary tasting boxes, or connect via WhatsApp, we collect:
+                    When you contact our sales desk, request complimentary tasting boxes, or connect via WhatsApp, we collect:
                   </p>
                   <ul className="list-disc pl-6 text-sm sm:text-base text-[#381A0E]/80 space-y-1.5">
                     <li>Chef / Representative Name and Business Entity Name</li>
@@ -326,7 +326,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({
                     2. WHATSAPP BUSINESS & META CLOUD API
                   </h2>
                   <p className="text-sm sm:text-base text-[#381A0E]/80 leading-relaxed">
-                    We provide direct trade support powered by the <strong>WhatsApp Cloud API (Meta Platforms, Inc.)</strong>. All WhatsApp chat conversations are end-to-end encrypted. We process messages exclusively to provide commercial quotes, share technical specification PDFs, and issue dispatch tracking numbers. We never scrape contacts or transmit spam broadcasts.
+                    We provide direct sales support powered by the <strong>WhatsApp Cloud API (Meta Platforms, Inc.)</strong>. All WhatsApp chat conversations are end-to-end encrypted. We process messages exclusively to provide commercial quotes, share technical specification PDFs, and issue dispatch tracking numbers. We never scrape contacts or transmit spam broadcasts.
                   </p>
                 </motion.div>
 
@@ -339,7 +339,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({
                     3. USE & NON-DISCLOSURE OF INFORMATION
                   </h2>
                   <p className="text-sm sm:text-base text-[#381A0E]/80 leading-relaxed">
-                    <strong>We never sell, rent, or trade your personal data.</strong> Information is only shared with verified temperature-controlled logistics partners solely for delivering physical chocolate sample orders to your bakery address, or when required by statutory Indian authorities.
+                    <strong>We never sell, rent, or share your personal data.</strong> Information is only shared with verified temperature-controlled logistics partners solely for delivering physical chocolate sample orders to your bakery address, or when required by statutory Indian authorities.
                   </p>
                 </motion.div>
 

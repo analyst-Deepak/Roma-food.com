@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Heart, ShoppingBag } from 'lucide-react';
 import { MotionOverlayMenu } from './MotionOverlayMenu';
+import { useCart } from '../context/CartContext';
 
 interface Gr8rNavbarProps {
   onOpenReservation?: () => void;
@@ -15,6 +17,7 @@ export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
   variant = 'floating',
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { cartCount, cartTotal, setIsCartOpen, wishlistCount, setIsWishlistOpen } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,9 +28,10 @@ export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
   }, []);
 
   const navLinks = [
+    { label: 'SHOP', id: 'shop' },
     { label: 'ABOUT', id: 'about' },
     { label: 'PRODUCT', id: 'menu' },
-    { label: 'BRANCH', id: 'branch' },
+    { label: 'CAREERS', id: 'careers' },
     { label: 'BLOG', id: 'blog' },
     { label: 'CONTACT', id: 'contact' },
   ];
@@ -84,6 +88,7 @@ export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
           <nav className="hidden md:flex items-center gap-1 lg:gap-2">
             {navLinks.map((link) => {
               const isActive =
+                (link.id === 'shop' && currentPage === 'shop') ||
                 (link.id === 'about' && currentPage === 'about') ||
                 (link.id === 'home' && currentPage === 'home');
               return (
@@ -103,8 +108,50 @@ export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
             })}
           </nav>
 
-          {/* Framer Motion Overlay Menu Toggle Button */}
-          <div className="flex items-center">
+          {/* Wishlist, Cart & Motion Overlay Menu */}
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* Wishlist (Heart) Trigger Button */}
+            <button
+              onClick={() => setIsWishlistOpen(true)}
+              aria-label={`Open wishlist (${wishlistCount} saved items)`}
+              title="My Wishlist"
+              className="relative p-2 sm:px-2.5 sm:py-1.5 rounded-full bg-[#1C0E07]/90 hover:bg-[#381A0E] text-[#FEE8B4] hover:text-[#F9BD03] border border-[#F9BD03]/35 hover:border-red-400/60 transition-all duration-200 flex items-center gap-1.5 cursor-pointer shadow-md active:scale-95 group"
+            >
+              <Heart
+                className={`w-4 h-4 transition-transform group-hover:scale-110 ${
+                  wishlistCount > 0
+                    ? 'text-red-500 fill-red-500'
+                    : 'text-[#FEE8B4] group-hover:text-red-400'
+                }`}
+              />
+              {wishlistCount > 0 && (
+                <span className="w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-black font-mono flex items-center justify-center shadow-md">
+                  {wishlistCount}
+                </span>
+              )}
+            </button>
+
+            {/* Cart Drawer Trigger Button */}
+            <button
+              onClick={() => setIsCartOpen(true)}
+              aria-label={`Open shopping bag (${cartCount} items)`}
+              className="relative p-2 sm:px-3 sm:py-1.5 rounded-full bg-[#1C0E07]/90 hover:bg-[#F9BD03] text-[#FEE8B4] hover:text-[#1C0E07] border border-[#F9BD03]/35 transition-all duration-200 flex items-center gap-1.5 cursor-pointer shadow-md active:scale-95 group"
+            >
+              <svg className="w-4 h-4 transition-transform group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              {cartTotal > 0 && (
+                <span className="hidden sm:inline text-xs font-bold font-mono">
+                  ₹{cartTotal}
+                </span>
+              )}
+              {cartCount > 0 && (
+                <span className="w-5 h-5 rounded-full bg-[#F9BD03] group-hover:bg-[#1C0E07] text-[#1C0E07] group-hover:text-[#F9BD03] text-[10px] font-black font-mono flex items-center justify-center shadow-md">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+
             <MotionOverlayMenu
               onNavigate={onNavigate}
               currentPage={currentPage}

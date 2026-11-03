@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import {
-  ArrowUp,
   Heart,
   Phone,
   Mail,
@@ -10,7 +9,7 @@ import {
   ShieldCheck,
   Sparkles,
   ArrowRight,
-  CheckCircle2,
+  Briefcase,
   Instagram,
   Linkedin,
   Facebook,
@@ -34,9 +33,6 @@ export const Gr8rFooter: React.FC<Gr8rFooterProps> = ({
   onNavigate,
   onOpenLegal,
 }) => {
-  const [emailInput, setEmailInput] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -48,15 +44,6 @@ export const Gr8rFooter: React.FC<Gr8rFooterProps> = ({
     } else {
       const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (emailInput.trim()) {
-      setSubscribed(true);
-      setTimeout(() => setSubscribed(false), 4000);
-      setEmailInput('');
     }
   };
 
@@ -108,93 +95,16 @@ export const Gr8rFooter: React.FC<Gr8rFooterProps> = ({
     },
   ];
 
-  const portfolioLinks = [
-    { label: '55% & 70% Real Couvertures', id: 'menu' },
-    { label: 'Classic Milk Compounds & Slabs', id: 'menu' },
-    { label: 'Caramel Butterscotch Buttons', id: 'menu' },
-    { label: 'Ivory White Silk Drops', id: 'menu' },
-    { label: 'Roasted Hazelnut Praline', id: 'menu' },
-    { label: 'Dutch Alkalized Cocoa Powders', id: 'menu' },
-  ];
-
   return (
-    <footer id="contact" className="relative bg-[#180A04] text-[#FEE8B4] pt-24 pb-12 overflow-hidden select-none border-t border-[#FEE8B4]/15">
+    <footer id="contact" className="relative bg-[#180A04] text-[#FEE8B4] pt-16 sm:pt-20 pb-12 overflow-hidden select-none border-t border-[#FEE8B4]/15">
       {/* Subtle Warm Amber Glow Layers */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[360px] bg-gradient-to-b from-[#F9BD03]/10 via-[#F9BD03]/5 to-transparent rounded-full blur-[160px] pointer-events-none" />
       <div className="absolute -bottom-20 -right-20 w-[600px] h-[600px] bg-[#381A0E]/60 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 relative z-10">
-        
-        {/* Top VIP Sampling & Trade Inquiry Banner */}
-        <div className="pb-16 border-b border-[#FEE8B4]/15 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#F9BD03]/10 border border-[#F9BD03]/30 mb-3">
-              <Sparkles className="w-3.5 h-3.5 text-[#F9BD03]" />
-              <span
-                className="text-[11px] font-black tracking-[0.26em] uppercase text-[#F9BD03]"
-                style={{ fontFamily: "'Inter', sans-serif" }}
-              >
-                ROMAS TRADE CONCIERGE & SAMPLE BOX
-              </span>
-            </div>
 
-            <h2
-              className="text-4xl sm:text-5xl md:text-6xl font-black uppercase text-[#FEE8B4] tracking-tight leading-[0.92]"
-              style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
-            >
-              TASTE THE HAPPINESS IN EVERY CREATION
-            </h2>
-
-            <p className="mt-3.5 text-sm sm:text-base text-[#FEE8B4]/70 max-w-xl font-normal leading-relaxed">
-              Order complimentary insulated tasting boxes for your bakery, patisserie, or confectionery line direct from Dhamtari Works.
-            </p>
-          </div>
-
-          {/* Newsletter / Sample Box Quick Request */}
-          <div className="w-full lg:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-            <form onSubmit={handleSubscribe} className="relative flex items-center">
-              <input
-                type="email"
-                value={emailInput}
-                onChange={(e) => setEmailInput(e.target.value)}
-                placeholder="Enter pastry chef email..."
-                required
-                className="w-full sm:w-72 px-5 py-3.5 rounded-full bg-[#2A1107] border border-[#FEE8B4]/25 text-[#FEE8B4] text-xs font-medium placeholder:text-[#FEE8B4]/40 focus:outline-none focus:border-[#F9BD03] focus:ring-1 focus:ring-[#F9BD03] transition-all shadow-inner"
-              />
-              <button
-                type="submit"
-                className="absolute right-1.5 px-4 py-2.5 rounded-full bg-[#F9BD03] hover:bg-[#E5AC00] text-[#1C0E07] text-[11px] font-black uppercase tracking-wider transition-all flex items-center gap-1 shadow-md"
-              >
-                <span>JOIN</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </form>
-
-            <motion.button
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={scrollToTop}
-              className="w-12 h-12 rounded-full border border-[#FEE8B4]/30 bg-[#2A1107] flex items-center justify-center hover:bg-[#F9BD03] hover:text-[#1C0E07] hover:border-[#F9BD03] text-[#FEE8B4] transition-all duration-300 shadow-md shrink-0 self-center sm:self-auto"
-              aria-label="Back to top"
-            >
-              <ArrowUp className="w-5 h-5" />
-            </motion.button>
-          </div>
-        </div>
-
-        {subscribed && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="py-3 px-5 rounded-2xl bg-[#00A859]/20 border border-[#00A859]/40 text-[#86EFAC] text-xs font-semibold flex items-center gap-2 my-4"
-          >
-            <CheckCircle2 className="w-4 h-4 text-[#86EFAC]" />
-            <span>Thank you! Your culinary inquiry has been received. Our concierge will dispatch trade samples shortly.</span>
-          </motion.div>
-        )}
-
-        {/* Middle Section: 5 High-End Luxury Columns */}
-        <div className="py-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 lg:gap-8 border-b border-[#FEE8B4]/15">
+        {/* Middle Section: 4 High-End Luxury Columns */}
+        <div className="py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 border-b border-[#FEE8B4]/15">
           
           {/* Col 1: Official Brand Identity & Credentials */}
           <div className="lg:pr-2">
@@ -223,52 +133,137 @@ export const Gr8rFooter: React.FC<Gr8rFooterProps> = ({
                 <ShieldCheck className="w-3.5 h-3.5 text-[#F9BD03]" />
                 <span>FSSAI Central Lic: 10526005000033</span>
               </div>
+
+              {/* ONLY Social Icons directly under FSSAI Central Lic as requested */}
+              <div className="pt-3 flex flex-wrap items-center gap-2.5">
+                {socialIcons.map((s) => (
+                  <motion.a
+                    key={s.id}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    whileHover={{ y: -3, scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`w-9 h-9 rounded-full border border-[#FEE8B4]/20 bg-[#251006]/90 backdrop-blur-md flex items-center justify-center text-[#FEE8B4] transition-all duration-300 shadow-md group ${s.hoverBg} ${s.hoverGlow}`}
+                  >
+                    {s.icon}
+                  </motion.a>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Col 2: Confectionery Range */}
+          {/* Col 2: Works Location Map (Replaced Atelier Range as requested) */}
           <div>
             <h4
-              className="text-xs font-black tracking-[0.24em] uppercase text-[#F9BD03] mb-6 flex items-center gap-2"
+              className="text-xs font-black tracking-[0.24em] uppercase text-[#F9BD03] mb-4 flex items-center gap-2"
               style={{ fontFamily: "'Inter', sans-serif" }}
             >
-              <span>ATELIER RANGE</span>
+              <span>FACTORY LOCATION</span>
               <span className="w-6 h-[1px] bg-[#F9BD03]/40" />
             </h4>
-            <ul className="space-y-3">
-              {portfolioLinks.map((item, idx) => (
-                <li key={idx}>
-                  <a
-                    href={`#${item.id}`}
-                    onClick={(e) => handleLinkClick(e, item.id)}
-                    className="text-xs sm:text-sm font-medium text-[#FEE8B4]/75 hover:text-[#F9BD03] transition-colors flex items-center gap-2 group"
-                  >
-                    <span className="w-1 h-1 rounded-full bg-[#F9BD03]/40 group-hover:w-2 group-hover:bg-[#F9BD03] transition-all" />
-                    <span>{item.label}</span>
-                  </a>
-                </li>
-              ))}
-              {onOpenBrandGuide && (
-                <li className="pt-2">
-                  <button
-                    onClick={onOpenBrandGuide}
-                    className="text-xs font-bold uppercase tracking-wider text-[#F9BD03] hover:text-[#ffffff] transition-colors flex items-center gap-1.5 cursor-pointer"
-                  >
-                    <Sparkles className="w-3.5 h-3.5 text-[#F9BD03]" />
-                    <span>OFFICIAL BRAND STANDARDS</span>
-                  </button>
-                </li>
-              )}
-            </ul>
+
+            <p className="text-xs text-[#FEE8B4]/70 mb-3 font-normal leading-relaxed">
+              <span className="text-[#F9BD03] font-semibold">Kurud Factory:</span> 154/1, Dhamtari Road, Kurod, Dhamtari (C.G.)
+            </p>
+
+            {/* Interactive Embedded Google Map */}
+            <div className="relative w-full h-44 rounded-2xl overflow-hidden border border-[#FEE8B4]/20 shadow-lg bg-[#251006] group">
+              <iframe
+                title="ROMAS Dhamtari Works Location Map"
+                src="https://maps.google.com/maps?q=Kurud%2C+Dhamtari%2C+Chhattisgarh+493663&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                className="w-full h-full border-0 filter contrast-[1.05] opacity-90 group-hover:opacity-100 transition-opacity"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+
+            <div className="mt-3">
+              <a
+                href="https://maps.google.com/?q=Kurud+Dhamtari+Chhattisgarh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#F9BD03] hover:text-white transition-colors group"
+              >
+                <MapPin className="w-3.5 h-3.5 text-[#F9BD03]" />
+                <span>Directions to Kurud Factory</span>
+                <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+              </a>
+            </div>
           </div>
 
-          {/* Col 3: LEGAL (Directly matching exact user reference) */}
+          {/* Col 3: Direct Commercial & Corporate Inquiries */}
           <div>
             <h4
               className="text-xs font-black tracking-[0.24em] uppercase text-[#F9BD03] mb-6 flex items-center gap-2"
               style={{ fontFamily: "'Inter', sans-serif" }}
             >
-              <span>LEGAL</span>
+              <span>OFFICES & WORKS</span>
+              <span className="w-6 h-[1px] bg-[#F9BD03]/40" />
+            </h4>
+            <ul className="space-y-3.5 text-xs sm:text-sm text-[#FEE8B4]/80">
+              {/* Corporate Office */}
+              <li className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 text-[#F9BD03] mt-0.5 shrink-0" />
+                <div className="leading-snug">
+                  <span className="text-[10px] font-black uppercase text-[#F9BD03] tracking-wider block mb-0.5">
+                    Corporate Office
+                  </span>
+                  <span>{COMPANY_INFO.corporateOffice || 'Sf-8, Shyam Plaza, Opp. Bus Stand, Pandri, Raipur (C.G.)'}</span>
+                </div>
+              </li>
+
+              {/* Factory Address */}
+              <li className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 text-[#F9BD03] mt-0.5 shrink-0" />
+                <div className="leading-snug">
+                  <span className="text-[10px] font-black uppercase text-[#F9BD03] tracking-wider block mb-0.5">
+                    Factory & Works (Kurud)
+                  </span>
+                  <span>{COMPANY_INFO.factoryAddress || COMPANY_INFO.address}</span>
+                </div>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="w-4 h-4 text-[#F9BD03] shrink-0" />
+                <a href={`tel:${COMPANY_INFO.phone}`} className="hover:text-[#F9BD03] font-semibold transition-colors">
+                  {COMPANY_INFO.phone}
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail className="w-4 h-4 text-[#F9BD03] shrink-0" />
+                <a href={`mailto:${COMPANY_INFO.email}`} className="hover:text-[#F9BD03] transition-colors">
+                  {COMPANY_INFO.email}
+                </a>
+              </li>
+              <li className="flex items-center gap-3 text-xs text-[#FEE8B4]/60 pt-1">
+                <Clock className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span>Mon – Sat: 9:00 AM – 7:30 PM IST</span>
+              </li>
+            </ul>
+
+            {/* Quick WhatsApp Inquiry Pill Button */}
+            <div className="mt-5 pt-4 border-t border-[#FEE8B4]/10">
+              <a
+                href={`https://wa.me/919098229454?text=Hello%20Roma%20Foods%20Concierge,%20I%20am%20interested%20in%20ROMAS%20chocolates.`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00A859]/20 hover:bg-[#00A859] border border-[#00A859]/50 text-white text-xs font-bold transition-all shadow-md group"
+              >
+                <span className="w-2 h-2 rounded-full bg-[#86EFAC] animate-ping" />
+                <span>Chat On WhatsApp</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </a>
+            </div>
+          </div>
+
+          {/* Col 4: LEGAL & BRAND POLICIES */}
+          <div>
+            <h4
+              className="text-xs font-black tracking-[0.24em] uppercase text-[#F9BD03] mb-6 flex items-center gap-2"
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
+              <span>LEGAL & POLICIES</span>
               <span className="w-6 h-[1px] bg-[#F9BD03]/40" />
             </h4>
             <ul className="space-y-3.5">
@@ -311,6 +306,27 @@ export const Gr8rFooter: React.FC<Gr8rFooterProps> = ({
                   <span>Cookie Policy</span>
                 </a>
               </li>
+              {onOpenBrandGuide && (
+                <li className="pt-1">
+                  <button
+                    onClick={onOpenBrandGuide}
+                    className="text-xs font-bold uppercase tracking-wider text-[#F9BD03] hover:text-[#ffffff] transition-colors flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-[#F9BD03]" />
+                    <span>OFFICIAL BRAND STANDARDS</span>
+                  </button>
+                </li>
+              )}
+              <li className="pt-0.5">
+                <a
+                  href="/careers"
+                  onClick={(e) => handleLinkClick(e, 'careers')}
+                  className="text-xs font-bold uppercase tracking-wider text-[#F9BD03] hover:text-[#ffffff] transition-colors flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Briefcase className="w-3.5 h-3.5 text-[#F9BD03]" />
+                  <span>CAREERS — WE'RE HIRING</span>
+                </a>
+              </li>
               <li className="pt-2">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#2A1107] border border-[#FEE8B4]/15 text-[11px] text-[#FEE8B4]/60">
                   <FileText className="w-3.5 h-3.5 text-[#F9BD03]" />
@@ -318,90 +334,6 @@ export const Gr8rFooter: React.FC<Gr8rFooterProps> = ({
                 </div>
               </li>
             </ul>
-          </div>
-
-          {/* Col 4: Direct Commercial Inquiries */}
-          <div>
-            <h4
-              className="text-xs font-black tracking-[0.24em] uppercase text-[#F9BD03] mb-6 flex items-center gap-2"
-              style={{ fontFamily: "'Inter', sans-serif" }}
-            >
-              <span>COMMERCIAL WORKS</span>
-              <span className="w-6 h-[1px] bg-[#F9BD03]/40" />
-            </h4>
-            <ul className="space-y-4 text-xs sm:text-sm text-[#FEE8B4]/80">
-              <li className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-[#F9BD03] mt-0.5 shrink-0" />
-                <span className="leading-snug">{COMPANY_INFO.address}</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-[#F9BD03] shrink-0" />
-                <a href={`tel:${COMPANY_INFO.phone}`} className="hover:text-[#F9BD03] font-semibold transition-colors">
-                  {COMPANY_INFO.phone}
-                </a>
-              </li>
-              <li className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-[#F9BD03] shrink-0" />
-                <a href={`mailto:${COMPANY_INFO.email}`} className="hover:text-[#F9BD03] transition-colors">
-                  {COMPANY_INFO.email}
-                </a>
-              </li>
-              <li className="flex items-center gap-3 text-xs text-[#FEE8B4]/60 pt-1">
-                <Clock className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>Mon – Sat: 9:00 AM – 7:30 PM IST</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 5: SOCIAL CHANNELS (PURE ICONS ONLY, NO NAMES) */}
-          <div>
-            <h4
-              className="text-xs font-black tracking-[0.24em] uppercase text-[#F9BD03] mb-3 flex items-center gap-2"
-              style={{ fontFamily: "'Inter', sans-serif" }}
-            >
-              <span>FOLLOW US</span>
-              <span className="w-6 h-[1px] bg-[#F9BD03]/40" />
-            </h4>
-
-            <p className="text-xs text-[#FEE8B4]/60 mb-6 font-normal">
-              Follow our pastry formulation masterclasses, culinary drops & harvest updates.
-            </p>
-
-            {/* Premium Circular Glassmorphic Social Icons (Icons Only) */}
-            <div className="flex flex-wrap items-center gap-3">
-              {socialIcons.map((s) => (
-                <motion.a
-                  key={s.id}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.label}
-                  whileHover={{ y: -4, scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`w-11 h-11 rounded-full border border-[#FEE8B4]/20 bg-[#251006]/90 backdrop-blur-md flex items-center justify-center text-[#FEE8B4] transition-all duration-300 shadow-lg group ${s.hoverBg} ${s.hoverGlow}`}
-                >
-                  {s.icon}
-                </motion.a>
-              ))}
-            </div>
-
-            {/* Quick WhatsApp Inquiry Pill Button */}
-            <div className="mt-8 pt-6 border-t border-[#FEE8B4]/10">
-              <span className="text-[10px] font-black uppercase text-[#FEE8B4]/50 tracking-widest block mb-2">
-                DIRECT TRADE CHAT
-              </span>
-              <a
-                href={`https://wa.me/919098229454?text=Hello%20Roma%20Foods%20Concierge,%20I%20am%20interested%20in%20ROMAS%20chocolates.`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00A859]/20 hover:bg-[#00A859] border border-[#00A859]/50 text-white text-xs font-bold transition-all shadow-md group"
-              >
-                <span className="w-2 h-2 rounded-full bg-[#86EFAC] animate-ping" />
-                <span>Chat On WhatsApp</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </div>
-
           </div>
 
         </div>
@@ -422,7 +354,7 @@ export const Gr8rFooter: React.FC<Gr8rFooterProps> = ({
 
         {/* Bottom Legal, Certification & Copyright Bar */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#FEE8B4]/50">
-          <p>© {COMPANY_INFO.establishedYear || new Date().getFullYear()} ROMAS CHOCOLATES (ROMA FOODS). ALL RIGHTS RESERVED.</p>
+          <p>© 2026 ROMAS CHOCOLATES (ROMA FOODS). ALL RIGHTS RESERVED.</p>
           
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-[11px] font-medium">
             <a

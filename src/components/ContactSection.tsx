@@ -102,10 +102,22 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                   <MapPin className="w-5 h-5 text-[#C59B27] shrink-0 mt-0.5" />
                   <div>
                     <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#8C4724] block">
-                      Works & Manufacturing Facility:
+                      Corporate Office:
                     </span>
                     <p className="text-xs text-[#2A0E04]/80 mt-0.5 leading-relaxed font-light">
-                      {COMPANY_INFO.address}
+                      {COMPANY_INFO.corporateOffice || 'Sf-8, Shyam Plaza, Opp. Bus Stand, Pandri, Raipur (C.G.)'}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3.5">
+                  <MapPin className="w-5 h-5 text-[#C59B27] shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#8C4724] block">
+                      Kurud Factory & Works:
+                    </span>
+                    <p className="text-xs text-[#2A0E04]/80 mt-0.5 leading-relaxed font-light">
+                      {COMPANY_INFO.factoryAddress || COMPANY_INFO.address}
                     </p>
                   </div>
                 </div>

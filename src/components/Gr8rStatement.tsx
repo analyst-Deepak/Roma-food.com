@@ -107,11 +107,6 @@ export const Gr8rStatement: React.FC = () => {
       animId = requestAnimationFrame(frame);
     }
 
-    function setProgress(f: number) {
-      if (bootBar) bootBar.style.transform = `scaleX(${f})`;
-      if (bootPct) bootPct.textContent = `LOADING ${Math.round(f * 100)}%`;
-    }
-
     function start() {
       if (started) return;
       started = true;
@@ -151,53 +146,6 @@ export const Gr8rStatement: React.FC = () => {
       setTimeout(start, 12000); // Failsafe so a stalled decode never strands page behind preloader
     }
 
-    // Fetching mp4 as a fully buffered blob first: seeking inside a buffered blob is near instant, while range requests over the network are a slideshow.
-    function preload() {
-      const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-      const signal = controller ? controller.signal : undefined;
-
-      const bail = setTimeout(function () {
-        if (!attached) {
-          if (controller) controller.abort();
-          setProgress(1);
-          attach(VIDEO_URL);
-        }
-      }, 15000);
-
-      fetch(VIDEO_URL, { signal })
-        .then((res) => {
-          if (!res.ok || !res.body) throw new Error('Fetch failed');
-          const total = Number(res.headers.get('content-length')) || 0;
-          const reader = res.body.getReader();
-          const chunks: any[] = [];
-          let got = 0;
-
-          function pump(): Promise<Blob> {
-            return reader.read().then((result) => {
-              if (result.done) {
-                return new Blob(chunks, { type: 'video/mp4' });
-              }
-              chunks.push(result.value);
-              got += result.value.byteLength;
-              setProgress(total ? got / total : Math.min(got / 11e6, 0.95));
-              return pump();
-            });
-          }
-          return pump();
-        })
-        .then((blob) => {
-          clearTimeout(bail);
-          setProgress(1);
-          attach(URL.createObjectURL(blob));
-        })
-        .catch(() => {
-          clearTimeout(bail);
-          setProgress(1);
-          // Try remote first, fallback handles local
-          attach(VIDEO_URL);
-        });
-    }
-
     // iOS unlock: iOS will not paint a frame from a video that has never been played, so nudge it once on first interaction and pause immediately.
     function unlock() {
       if (!clip) return;
@@ -221,7 +169,9 @@ export const Gr8rStatement: React.FC = () => {
 
     readScroll();
     paint();
-    preload();
+    // Stream the local all-intra clip directly (it seeks fine once buffered) instead of
+    // blocking on a full blob download — the preloader clears the moment the first frame decodes.
+    attach(VIDEO_URL);
     animId = requestAnimationFrame(frame);
 
     return () => {
@@ -613,7 +563,7 @@ export const Gr8rStatement: React.FC = () => {
                   document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
-                Start a Trade Brief
+                Request a Quote
               </a>
             </div>
           </section>

@@ -31,9 +31,10 @@ interface MotionOverlayMenuProps {
 }
 
 const DEFAULT_LINKS: MenuItem[] = [
+  { label: 'SHOP', id: 'shop', badge: '3D' },
   { label: 'ABOUT', id: 'about' },
   { label: 'PRODUCT', id: 'menu' },
-  { label: 'BRANCH', id: 'branch' },
+  { label: 'CAREERS', id: 'careers' },
   { label: 'BLOG', id: 'blog' },
   { label: 'CONTACT', id: 'contact' },
 ];
@@ -189,22 +190,19 @@ export const MotionOverlayMenu: React.FC<MotionOverlayMenuProps> = ({
     hidden: {
       opacity: 0,
       y: 28,
-      filter: 'blur(12px)',
     },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
-      filter: 'blur(0px)',
       transition: {
-        duration: 0.75,
+        duration: 0.6,
         ease: EASE_OUT,
-        delay: 0.22 + i * 0.07,
+        delay: 0.18 + i * 0.06,
       },
     }),
     exit: {
       opacity: 0,
       y: -10,
-      filter: 'blur(8px)',
       transition: {
         duration: 0.25,
         ease: EASE_IN,
@@ -313,7 +311,7 @@ export const MotionOverlayMenu: React.FC<MotionOverlayMenuProps> = ({
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                className="fixed inset-0 z-[9999] overflow-hidden flex flex-col justify-between text-[#FEE8B4] bg-[#160A04]/96 backdrop-blur-2xl selection:bg-[#F9BD03] selection:text-[#160A04]"
+                className="fixed inset-0 z-[9999] overflow-hidden flex flex-col justify-between text-[#FEE8B4] bg-[#160A04] selection:bg-[#F9BD03] selection:text-[#160A04]"
               >
                 {/* Ambient Golden Chocolate Glow Effect */}
                 <div
@@ -430,7 +428,7 @@ export const MotionOverlayMenu: React.FC<MotionOverlayMenuProps> = ({
 
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs font-medium text-[#FEE8B4]/70">
                     <motion.div custom={0} variants={footerVariants}>
-                      <span>© {COMPANY_INFO.establishedYear || 2026} ROMAS CHOCOLATES (ROMA FOODS). DHAMTARI WORKS.</span>
+                      <span>© 2026 ROMAS CHOCOLATES (ROMA FOODS). DHAMTARI WORKS.</span>
                     </motion.div>
 
                     {/* Secondary Quick Links with Animated Underline */}

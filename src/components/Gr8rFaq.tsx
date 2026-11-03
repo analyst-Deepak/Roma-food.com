@@ -8,7 +8,7 @@ export const Gr8rFaq: React.FC = () => {
   const faqs = [
     {
       q: 'Do You Offer Commercial Bakery Sample Kits?',
-      a: 'Yes! Commercial bakeries, luxury hotels, and confectionery artists can request our complimentary trade sample kit. We dispatch insulated tasting boxes containing our signature buttons, slabs, and fillings directly to your kitchen.',
+      a: 'Yes! Commercial bakeries, luxury hotels, and confectionery artists can request our complimentary sample kit. We dispatch insulated tasting boxes containing our signature buttons, slabs, and fillings directly to your kitchen.',
     },
     {
       q: 'Do I Need To Temper ROMAS Compound Slabs & Buttons?',

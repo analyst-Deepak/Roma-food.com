@@ -13,19 +13,36 @@ import { Gr8rBlog } from './components/Gr8rBlog';
 import { Gr8rFooter } from './components/Gr8rFooter';
 import { AboutPage } from './components/AboutPage';
 import { LegalPage, LegalTabType } from './components/LegalPage';
+import { CareerPage } from './components/CareerPage';
+import { AdminPage } from './components/AdminPage';
+import { ShopPage } from './components/ShopPage';
+import { ShopSection } from './components/ShopSection';
+import { ProductDetailsPage } from './components/ProductDetailsPage';
+import { ECOMMERCE_PRODUCTS } from './data/ecommerceProducts';
+import { EcommerceProduct } from './types/ecommerce';
+import { CartDrawer } from './components/CartDrawer';
+import { WishlistDrawer } from './components/WishlistDrawer';
+import { CartProvider } from './context/CartContext';
 import { BrandGuideModal } from './components/BrandGuideModal';
 import { SampleInquiryDrawer } from './components/SampleInquiryDrawer';
 import { FloatingWhatsAppWidget } from './components/FloatingWhatsAppWidget';
+import { ChatbotWidget } from './components/ChatbotWidget';
 
-export type AppRoute = 'home' | 'about' | 'terms' | 'privacy' | 'cookie';
+export type AppRoute = 'home' | 'shop' | 'product' | 'about' | 'terms' | 'privacy' | 'cookie' | 'career' | 'admin';
 
 export default function App() {
   // Parse route from window.location.pathname and hash
-  const getRouteFromUrl = (): { route: AppRoute; section?: string } => {
+  const getRouteFromUrl = (): { route: AppRoute; section?: string; productId?: string } => {
     const rawPath = window.location.pathname.toLowerCase().replace(/\/$/, '');
     const rawHash = window.location.hash.toLowerCase().replace(/^#/, '');
 
-    // 1. Pathname matches (Primary for Meta API verification & standard web URLs)
+    // 1. Pathname matches
+    if (rawPath === '/product' || rawPath.startsWith('/product/')) {
+      return { route: 'product' };
+    }
+    if (rawPath === '/shop' || rawPath === '/store' || rawPath === '/products') {
+      return { route: 'shop' };
+    }
     if (rawPath === '/privacy-policy' || rawPath === '/privacy' || rawPath === '/data-deletion') {
       return { route: 'privacy' };
     }
@@ -38,8 +55,20 @@ export default function App() {
     if (rawPath === '/about') {
       return { route: 'about' };
     }
+    if (rawPath === '/careers' || rawPath === '/career') {
+      return { route: 'career' };
+    }
+    if (rawPath === '/admin') {
+      return { route: 'admin' };
+    }
 
-    // 2. Hash-based matches (Fallback for static anchors)
+    // 2. Hash-based matches
+    if (rawHash.startsWith('product')) {
+      return { route: 'product' };
+    }
+    if (rawHash === 'shop' || rawHash === 'store') {
+      return { route: 'shop' };
+    }
     if (rawHash === 'privacy-policy' || rawHash === 'privacy' || rawHash === 'data-deletion') {
       return { route: 'privacy' };
     }
@@ -52,12 +81,26 @@ export default function App() {
     if (rawHash === 'about') {
       return { route: 'about' };
     }
+    if (rawHash === 'careers' || rawHash === 'career') {
+      return { route: 'career' };
+    }
 
     // Default Home page
     return { route: 'home', section: rawHash };
   };
 
   const [currentRoute, setCurrentRoute] = useState<AppRoute>(() => getRouteFromUrl().route);
+  const [selectedProduct, setSelectedProduct] = useState<EcommerceProduct>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const pid = params.get('id');
+      if (pid) {
+        const found = ECOMMERCE_PRODUCTS.find((p) => p.id === pid);
+        if (found) return found;
+      }
+    }
+    return ECOMMERCE_PRODUCTS[0];
+  });
   const [isBrandGuideOpen, setIsBrandGuideOpen] = useState(false);
   const [isSampleBagOpen, setIsSampleBagOpen] = useState(false);
   const [requestedSamples, setRequestedSamples] = useState<Product[]>([]);
@@ -85,7 +128,11 @@ export default function App() {
 
   // Set document title according to active route
   useEffect(() => {
-    if (currentRoute === 'privacy') {
+    if (currentRoute === 'product' && selectedProduct) {
+      document.title = `${selectedProduct.name} | ROMAS Chocolates`;
+    } else if (currentRoute === 'shop') {
+      document.title = 'Shop Authentic 3D Chocolates | ROMAS Chocolates';
+    } else if (currentRoute === 'privacy') {
       document.title = 'Privacy Policy | ROMAS Chocolates - Roma Foods';
     } else if (currentRoute === 'terms') {
       document.title = 'Terms & Conditions | ROMAS Chocolates - Roma Foods';
@@ -93,10 +140,14 @@ export default function App() {
       document.title = 'Cookie Policy | ROMAS Chocolates - Roma Foods';
     } else if (currentRoute === 'about') {
       document.title = 'About ROMAS Chocolates | Pure Chocolate Craft';
+    } else if (currentRoute === 'career') {
+      document.title = 'Careers at ROMAS Chocolates | Roma Foods';
+    } else if (currentRoute === 'admin') {
+      document.title = 'Admin · ROMAS Chocolates';
     } else {
       document.title = 'ROMAS Chocolates – Spreading Happiness';
     }
-  }, [currentRoute]);
+  }, [currentRoute, selectedProduct]);
 
   // Push URL to browser history
   const navigateTo = (path: string, route: AppRoute) => {
@@ -107,7 +158,24 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleNavigateShop = () => {
+    navigateTo('/shop', 'shop');
+  };
+
+  const handleOpenProduct = (prod: EcommerceProduct) => {
+    setSelectedProduct(prod);
+    navigateTo(`/product?id=${prod.id}`, 'product');
+  };
+
   const handleNavigateHome = (sectionId?: string) => {
+    if (sectionId === 'shop') {
+      handleNavigateShop();
+      return;
+    }
+    if (sectionId === 'careers') {
+      navigateTo('/careers', 'career');
+      return;
+    }
     if (currentRoute !== 'home') {
       navigateTo('/', 'home');
       if (sectionId) {
@@ -163,79 +231,130 @@ export default function App() {
 
   // Check if current route is one of the dedicated legal pages
   const isLegalRoute = currentRoute === 'terms' || currentRoute === 'privacy' || currentRoute === 'cookie';
+  const isCareerRoute = currentRoute === 'career';
+  const isAdminRoute = currentRoute === 'admin';
 
   return (
-    <div className="min-h-screen bg-[#381A0E] text-[#FEE8B4] flex flex-col font-sans selection:bg-[#F9BD03] selection:text-[#381A0E] antialiased">
-      
-      {/* 1. Show Main Navbar on Home and About pages */}
-      {!isLegalRoute && (
-        <Gr8rNavbar
-          onOpenReservation={() => setIsSampleBagOpen(true)}
-          onNavigate={(id) => {
-            if (id === 'about') {
-              handleNavigateAbout();
-            } else if (id === 'home') {
-              handleNavigateHome();
-            } else {
-              handleNavigateHome(id);
-            }
-          }}
-          currentPage={currentRoute === 'about' ? 'about' : 'home'}
-        />
-      )}
-
-      {/* Main Content Layout based on Current Active Route */}
-      <main className="flex-1 w-full">
-        {/* Dedicated Legal Routes (for Meta API / WhatsApp Cloud API verification) */}
-        {isLegalRoute && (
-          <LegalPage
-            currentTab={currentRoute as LegalTabType}
-            onSelectTab={handleNavigateLegal}
-            onNavigateHome={(id) => handleNavigateHome(id)}
-            onNavigateAbout={handleNavigateAbout}
+    <CartProvider>
+      <div className="min-h-screen bg-[#381A0E] text-[#FEE8B4] flex flex-col font-sans selection:bg-[#F9BD03] selection:text-[#381A0E] antialiased">
+        
+        {/* 1. Show Main Navbar on Home, Shop and About pages (Career/Admin pages render their own) */}
+        {!isLegalRoute && !isCareerRoute && !isAdminRoute && (
+          <Gr8rNavbar
             onOpenReservation={() => setIsSampleBagOpen(true)}
-            onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
+            onNavigate={(id) => {
+              if (id === 'shop') {
+                handleNavigateShop();
+              } else if (id === 'about') {
+                handleNavigateAbout();
+              } else if (id === 'home') {
+                handleNavigateHome();
+              } else {
+                handleNavigateHome(id);
+              }
+            }}
+            currentPage={currentRoute}
           />
         )}
 
-        {/* Dedicated About Page featuring Monumental 3D ROMAS Chocolate Slab on Floor */}
-        {currentRoute === 'about' && (
-          <AboutPage
-            onOpenReservation={() => setIsSampleBagOpen(true)}
-            onNavigateHome={() => handleNavigateHome()}
-          />
-        )}
-
-        {/* Home Page: Hero with 1080p Image Sequence + 3 Floating Canisters + Menu + Commitments + Branches */}
-        {currentRoute === 'home' && (
-          <>
-            <Gr8rHero />
-            <Gr8rStatement />
-            <Gr8rMenu onSelectItem={handleSelectMenuItem} />
-            <Gr8rFeatures />
-            <Gr8rBranches />
-            <Gr8rTestimonials />
-            <Gr8rFaq />
-            <Gr8rBlog />
-            
-            {/* Grand ROMAS Footer on Home Page */}
-            <Gr8rFooter
+        {/* Main Content Layout based on Current Active Route */}
+        <main className="flex-1 w-full">
+          {/* Dedicated Legal Routes (for Meta API / WhatsApp Cloud API verification) */}
+          {isLegalRoute && (
+            <LegalPage
+              currentTab={currentRoute as LegalTabType}
+              onSelectTab={handleNavigateLegal}
+              onNavigateHome={(id) => handleNavigateHome(id)}
+              onNavigateAbout={handleNavigateAbout}
               onOpenReservation={() => setIsSampleBagOpen(true)}
               onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
-              onNavigate={(id) => handleNavigateHome(id)}
+            />
+          )}
+
+          {/* Dedicated Full Screen Product Details Page (Flipkart / Amazon Full Page Layout) */}
+          {currentRoute === 'product' && selectedProduct && (
+            <ProductDetailsPage
+              product={selectedProduct}
+              onBack={() => navigateTo('/shop', 'shop')}
+              onNavigateHome={(id) => handleNavigateHome(id)}
+              onNavigateShop={handleNavigateShop}
+              onSelectProduct={handleOpenProduct}
+              onOpenReservation={() => setIsSampleBagOpen(true)}
+              onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
               onOpenLegal={handleNavigateLegal}
             />
-          </>
-        )}
-      </main>
+          )}
 
-      {/* Official Brand Standards & Usage Guidelines Modal */}
+          {/* Dedicated 3D Shop Page (Clean White Background) */}
+          {currentRoute === 'shop' && (
+            <ShopPage
+              onNavigateHome={(id) => handleNavigateHome(id)}
+              onNavigateAbout={handleNavigateAbout}
+              onSelectProduct={handleOpenProduct}
+              onOpenReservation={() => setIsSampleBagOpen(true)}
+              onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
+              onOpenLegal={handleNavigateLegal}
+            />
+          )}
+
+          {/* Dedicated About Page featuring Monumental 3D ROMAS Chocolate Slab on Floor */}
+          {currentRoute === 'about' && (
+            <AboutPage
+              onOpenReservation={() => setIsSampleBagOpen(true)}
+              onNavigateHome={() => handleNavigateHome()}
+            />
+          )}
+
+          {/* Dedicated Careers Page */}
+          {isCareerRoute && (
+            <CareerPage
+              onNavigateHome={(id) => handleNavigateHome(id)}
+              onNavigateAbout={handleNavigateAbout}
+              onOpenReservation={() => setIsSampleBagOpen(true)}
+              onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
+              onOpenLegal={handleNavigateLegal}
+            />
+          )}
+
+          {/* Hidden Admin Dashboard (Supabase Auth) */}
+          {isAdminRoute && (
+            <AdminPage onNavigateHome={() => handleNavigateHome()} />
+          )}
+
+          {/* Home Page: Hero with 1080p Image Sequence + 3 Floating Canisters + Menu + Shop + Commitments + Branches */}
+          {currentRoute === 'home' && (
+            <>
+              <Gr8rHero />
+              <Gr8rStatement />
+              <Gr8rMenu onSelectItem={handleSelectMenuItem} />
+              
+              {/* 3D E-Commerce Storefront on Pure White Background */}
+              <ShopSection id="shop" onSelectProduct={handleOpenProduct} />
+
+              <Gr8rFeatures />
+              <Gr8rBranches />
+              <Gr8rTestimonials />
+              <Gr8rFaq />
+              <Gr8rBlog />
+              
+              {/* Grand ROMAS Footer on Home Page */}
+              <Gr8rFooter
+                onOpenReservation={() => setIsSampleBagOpen(true)}
+                onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
+                onNavigate={(id) => handleNavigateHome(id)}
+                onOpenLegal={handleNavigateLegal}
+              />
+            </>
+          )}
+        </main>
+
+        {/* Official Brand Standards & Usage Guidelines Modal */}
       <BrandGuideModal
         isOpen={isBrandGuideOpen}
         onClose={() => setIsBrandGuideOpen(false)}
       />
 
-      {/* B2B Trade Sample Inquiry Drawer */}
+      {/* B2B Sample Inquiry Drawer */}
       <SampleInquiryDrawer
         isOpen={isSampleBagOpen}
         onClose={() => setIsSampleBagOpen(false)}
@@ -248,8 +367,23 @@ export default function App() {
         }}
       />
 
-      {/* Floating Animated WhatsApp & Trade Concierge Widget */}
+      {/* Direct E-Commerce Shopping Cart Drawer */}
+      <CartDrawer
+        onNavigateToShop={handleNavigateShop}
+      />
+
+      {/* Direct E-Commerce Wishlist (Heart) Drawer */}
+      <WishlistDrawer
+        onNavigateToShop={handleNavigateShop}
+        onSelectProduct={handleOpenProduct}
+      />
+
+      {/* Floating Animated WhatsApp & Sales Concierge Widget */}
       <FloatingWhatsAppWidget />
+
+      {/* Floating ROMAS AI Chat Assistant (bottom-left, n8n) */}
+      <ChatbotWidget />
     </div>
+    </CartProvider>
   );
 }

@@ -7,21 +7,21 @@ export const Gr8rBranches: React.FC = () => {
   const branches = [
     {
       name: 'THE RESERVE CHOCOLATERIE',
-      subtitle: 'Primary Manufacturing Facility & Works',
-      address: COMPANY_INFO.address,
+      subtitle: 'Kurud Works & Primary Manufacturing Facility',
+      address: COMPANY_INFO.factoryAddress || COMPANY_INFO.address,
       hours: 'Monday – Sunday | 9:30 AM – 7:00 PM IST',
       phone: COMPANY_INFO.phone,
       image: '/assets/chocolate/branch_works.jpg',
-      mapsUrl: 'https://maps.google.com/?q=Dhamtari+Chhattisgarh',
+      mapsUrl: 'https://maps.google.com/?q=Kurud+Dhamtari+Chhattisgarh',
     },
     {
       name: 'THE ROAST & TEMPER STUDIO',
-      subtitle: 'Chef Tasting & Commercial Distribution Center',
-      address: 'Central Confectionery Hub, Marine Drive Lake Area, Raipur, Chhattisgarh 492001',
+      subtitle: 'Corporate Office & Commercial Center',
+      address: COMPANY_INFO.corporateOffice || 'Sf-8, Shyam Plaza, Opp. Bus Stand, Pandri, Raipur (C.G.)',
       hours: 'Monday – Saturday | 9:00 AM – 8:00 PM IST',
       phone: COMPANY_INFO.phone,
       image: '/assets/chocolate/branch_atelier.jpg',
-      mapsUrl: 'https://maps.google.com/?q=Raipur+Chhattisgarh',
+      mapsUrl: 'https://maps.google.com/?q=Shyam+Plaza+Pandri+Raipur',
     },
   ];
 
@@ -42,9 +42,9 @@ export const Gr8rBranches: React.FC = () => {
             className="text-4xl sm:text-7xl lg:text-8xl font-bold uppercase tracking-tight text-[#381A0E] leading-[0.9]"
             style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
           >
-            CRAFTED FOR
+            WHY ROMA
             <br />
-            EVERY MOMENT
+            FOODS
           </h2>
         </div>
 
