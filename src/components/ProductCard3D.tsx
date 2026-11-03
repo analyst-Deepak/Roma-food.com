@@ -254,7 +254,7 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
           stiffness: 300,
           damping: 24,
         }}
-        className="relative flex flex-col justify-between h-full p-4 rounded-2xl bg-white border border-[#EADBCC]/80 shadow-[0_2px_12px_rgba(42,19,8,0.05)] hover:shadow-[0_20px_40px_-12px_rgba(42,19,8,0.18)] hover:border-[#D4AF37]/80 hover:ring-1 hover:ring-[#D4AF37]/30 transition-all duration-300"
+        className="relative flex flex-col justify-between h-full p-2.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-[#EADBCC]/80 shadow-[0_2px_12px_rgba(42,19,8,0.05)] hover:shadow-[0_20px_40px_-12px_rgba(42,19,8,0.18)] hover:border-[#D4AF37]/80 hover:ring-1 hover:ring-[#D4AF37]/30 transition-all duration-300"
         style={{
           transformStyle: 'preserve-3d',
         }}
@@ -301,7 +301,7 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
 
         {/* 3D Floating Product Image Stage — 100% Open & Containerless */}
         <div
-          className="relative w-full h-44 sm:h-48 flex items-center justify-center my-1 select-none pointer-events-none"
+          className="relative w-full h-36 sm:h-48 flex items-center justify-center my-1 select-none pointer-events-none"
           style={{ transform: 'translateZ(40px)' }}
         >
           {/* Subtle warm ambient radial glow on pure card white */}
@@ -369,7 +369,7 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
               <span className="text-[10px] font-bold text-[#8C4724] bg-[#FAF0E4] px-2 py-0.5 rounded-full border border-[#EADBCC]">
                 {product.weight}
               </span>
-              <span className="text-[10px] text-gray-500 font-medium">
+              <span className="hidden sm:inline text-[10px] text-gray-500 font-medium">
                 100% Pure Cocoa Butter
               </span>
             </div>
@@ -394,21 +394,21 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
               )}
             </div>
 
-            <span className="text-[10px] text-[#2E7D32] font-semibold block mb-2">
-              ✓ Free Delivery over ₹799 &bull; Insulated Pack
+            <span className="text-[10px] text-[#2E7D32] font-semibold block mb-2 truncate">
+              ✓ Free Delivery over ₹799<span className="hidden sm:inline"> &bull; Insulated Pack</span>
             </span>
 
             {/* Dual Action Buttons: Add to Cart & Buy Now */}
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
               {/* Yellow Add to Cart Button */}
               <button
                 onClick={handleAddToCart}
                 disabled={isAdding}
                 aria-label={`Add ${product.name} to cart`}
-                className={`py-2 px-2.5 rounded-full font-bold text-xs uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm active:scale-95 cursor-pointer ${
+                className={`py-2 px-2 sm:px-2.5 rounded-full font-bold text-[11px] sm:text-xs uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm active:scale-95 cursor-pointer ${
                   isAdding
                     ? 'bg-emerald-600 text-white'
-                    : 'bg-[#F9BD03] hover:bg-[#E5AA00] text-[#1C0E07]'
+                    : 'bg-[#FF8F2E] hover:bg-[#F07E1B] text-[#1C0E07]'
                 }`}
               >
                 {isAdding ? (
@@ -428,9 +428,9 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
               <button
                 onClick={handleQuickWhatsAppBuy}
                 aria-label={`Buy ${product.name} now`}
-                className="py-2 px-2.5 rounded-full font-bold text-xs uppercase tracking-wider bg-[#1C0E07] hover:bg-[#2E150A] text-[#FEE8B4] hover:text-[#F9BD03] border border-[#F9BD03]/30 transition-all duration-200 flex items-center justify-center gap-1 shadow-sm active:scale-95 cursor-pointer"
+                className="py-2 px-2 sm:px-2.5 rounded-full font-bold text-[11px] sm:text-xs uppercase tracking-wider bg-[#4A2412] hover:bg-[#36190C] text-[#FFEFE0] transition-all duration-200 flex items-center justify-center gap-1 shadow-sm active:scale-95 cursor-pointer"
               >
-                <Zap className="w-3.5 h-3.5 fill-[#F9BD03] text-[#F9BD03]" />
+                <Zap className="w-3.5 h-3.5 fill-[#FF8F2E] text-[#FF8F2E]" />
                 <span>Buy</span>
               </button>
             </div>

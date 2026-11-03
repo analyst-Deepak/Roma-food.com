@@ -31,6 +31,7 @@
 /* Custom scrollbar matching coffee-gr8r */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
   background: #381A0E;
@@ -41,6 +42,15 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #E5AC00;
+}
+
+/* Hidden scrollbar utility for inline tab/pill strips (horizontal scroll without a visible track) */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Infinite Marquee */

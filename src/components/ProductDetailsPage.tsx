@@ -153,7 +153,7 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
           {/* =========================================================================
               COLUMN 1 (Left, 5 Cols): Gallery Thumbnails & High-Res Product Image
               ========================================================================= */}
-          <div className="lg:col-span-5 flex flex-col-reverse sm:flex-row gap-4 sticky top-28">
+          <div className="lg:col-span-5 flex flex-col-reverse sm:flex-row gap-4 lg:sticky lg:top-28">
             {/* Vertical Thumbnail Strip */}
             <div className="flex sm:flex-col gap-2 overflow-x-auto sm:overflow-visible shrink-0 pb-2 sm:pb-0">
               {galleryImages.map((img, idx) => (
@@ -430,7 +430,7 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
           {/* =========================================================================
               COLUMN 3 (Right, 3 Cols): The Famous Sticky Buy Box
               ========================================================================= */}
-          <div className="lg:col-span-3 sticky top-28">
+          <div className="lg:col-span-3 lg:sticky lg:top-28">
             <div className="rounded-xl border border-[#D5D9D9] p-4 bg-white shadow-sm space-y-3">
               {/* Box Price */}
               <div>

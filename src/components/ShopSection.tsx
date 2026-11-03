@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   Filter,
@@ -46,6 +46,16 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
   const [sortBy, setSortBy] = useState<SortOption>('relevance');
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
+  // Lock background scroll while the mobile filter bottom-sheet is open
+  useEffect(() => {
+    if (!isMobileFilterOpen) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, [isMobileFilterOpen]);
+
   // Clear all filters
   const handleClearAllFilters = () => {
     setSelectedCategory('all');
@@ -62,6 +72,13 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
     priceRange !== 'all' ||
     minRating > 0 ||
     onlyAssured;
+
+  // Count of active filters (for the mobile filter badge)
+  const activeFilterCount =
+    (selectedCategory !== 'all' ? 1 : 0) +
+    (priceRange !== 'all' ? 1 : 0) +
+    (minRating > 0 ? 1 : 0) +
+    (onlyAssured ? 1 : 0);
 
   // Filter & Sort Logic
   const filteredProducts = useMemo(() => {
@@ -116,39 +133,74 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
     <section
       id={id}
       className={`relative bg-[#F1F3F6] text-[#212121] overflow-hidden ${
-        isStandalonePage ? 'pt-28 sm:pt-32 pb-20' : 'py-16 sm:py-24 border-t border-gray-200'
+        isStandalonePage ? 'pt-20 sm:pt-24 pb-20' : 'py-16 sm:py-24 border-t border-gray-200'
       }`}
     >
       <div className="w-full max-w-[1920px] mx-auto px-3 sm:px-6 lg:px-8 xl:px-10">
 
         {/* Mobile Filter Toggle Button */}
-        <div className="md:hidden mb-4 flex items-center justify-between bg-white p-3 rounded-lg border border-gray-200 shadow-xs">
+        <div className="md:hidden mb-4 flex items-center justify-between bg-white p-3 rounded-xl border border-gray-200 shadow-xs">
           <button
-            onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
-            className="flex items-center gap-2 text-xs font-bold text-[#8C4724] uppercase tracking-wider cursor-pointer"
+            onClick={() => setIsMobileFilterOpen(true)}
+            className="flex items-center gap-2 text-xs font-bold text-[#8C4724] uppercase tracking-wider cursor-pointer active:scale-95 transition-transform"
           >
-            <SlidersHorizontal className="w-4 h-4" />
-            <span>Filters {isFiltered && '(Active)'}</span>
+            <span className="w-8 h-8 rounded-full bg-[#FAF0E4] flex items-center justify-center">
+              <SlidersHorizontal className="w-4 h-4" />
+            </span>
+            <span>Filters</span>
+            {activeFilterCount > 0 && (
+              <span className="w-5 h-5 rounded-full bg-[#8C4724] text-white text-[10px] font-black flex items-center justify-center">
+                {activeFilterCount}
+              </span>
+            )}
           </button>
 
-          <span className="text-xs text-gray-500">
-            {filteredProducts.length} Items Found
+          <span className="text-xs text-gray-500 font-medium">
+            <strong className="text-[#1C0E07]">{filteredProducts.length}</strong> Items Found
           </span>
         </div>
 
+        {/* Mobile Bottom-Sheet Backdrop */}
+        {isMobileFilterOpen && (
+          <div
+            onClick={() => setIsMobileFilterOpen(false)}
+            className="md:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity"
+            aria-hidden="true"
+          />
+        )}
+
         {/* 2-Column Flipkart Layout: Left Sidebar Filters + Right Product Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
-          
+
           {/* =========================================================================
               LEFT COLUMN: Flipkart Style Filters Sidebar
+              (Mobile: slide-up bottom sheet · Desktop: inline sidebar)
               ========================================================================= */}
           <aside
-            className={`md:col-span-4 lg:col-span-3 bg-white rounded-lg border border-gray-200 shadow-xs divide-y divide-gray-100 ${
-              isMobileFilterOpen ? 'block mb-4' : 'hidden md:block'
+            className={`bg-white divide-y divide-gray-100 fixed inset-x-0 bottom-0 z-50 max-h-[88vh] overflow-y-auto rounded-t-2xl shadow-2xl border-t border-gray-200 transition-transform duration-300 ease-out will-change-transform md:col-span-4 lg:col-span-3 md:static md:z-auto md:translate-y-0 md:max-h-none md:overflow-visible md:rounded-lg md:rounded-t-lg md:shadow-xs md:border md:border-gray-200 md:pointer-events-auto md:transition-none ${
+              isMobileFilterOpen ? 'translate-y-0' : 'translate-y-full pointer-events-none'
             }`}
           >
-            {/* Sidebar Header */}
-            <div className="p-4 flex items-center justify-between bg-white">
+            {/* Mobile Bottom-Sheet Header (drag handle + close) */}
+            <div className="md:hidden sticky top-0 z-10 bg-white px-4 pt-3 pb-3">
+              <div className="w-10 h-1 rounded-full bg-gray-300 mx-auto mb-3" />
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-sm text-[#1C0E07] uppercase tracking-wider flex items-center gap-2">
+                  <Filter className="w-4 h-4 text-[#8C4724]" />
+                  <span>Filters</span>
+                </span>
+                <button
+                  onClick={() => setIsMobileFilterOpen(false)}
+                  className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 cursor-pointer active:scale-90 transition-all"
+                  aria-label="Close filters"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Sidebar Header (desktop only) */}
+            <div className="hidden md:flex p-4 items-center justify-between bg-white">
               <span className="font-bold text-sm text-[#212121] uppercase tracking-wider flex items-center gap-2">
                 <Filter className="w-4 h-4 text-gray-600" />
                 <span>Filters</span>
@@ -172,7 +224,7 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
 
               <div className="text-xs text-gray-700 font-semibold mb-1 flex items-center gap-1 text-[#8C4724]">
                 <span>‹</span>
-                <span>Chocolates</span>
+                <span>ROMAS Chocolates</span>
               </div>
 
               <div className="space-y-1 pl-2">
@@ -181,7 +233,10 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
                   return (
                     <button
                       key={cat.id}
-                      onClick={() => setSelectedCategory(cat.id)}
+                      onClick={() => {
+                        setSelectedCategory(cat.id);
+                        setIsMobileFilterOpen(false);
+                      }}
                       className={`w-full text-left py-1.5 px-2.5 rounded text-xs transition-colors flex items-center justify-between cursor-pointer ${
                         isActive
                           ? 'bg-[#FAF0E4] text-[#8C4724] font-bold border-l-3 border-[#8C4724]'
@@ -310,6 +365,23 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
               <strong className="text-gray-900 block font-bold">Factory Guarantee:</strong>
               <p>Direct temperature-controlled dispatch from Kurod works, Dhamtari (493663).</p>
             </div>
+
+            {/* Mobile Bottom-Sheet Sticky Action Footer */}
+            <div className="md:hidden sticky bottom-0 z-10 bg-white border-t border-gray-200 p-3 flex items-center gap-3 shadow-[0_-4px_16px_rgba(0,0,0,0.06)]">
+              <button
+                onClick={handleClearAllFilters}
+                disabled={!isFiltered}
+                className="flex-1 py-2.5 rounded-full border border-gray-300 text-xs font-bold uppercase tracking-wider text-gray-700 disabled:opacity-40 active:scale-95 transition-all cursor-pointer"
+              >
+                Clear All
+              </button>
+              <button
+                onClick={() => setIsMobileFilterOpen(false)}
+                className="flex-[1.6] py-2.5 rounded-full bg-[#8C4724] text-white text-xs font-bold uppercase tracking-wider active:scale-95 transition-all cursor-pointer shadow-sm"
+              >
+                Show {filteredProducts.length} Results
+              </button>
+            </div>
           </aside>
 
           {/* =========================================================================
@@ -347,7 +419,7 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
               </div>
 
               {/* Flipkart Sort By Bar */}
-              <div className="flex items-center gap-2 sm:gap-4 pt-3 overflow-x-auto text-xs text-gray-600">
+              <div className="flex items-center gap-2 sm:gap-4 pt-3 overflow-x-auto no-scrollbar text-xs text-gray-600">
                 <span className="font-bold text-gray-800 shrink-0">Sort By:</span>
                 {[
                   { id: 'relevance', label: 'Relevance' },
@@ -393,7 +465,7 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
             ) : (
               <motion.div
                 layout
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6"
+                className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-2.5 sm:gap-6"
               >
                 {filteredProducts.map((product) => (
                   <ProductCard3D

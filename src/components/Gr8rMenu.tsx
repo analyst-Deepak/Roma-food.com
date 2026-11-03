@@ -248,8 +248,14 @@ export const CATEGORY_RANGES: CategoryRange[] = [
   },
 ];
 
+const DEFAULT_CATEGORY_ID = 'cocoa-products';
+const DEFAULT_ACTIVE_INDEX = Math.max(
+  0,
+  CATEGORY_RANGES.findIndex((cat) => cat.id === DEFAULT_CATEGORY_ID)
+);
+
 export const Gr8rMenu: React.FC<Gr8rMenuProps> = ({ onSelectItem }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(DEFAULT_ACTIVE_INDEX);
   const [selectedCategory, setSelectedCategory] = useState<CategoryRange | null>(null);
   const [addedVariants, setAddedVariants] = useState<Record<string, boolean>>({});
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
@@ -301,7 +307,7 @@ export const Gr8rMenu: React.FC<Gr8rMenuProps> = ({ onSelectItem }) => {
   useEffect(() => {
     if (isHovered || selectedCategory) return;
     const intervalMs = 50;
-    const totalDurationMs = 5500;
+    const totalDurationMs = 1800;
     const step = (intervalMs / totalDurationMs) * 100;
 
     const timer = setInterval(() => {
@@ -588,12 +594,16 @@ Please share the catalog.`
                         }`}
                       />
 
-                      {/* Category Label below side products for intuitive browsing */}
-                      {!isCurrent && (
-                        <span className="mt-3 text-[11px] font-bold uppercase tracking-widest text-[#381A0E]/60 group-hover:text-[#381A0E] transition-colors">
-                          {cat.name}
-                        </span>
-                      )}
+                      {/* Category Label directly beneath the product image for every card, including the active one */}
+                      <span
+                        className={
+                          isCurrent
+                            ? 'mt-4 text-sm sm:text-base font-black uppercase tracking-widest text-gr8r-brown'
+                            : 'mt-3 text-[11px] font-bold uppercase tracking-widest text-gr8r-brown/60 group-hover:text-gr8r-brown transition-colors'
+                        }
+                      >
+                        {cat.name}
+                      </span>
                     </motion.div>
                   </motion.div>
                 );

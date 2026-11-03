@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, ShoppingBag } from 'lucide-react';
+import { Heart, ShoppingCart } from 'lucide-react';
 import { MotionOverlayMenu } from './MotionOverlayMenu';
 import { useCart } from '../context/CartContext';
 
@@ -50,24 +50,18 @@ export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
     <>
       {/* Floating Dynamic Island Header or Solid Brown Header */}
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 flex justify-center ${
           variant === 'solid'
-            ? 'bg-[#381A0E] border-b border-[#FEE8B4]/15 px-4 sm:px-8 py-3.5 sm:py-4 shadow-lg'
+            ? 'bg-[#381A0E] border-b border-[#FEE8B4]/15 px-4 sm:px-8 py-2.5 sm:py-3 shadow-lg'
             : isScrolled
-            ? 'top-2.5 sm:top-4 px-3 sm:px-6 flex justify-center'
-            : 'top-0 px-4 sm:px-8 pt-5 sm:pt-6 pb-4 bg-gradient-to-b from-[#1C0E07]/80 via-[#1C0E07]/40 to-transparent flex justify-center'
+            ? 'px-4 sm:px-8 py-2 sm:py-2.5 bg-[#1C0E07]/95 backdrop-blur-xl border-b border-gr8r-yellow/15 shadow-lg'
+            : 'px-4 sm:px-8 pt-3.5 sm:pt-4 pb-2.5 bg-linear-to-b from-[#1C0E07]/80 via-[#1C0E07]/40 to-transparent'
         }`}
       >
         <motion.div
           layout
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className={`w-full transition-all duration-300 flex items-center justify-between ${
-            variant === 'solid'
-              ? 'max-w-7xl mx-auto'
-              : isScrolled
-              ? 'max-w-6xl rounded-full bg-[#1C0E07]/90 backdrop-blur-2xl border border-[#F9BD03]/35 shadow-[0_18px_45px_rgba(0,0,0,0.6),0_0_24px_rgba(249,189,3,0.15)] py-2 sm:py-2.5 px-4 sm:px-7'
-              : 'max-w-7xl mx-auto'
-          }`}
+          className="w-full max-w-7xl mx-auto transition-all duration-300 flex items-center justify-between"
         >
           {/* Official ROMAS™ Spreading Happiness Logo */}
           <button
@@ -79,7 +73,7 @@ export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
               src="/assets/romas-logo-gold.png"
               alt="ROMAS Spreading Happiness"
               className={`w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(249,189,3,0.35)] transition-all duration-300 ${
-                variant === 'solid' ? 'h-8 sm:h-10' : isScrolled ? 'h-7 sm:h-9' : 'h-8 sm:h-11 md:h-12'
+                variant === 'solid' ? 'h-7 sm:h-8' : isScrolled ? 'h-6 sm:h-7' : 'h-7 sm:h-9 md:h-10'
               }`}
             />
           </button>
@@ -95,7 +89,7 @@ export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
                 <button
                   key={link.label}
                   onClick={(e) => handleLinkClick(e, link.id)}
-                  className={`text-xs font-black tracking-widest uppercase transition-all px-3.5 py-1.5 rounded-full select-none cursor-pointer ${
+                  className={`text-xs font-black tracking-widest uppercase transition-all px-3.5 py-1 rounded-full select-none cursor-pointer ${
                     isActive
                       ? 'bg-[#F9BD03] text-[#1C0E07] shadow-sm'
                       : 'text-[#FEE8B4] hover:text-[#F9BD03] hover:bg-[#FEE8B4]/10'
@@ -115,17 +109,17 @@ export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
               onClick={() => setIsWishlistOpen(true)}
               aria-label={`Open wishlist (${wishlistCount} saved items)`}
               title="My Wishlist"
-              className="relative p-2 sm:px-2.5 sm:py-1.5 rounded-full bg-[#1C0E07]/90 hover:bg-[#381A0E] text-[#FEE8B4] hover:text-[#F9BD03] border border-[#F9BD03]/35 hover:border-red-400/60 transition-all duration-200 flex items-center gap-1.5 cursor-pointer shadow-md active:scale-95 group"
+              className="relative w-8 h-8 sm:w-9 sm:h-9 shrink-0 rounded-full bg-[#1C0E07]/90 hover:bg-gr8r-brown border border-gr8r-yellow/35 hover:border-red-400/60 transition-all duration-200 flex items-center justify-center cursor-pointer shadow-md active:scale-95 group"
             >
               <Heart
                 className={`w-4 h-4 transition-transform group-hover:scale-110 ${
                   wishlistCount > 0
                     ? 'text-red-500 fill-red-500'
-                    : 'text-[#FEE8B4] group-hover:text-red-400'
+                    : 'text-gr8r-cream group-hover:text-red-400'
                 }`}
               />
               {wishlistCount > 0 && (
-                <span className="w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-black font-mono flex items-center justify-center shadow-md">
+                <span className="absolute -top-1 -right-1 w-4.5 h-4.5 rounded-full bg-red-500 border-2 border-[#1C0E07] text-white text-[9px] font-black font-mono flex items-center justify-center shadow-md">
                   {wishlistCount}
                 </span>
               )}
@@ -135,22 +129,22 @@ export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
             <button
               onClick={() => setIsCartOpen(true)}
               aria-label={`Open shopping bag (${cartCount} items)`}
-              className="relative p-2 sm:px-3 sm:py-1.5 rounded-full bg-[#1C0E07]/90 hover:bg-[#F9BD03] text-[#FEE8B4] hover:text-[#1C0E07] border border-[#F9BD03]/35 transition-all duration-200 flex items-center gap-1.5 cursor-pointer shadow-md active:scale-95 group"
+              className="relative w-8 h-8 sm:w-9 sm:h-9 shrink-0 rounded-full bg-[#1C0E07]/90 hover:bg-gr8r-yellow border border-gr8r-yellow/35 transition-all duration-200 flex items-center justify-center cursor-pointer shadow-md active:scale-95 group"
             >
-              <svg className="w-4 h-4 transition-transform group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-              </svg>
-              {cartTotal > 0 && (
-                <span className="hidden sm:inline text-xs font-bold font-mono">
-                  ₹{cartTotal}
-                </span>
-              )}
+              <ShoppingCart className="w-4 h-4 text-gr8r-cream group-hover:text-[#1C0E07] transition-transform group-hover:scale-110" />
               {cartCount > 0 && (
-                <span className="w-5 h-5 rounded-full bg-[#F9BD03] group-hover:bg-[#1C0E07] text-[#1C0E07] group-hover:text-[#F9BD03] text-[10px] font-black font-mono flex items-center justify-center shadow-md">
+                <span className="absolute -top-1 -right-1 w-4.5 h-4.5 rounded-full bg-gr8r-yellow border-2 border-[#1C0E07] text-[#1C0E07] text-[9px] font-black font-mono flex items-center justify-center shadow-md">
                   {cartCount}
                 </span>
               )}
             </button>
+
+            {/* Cart Total (desktop only, shown alongside the bag button) */}
+            {cartTotal > 0 && (
+              <span className="hidden sm:inline text-xs font-bold font-mono text-gr8r-cream">
+                ₹{cartTotal}
+              </span>
+            )}
 
             <MotionOverlayMenu
               onNavigate={onNavigate}

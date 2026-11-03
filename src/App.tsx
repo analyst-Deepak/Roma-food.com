@@ -16,7 +16,6 @@ import { LegalPage, LegalTabType } from './components/LegalPage';
 import { CareerPage } from './components/CareerPage';
 import { AdminPage } from './components/AdminPage';
 import { ShopPage } from './components/ShopPage';
-import { ShopSection } from './components/ShopSection';
 import { ProductDetailsPage } from './components/ProductDetailsPage';
 import { ECOMMERCE_PRODUCTS } from './data/ecommerceProducts';
 import { EcommerceProduct } from './types/ecommerce';
@@ -327,9 +326,6 @@ export default function App() {
               <Gr8rHero />
               <Gr8rStatement />
               <Gr8rMenu onSelectItem={handleSelectMenuItem} />
-              
-              {/* 3D E-Commerce Storefront on Pure White Background */}
-              <ShopSection id="shop" onSelectProduct={handleOpenProduct} />
 
               <Gr8rFeatures />
               <Gr8rBranches />
