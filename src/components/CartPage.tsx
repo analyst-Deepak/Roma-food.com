@@ -1051,11 +1051,13 @@ export const CartPage: React.FC<CartPageProps> = ({
                   {cart.map((item) => (
                     <div key={item.product.id} className="py-2.5 first:pt-0 last:pb-0 flex items-center justify-between gap-3 text-xs">
                       <div className="flex items-center gap-3 min-w-0">
-                        <img
-                          src={item.product.image}
-                          alt={item.product.name}
-                          className="w-12 h-12 object-contain shrink-0 rounded bg-neutral-50 p-1 border border-neutral-200"
-                        />
+                        <div className="w-12 h-13 rounded-lg bg-gradient-to-b from-[#FAF6F0] to-[#ECE2D2] border border-[#E5D7C5]/90 p-1 flex items-center justify-center shrink-0">
+                          <img
+                            src={item.product.image}
+                            alt={item.product.name}
+                            className="max-h-full max-w-full object-contain filter drop-shadow-xs"
+                          />
+                        </div>
                         <div className="min-w-0">
                           <p className="font-bold text-neutral-800 truncate">{item.product.name}</p>
                           <p className="text-[11px] text-neutral-500">
@@ -1919,12 +1921,12 @@ export const CartPage: React.FC<CartPageProps> = ({
                           <div className="flex items-start gap-4 min-w-0 flex-1">
                             <div
                               onClick={() => onSelectProduct?.(item.product)}
-                              className="w-20 h-24 sm:w-24 sm:h-28 rounded-xl bg-neutral-50 border border-neutral-200 p-2 flex items-center justify-center shrink-0 cursor-pointer group"
+                              className="w-20 h-24 sm:w-24 sm:h-28 rounded-xl bg-gradient-to-b from-[#FAF6F0] to-[#ECE2D2] border border-[#E5D7C5]/90 p-2 flex items-center justify-center shrink-0 cursor-pointer group shadow-[inset_0_1px_4px_rgba(42,19,8,0.04)]"
                             >
                               <img
                                 src={item.product.image}
                                 alt={item.product.name}
-                                className="max-h-full max-w-full object-contain filter drop-shadow-md group-hover:scale-105 transition-transform"
+                                className="max-h-[94%] max-w-[94%] object-contain filter drop-shadow-md group-hover:scale-106 transition-transform"
                               />
                             </div>
 

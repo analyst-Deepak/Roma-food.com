@@ -78,15 +78,9 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
         onClick={() => onQuickView(product)}
         className="group relative select-none cursor-pointer bg-white rounded-2xl border border-[#EADBCC]/80 hover:border-[#D4AF37]/70 shadow-[0_4px_20px_-4px_rgba(42,19,8,0.06)] hover:shadow-[0_20px_40px_-12px_rgba(42,19,8,0.18)] transition-all duration-300 p-4 sm:p-5 flex flex-col sm:flex-row gap-5 items-center justify-between"
       >
-        {/* Left: 3D Product Image + Badges — 100% Containerless */}
-        <div className="relative w-full sm:w-48 h-48 shrink-0 flex items-center justify-center p-2 select-none">
-          {/* Subtle warm luxury spotlight */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(249,189,3,0.06)_0%,transparent_65%)] pointer-events-none" />
-
-          {/* Floor Shadow */}
-          <div className="absolute bottom-1 w-32 h-3 rounded-full bg-[#2A1308]/20 blur-md pointer-events-none" />
-
-          <div className="absolute top-2 left-2 flex gap-1 z-10">
+        {/* Left: 3D Product Image + Badges — Seamless Flipkart Style without Container Border */}
+        <div className="relative w-full sm:w-52 h-52 shrink-0 flex items-center justify-center p-2 select-none">
+          <div className="absolute top-1 left-1 flex gap-1 z-10">
             {discountPercent > 0 && (
               <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#E8F5E9] text-[#2E7D32] border border-[#A5D6A7]/60 font-sans shadow-2xs">
                 {discountPercent}% off
@@ -104,13 +98,13 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
               e.stopPropagation();
               toggleWishlist(product);
             }}
-            className="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/95 hover:bg-white shadow-xs border border-gray-200 hover:border-red-300 flex items-center justify-center text-gray-400 hover:text-red-500 z-10 transition-all cursor-pointer active:scale-90"
+            className="absolute top-1 right-1 w-8 h-8 rounded-full flex items-center justify-center text-gray-300 hover:text-red-500 hover:bg-neutral-50 z-10 transition-all cursor-pointer active:scale-90"
             aria-label="Wishlist"
             title={isItemWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
           >
             <Heart
-              className={`w-3.5 h-3.5 transition-colors ${
-                isItemWishlisted ? 'text-red-500 fill-red-500' : ''
+              className={`w-4 h-4 transition-colors ${
+                isItemWishlisted ? 'text-red-500 fill-red-500' : 'text-gray-300 fill-gray-200/40 hover:text-red-400'
               }`}
             />
           </button>
@@ -118,9 +112,11 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
           <img
             src={product.image}
             alt={product.name}
-            className="max-h-[92%] max-w-[92%] object-contain rounded-xl filter drop-shadow-[0_12px_22px_rgba(42,19,8,0.2)] transition-transform duration-300 group-hover:scale-105"
+            className="relative max-h-full max-w-[95%] w-auto h-auto object-contain filter drop-shadow-[0_12px_20px_rgba(42,19,8,0.18)] transition-transform duration-300 group-hover:scale-106"
             loading="lazy"
           />
+
+          <div className="absolute bottom-1 w-32 h-3 rounded-full bg-[#2A1308]/15 blur-sm pointer-events-none" />
         </div>
 
         {/* Center: Details & Highlights */}
@@ -259,12 +255,13 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
           transformStyle: 'preserve-3d',
         }}
       >
-        {/* Card Header: Tag Badges & Wishlist Heart */}
+        {/* Product Image Stage (Seamless Flipkart Style — No Container Border) */}
         <div
-          className="w-full flex items-center justify-between z-10 mb-1"
-          style={{ transform: 'translateZ(25px)' }}
+          className="relative w-full h-56 sm:h-64 flex items-center justify-center select-none pt-2 pb-1"
+          style={{ transform: 'translateZ(30px)' }}
         >
-          <div className="flex items-center gap-1.5 flex-wrap">
+          {/* Top Left: Badges */}
+          <div className="absolute top-1 left-1 flex items-center gap-1.5 flex-wrap z-10">
             {discountPercent > 0 && (
               <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#E8F5E9] text-[#2E7D32] border border-[#A5D6A7]/60 font-sans shadow-2xs">
                 {discountPercent}% off
@@ -281,52 +278,43 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
             )}
           </div>
 
-          {/* Wishlist Heart Button */}
+          {/* Top Right: Wishlist Heart Button (Flipkart Style subtle heart) */}
           <button
             onClick={(e) => {
               e.stopPropagation();
               toggleWishlist(product);
             }}
-            className="w-8 h-8 rounded-full bg-white/95 hover:bg-white border border-gray-200 hover:border-red-300 flex items-center justify-center text-gray-400 hover:text-red-500 transition-all shadow-xs hover:shadow-md cursor-pointer active:scale-90"
+            className="absolute top-1 right-1 w-8 h-8 rounded-full flex items-center justify-center text-gray-300 hover:text-red-500 hover:bg-neutral-50 z-10 transition-all cursor-pointer active:scale-90"
             aria-label="Wishlist"
             title={isItemWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
           >
             <Heart
-              className={`w-3.5 h-3.5 transition-colors ${
-                isItemWishlisted ? 'text-red-500 fill-red-500' : ''
+              className={`w-4 h-4 transition-colors ${
+                isItemWishlisted ? 'text-red-500 fill-red-500' : 'text-gray-300 fill-gray-200/40 hover:text-red-400'
               }`}
             />
           </button>
-        </div>
 
-        {/* 3D Floating Product Image Stage — 100% Open & Containerless */}
-        <div
-          className="relative w-full h-36 sm:h-48 flex items-center justify-center my-1 select-none pointer-events-none"
-          style={{ transform: 'translateZ(40px)' }}
-        >
-          {/* Subtle warm ambient radial glow on pure card white */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(249,189,3,0.06)_0%,transparent_65%)] pointer-events-none" />
-
-          {/* Dynamic 3D Floor Shadow */}
-          <motion.div
-            animate={{
-              scale: isHovered ? 1.15 : 0.9,
-              opacity: isHovered ? 0.35 : 0.2,
-              y: isHovered ? 12 : 6,
-            }}
-            transition={{ duration: 0.3 }}
-            className="absolute bottom-1 w-36 sm:w-44 h-4 rounded-full bg-[#2A1308]/25 blur-md pointer-events-none"
-          />
-
-          {/* Transparent 3D Chocolate Product Floating Freely */}
+          {/* Full-View Product Image — Floating Seamlessly on Clean White Card */}
           <motion.img
             src={product.image}
             alt={product.name}
             width={640}
             height={640}
-            className="relative max-h-full max-w-[95%] w-auto object-contain filter drop-shadow-[0_16px_25px_rgba(42,19,8,0.22)] transition-transform duration-300 group-hover:scale-108 group-hover:-translate-y-1.5"
+            className="relative max-h-full max-w-[95%] w-auto h-auto object-contain filter drop-shadow-[0_12px_22px_rgba(42,19,8,0.18)] transition-transform duration-300 group-hover:scale-106 group-hover:-translate-y-1.5"
             loading="lazy"
             decoding="async"
+          />
+
+          {/* Dynamic 3D Floor Shadow */}
+          <motion.div
+            animate={{
+              scale: isHovered ? 1.1 : 0.9,
+              opacity: isHovered ? 0.35 : 0.18,
+              y: isHovered ? 8 : 2,
+            }}
+            transition={{ duration: 0.3 }}
+            className="absolute bottom-1 w-36 sm:w-44 h-3.5 rounded-full bg-[#2A1308]/20 blur-sm pointer-events-none"
           />
         </div>
 
