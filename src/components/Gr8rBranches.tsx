@@ -22,6 +22,10 @@ export const Gr8rBranches: React.FC = () => {
       phone: COMPANY_INFO.phone,
       image: '/assets/chocolate/branch_atelier.jpg',
       mapsUrl: 'https://maps.google.com/?q=Shyam+Plaza+Pandri+Raipur',
+      email: COMPANY_INFO.email,
+      website: COMPANY_INFO.website,
+      fssai: COMPANY_INFO.fssaiNumber,
+      established: COMPANY_INFO.establishedYear,
     },
   ];
 
@@ -89,6 +93,20 @@ export const Gr8rBranches: React.FC = () => {
                       <Clock className="w-4 h-4 text-[#F9BD03] shrink-0 mt-0.5" />
                       <span>{branch.hours}</span>
                     </div>
+
+                    {index === 1 && (
+                      <>
+                        <div className="pt-3 border-t border-gr8r-brown/10">
+                          <p className="text-[10px] font-semibold uppercase tracking-wider text-[#8C4724] mb-2">Company Details</p>
+                          <div className="space-y-1.5">
+                            {branch.website && <p>Website: <span className="text-gr8r-yellow">{branch.website}</span></p>}
+                            {branch.email && <p>Email: <span className="text-gr8r-yellow">{branch.email}</span></p>}
+                            {branch.fssai && <p>FSSAI: <span className="text-gr8r-yellow">{branch.fssai}</span></p>}
+                            {branch.established && <p>Est. <span className="text-gr8r-yellow">{branch.established}</span></p>}
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
