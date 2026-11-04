@@ -69,10 +69,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           initial={{ y: -32, opacity: 0, scale: 0.96 }}
           animate={{ y: 0, opacity: 1, scale: 1 }}
           transition={{ duration: 0.85, ease: framerEase }}
-          className={`max-w-6xl mx-auto rounded-full transition-all duration-300 pointer-events-auto border ${
+          className={`max-w-6xl mx-auto rounded-full transition-all duration-300 pointer-events-auto border py-2.5 sm:py-3.5 px-5 sm:px-7 ${
             isScrolled
-              ? 'bg-white/95 backdrop-blur-2xl border-[#381305]/15 shadow-[0_12px_40px_rgba(42,14,4,0.12)] py-2 sm:py-2.5 px-4 sm:px-6'
-              : 'bg-white/85 backdrop-blur-xl border-[#381305]/10 shadow-[0_8px_30px_rgba(42,14,4,0.06)] py-2.5 sm:py-3.5 px-5 sm:px-7'
+              ? 'bg-white/95 backdrop-blur-2xl border-[#381305]/15 shadow-[0_12px_40px_rgba(42,14,4,0.12)]'
+              : 'bg-white/85 backdrop-blur-xl border-[#381305]/10 shadow-[0_8px_30px_rgba(42,14,4,0.06)]'
           }`}
         >
           <div className="flex items-center justify-between gap-4">
