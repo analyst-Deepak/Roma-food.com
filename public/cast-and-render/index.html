@@ -579,6 +579,327 @@
       requestAnimationFrame(frame);
     })();
   </script>
+<!-- Roma Foods floating chatbot, call and WhatsApp widget -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --roma-chat-dark: #2a160c;
+    --roma-chat-deep: #160a04;
+    --roma-chat-gold: #e8b65c;
+    --roma-chat-gold-light: #fff1c4;
+  }
+
+  /* ---------- Stack that holds all three buttons ---------- */
+  .roma-fab-stack {
+    position: fixed;
+    right: 26px;
+    bottom: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .roma-fab {
+    position: relative;
+    display: block;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .roma-fab:focus-visible {
+    outline: 2px solid var(--roma-chat-gold-light);
+    outline-offset: 4px;
+    border-radius: 50%;
+  }
+  .roma-fab-art {
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.55));
+    animation: romaFloat 3s ease-in-out infinite;
+    transition: transform 0.3s cubic-bezier(.2,.8,.2,1.3), opacity 0.25s ease;
+  }
+  .roma-fab-call .roma-fab-art { animation-delay: 0.4s; }
+  .roma-fab-wa   .roma-fab-art { animation-delay: 0.8s; }
+  .roma-fab:hover .roma-fab-art {
+    animation-play-state: paused;
+    transform: translateY(-3px) scale(1.08);
+  }
+
+  /* Keep the robot launcher at its current size */
+  .roma-chat-launcher { width: 48px; height: 48px; }
+  .roma-chat-launcher:hover .roma-fab-art { transform: translateY(-3px) scale(1.08) rotate(-4deg); }
+
+  /* Robot details */
+  .roma-bot .roma-eye { transform-box: fill-box; transform-origin: center; animation: romaBlink 4s infinite; }
+  .roma-bot .roma-ball { animation: romaGlow 1.8s ease-in-out infinite; }
+
+  /* Phone wiggle */
+  .roma-phone-handset { transform-origin: 32px 32px; animation: romaRing 4s ease-in-out infinite; }
+
+  /* WhatsApp: official icon sits on the green 3D orb */
+  .roma-fab-wa .roma-wa-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 23px;
+    pointer-events: none;
+    animation: romaFloat 3s ease-in-out infinite;
+    animation-delay: 0.8s;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25));
+  }
+  .roma-fab-wa .roma-wa-icon svg { width: 23px; height: 23px; fill: #ffffff; }
+  .roma-fab-wa:hover .roma-wa-icon { animation-play-state: paused; transform: translateY(-3px) scale(1.08); }
+
+  @keyframes romaFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  @keyframes romaBlink { 0%,92%,100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+  @keyframes romaGlow  { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+  @keyframes romaRing  { 0%,80%,100% { transform: rotate(0); } 84% { transform: rotate(-12deg); } 88% { transform: rotate(12deg); } 92% { transform: rotate(-8deg); } 96% { transform: rotate(6deg); } }
+
+  /* Chatbot close state */
+  .roma-close {
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    padding: 2px;
+    background: conic-gradient(from 210deg, #8a5a1f, #f6d58b, #c48a32, #fff1c4, #a8732a, #f6d58b, #8a5a1f);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55);
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+    transition: opacity 0.25s ease, transform 0.3s ease;
+    pointer-events: none;
+  }
+  .roma-close span {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(circle at 35% 28%, #5b3420, var(--roma-chat-dark) 60%, var(--roma-chat-deep));
+  }
+  .roma-close svg { width: 22px; height: 22px; }
+  .roma-chat-launcher.is-open .roma-fab-art { opacity: 0; transform: scale(0.4) rotate(20deg); animation: none; }
+  .roma-chat-launcher.is-open .roma-close { opacity: 1; transform: rotate(0) scale(1); }
+
+  /* Tooltips (all three) */
+  .roma-tip {
+    position: absolute;
+    right: calc(100% + 14px);
+    top: 50%;
+    transform: translateY(-50%) translateX(10px);
+    white-space: nowrap;
+    padding: 10px 16px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #3b2416, var(--roma-chat-deep));
+    border: 1px solid rgba(232, 182, 92, 0.7);
+    color: var(--roma-chat-gold-light);
+    font: 500 13px/1 'Poppins', system-ui, sans-serif;
+    letter-spacing: 0.4px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .roma-tip b { font-family: 'Playfair Display', Georgia, serif; color: var(--roma-chat-gold); }
+  .roma-fab:hover .roma-tip,
+  .roma-chat-launcher.show-tip .roma-tip { opacity: 1; transform: translateY(-50%) translateX(0); }
+  .roma-chat-launcher.is-open .roma-tip { display: none; }
+
+  /* ---------- Chat popup ---------- */
+  .roma-chat-panel {
+    position: fixed;
+    right: 112px;
+    bottom: 24px;
+    z-index: 9998;
+    width: 400px;
+    height: 640px;
+    max-height: calc(100vh - 60px);
+    border-radius: 24px;
+    padding: 2px;
+    background: linear-gradient(160deg, #f6d58b, #a8732a 40%, #6b3e26 100%);
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.96);
+    transform-origin: bottom right;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(.2,.8,.2,1), visibility 0.3s;
+  }
+  .roma-chat-panel.is-open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+  .roma-chat-frame-wrap { position: relative; width: 100%; height: 100%; border-radius: 22px; overflow: hidden; background: #fdf1e3; }
+  .roma-chat-frame-wrap iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .roma-chat-loader { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 8px; background: #fdf1e3; }
+  .roma-chat-loader span { width: 9px; height: 9px; border-radius: 50%; background: #c8915b; animation: romaDot 1s infinite ease-in-out; }
+  .roma-chat-loader span:nth-child(2) { animation-delay: .15s; }
+  .roma-chat-loader span:nth-child(3) { animation-delay: .3s; }
+  @keyframes romaDot { 0%,80%,100% { transform: scale(.6); opacity:.5 } 40% { transform: scale(1); opacity:1 } }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 640px) {
+    .roma-fab-stack { right: 14px; bottom: 16px; gap: 5px; }
+    .roma-fab { width: 38px; height: 38px; }
+    .roma-chat-launcher { width: 42px; height: 42px; }
+    .roma-tip { display: none; }
+    .roma-chat-panel { inset: 0; width: 100%; height: 100%; max-height: none; border-radius: 0; padding: 0; z-index: 10000; }
+    .roma-chat-frame-wrap { border-radius: 0; }
+    /* when chat is open on mobile: hide call/WhatsApp, move close button to top-right */
+    body.roma-chat-open .roma-fab-call,
+    body.roma-chat-open .roma-fab-wa { display: none; }
+    body.roma-chat-open .roma-fab-stack { bottom: auto; top: 8px; right: 8px; z-index: 10001; }
+    body.roma-chat-open .roma-chat-launcher { width: 42px; height: 42px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .roma-fab-art, .roma-wa-icon, .roma-bot .roma-eye, .roma-bot .roma-ball, .roma-phone-handset { animation: none; }
+  }
+</style>
+
+<div class="roma-chat-panel" id="romaChatPanel" role="dialog" aria-label="Roma Foods chat assistant">
+  <div class="roma-chat-frame-wrap" id="romaChatFrameWrap">
+    <div class="roma-chat-loader" id="romaChatLoader"><span></span><span></span><span></span></div>
+  </div>
+</div>
+
+<div class="roma-fab-stack">
+
+  <!-- 1. Chatbot (robot) -->
+  <button class="roma-fab roma-chat-launcher" id="romaChatLauncher" type="button"
+          aria-label="Chat with Roma Assistant" aria-controls="romaChatPanel" aria-expanded="false">
+    <svg class="roma-fab-art roma-bot" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <radialGradient id="romaBotHead" cx="35%" cy="25%" r="85%">
+          <stop offset="0" stop-color="#f3c88a"/><stop offset="0.5" stop-color="#c4844a"/><stop offset="1" stop-color="#7a4523"/>
+        </radialGradient>
+        <radialGradient id="romaBotBall" cx="35%" cy="30%" r="70%">
+          <stop offset="0" stop-color="#fff6d8"/><stop offset="0.6" stop-color="#e8b65c"/><stop offset="1" stop-color="#a8732a"/>
+        </radialGradient>
+        <linearGradient id="romaBotScreen" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#3a2014"/><stop offset="1" stop-color="#140904"/>
+        </linearGradient>
+      </defs>
+      <rect x="30.8" y="8" width="2.4" height="8" rx="1.2" fill="#8a5230"/>
+      <circle class="roma-ball" cx="32" cy="7" r="4.2" fill="url(#romaBotBall)"/>
+      <rect x="4.5" y="26" width="8" height="15" rx="4" fill="url(#romaBotHead)"/>
+      <rect x="51.5" y="26" width="8" height="15" rx="4" fill="url(#romaBotHead)"/>
+      <rect x="9" y="14" width="46" height="39" rx="15" fill="url(#romaBotHead)"/>
+      <ellipse cx="24" cy="18.5" rx="10" ry="2.6" fill="#ffffff" opacity="0.28"/>
+      <rect x="15" y="21" width="34" height="25" rx="10" fill="url(#romaBotScreen)"/>
+      <rect x="15" y="21" width="34" height="25" rx="10" fill="none" stroke="#000" stroke-opacity="0.35"/>
+      <ellipse class="roma-eye" cx="25" cy="31" rx="3.3" ry="4" fill="#ffe9b8"/>
+      <ellipse class="roma-eye" cx="39" cy="31" rx="3.3" ry="4" fill="#ffe9b8"/>
+      <path d="M26.5 38.2Q32 42.6 37.5 38.2" stroke="#ffe9b8" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    </svg>
+    <span class="roma-close"><span>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18" stroke="#f0c97a" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+    </span></span>
+    <span class="roma-tip">Hi! Ask <b>Roma</b> anything 🍫</span>
+  </button>
+
+  <!-- 2. Call (3D caramel orb + cream handset) -->
+  <a class="roma-fab roma-fab-call" href="tel:+919098229454" aria-label="Call Roma Foods">
+    <svg class="roma-fab-art" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <radialGradient id="romaCallOrb" cx="35%" cy="28%" r="80%">
+          <stop offset="0" stop-color="#f3c88a"/><stop offset="0.5" stop-color="#c4844a"/><stop offset="1" stop-color="#6e3d1f"/>
+        </radialGradient>
+        <linearGradient id="romaCallHandset" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#fff6e2"/><stop offset="1" stop-color="#f0d3a4"/>
+        </linearGradient>
+      </defs>
+      <circle cx="32" cy="32" r="29" fill="url(#romaCallOrb)"/>
+      <ellipse cx="25" cy="14" rx="14" ry="5" fill="#ffffff" opacity="0.3"/>
+      <circle cx="32" cy="32" r="28.3" fill="none" stroke="#000" stroke-opacity="0.18"/>
+      <g class="roma-phone-handset">
+        <path transform="translate(3 3) scale(.9)"
+              d="M20 12c2-1.5 4.5-1 5.6 1l3.4 6.2c.9 1.7.5 3.8-1 5l-2.6 2.1c1.9 4.4 5.3 7.9 9.7 9.9l2.1-2.6c1.2-1.5 3.3-1.9 5-1l6.2 3.4c2 1.1 2.5 3.6 1 5.6l-2.6 3.3c-1.6 2-4.3 2.8-6.7 2C27.8 44.3 19.7 36.2 16.1 25.6c-.8-2.4 0-5.1 2-6.7z"
+              fill="url(#romaCallHandset)"/>
+      </g>
+    </svg>
+    <span class="roma-tip">Call us</span>
+  </a>
+
+  <!-- 3. WhatsApp (3D green orb + site's existing WhatsApp icon) -->
+  <a class="roma-fab roma-fab-wa" href="https://wa.me/917000860127?text=Hello%20Roma%20Foods%20Sales%20Desk%2C%20I%20am%20interested%20in%20ROMAS%20chocolates%20for%20my%20bakery%2Fbusiness.%20Please%20share%20commercial%20sample%20details." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg class="roma-fab-art" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <radialGradient id="romaWaOrb" cx="35%" cy="28%" r="80%">
+          <stop offset="0" stop-color="#8af5b4"/><stop offset="0.5" stop-color="#25c264"/><stop offset="1" stop-color="#0d6b34"/>
+        </radialGradient>
+      </defs>
+      <circle cx="32" cy="32" r="29" fill="url(#romaWaOrb)"/>
+      <ellipse cx="25" cy="14" rx="14" ry="5" fill="#ffffff" opacity="0.35"/>
+      <circle cx="32" cy="32" r="28.3" fill="none" stroke="#000" stroke-opacity="0.15"/>
+    </svg>
+    <span class="roma-wa-icon">
+      <svg viewBox="0 0 24 24" width="30" height="30" fill="#fff" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </span>
+    <span class="roma-tip">WhatsApp us</span>
+  </a>
+</div>
+
+<script>
+  (function () {
+    var CHAT_URL = 'https://n8n.srv1848322.hstgr.cloud/webhook/9175f260-8891-4dd7-958f-ae198e78e845/chat';
+    var launcher = document.getElementById('romaChatLauncher');
+    var panel = document.getElementById('romaChatPanel');
+    var wrap = document.getElementById('romaChatFrameWrap');
+    var loader = document.getElementById('romaChatLoader');
+    var loaded = false;
+
+    function openChat() {
+      if (!loaded) {
+        var frame = document.createElement('iframe');
+        frame.src = CHAT_URL;
+        frame.title = 'Roma Foods Assistant';
+        frame.allow = 'clipboard-write';
+        frame.onload = function () { loader.style.display = 'none'; };
+        wrap.appendChild(frame);
+        loaded = true;
+      }
+      panel.classList.add('is-open');
+      launcher.classList.add('is-open');
+      document.body.classList.add('roma-chat-open');
+      launcher.setAttribute('aria-expanded', 'true');
+      launcher.setAttribute('aria-label', 'Close chat');
+    }
+
+    function closeChat() {
+      panel.classList.remove('is-open');
+      launcher.classList.remove('is-open');
+      document.body.classList.remove('roma-chat-open');
+      launcher.setAttribute('aria-expanded', 'false');
+      launcher.setAttribute('aria-label', 'Chat with Roma Assistant');
+    }
+
+    launcher.addEventListener('click', function () {
+      panel.classList.contains('is-open') ? closeChat() : openChat();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeChat();
+    });
+
+    // Show the chatbot tooltip once, 4 seconds after page load
+    setTimeout(function () {
+      if (!panel.classList.contains('is-open')) {
+        launcher.classList.add('show-tip');
+        setTimeout(function () { launcher.classList.remove('show-tip'); }, 4000);
+      }
+    }, 4000);
+  })();
+</script>
 </body>
 </html>
 

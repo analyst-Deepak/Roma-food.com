@@ -25,8 +25,6 @@ import { WishlistDrawer } from './components/WishlistDrawer';
 import { CartProvider } from './context/CartContext';
 import { BrandGuideModal } from './components/BrandGuideModal';
 import { SampleInquiryDrawer } from './components/SampleInquiryDrawer';
-import { FloatingWhatsAppWidget } from './components/FloatingWhatsAppWidget';
-import { ChatbotWidget } from './components/ChatbotWidget';
 
 export type AppRoute = 'home' | 'shop' | 'product' | 'cart' | 'about' | 'terms' | 'privacy' | 'cookie' | 'career' | 'admin';
 
@@ -397,11 +395,6 @@ export default function App() {
         onSelectProduct={handleOpenProduct}
       />
 
-      {/* Floating Animated WhatsApp & Sales Concierge Widget */}
-      <FloatingWhatsAppWidget />
-
-      {/* Floating ROMAS AI Chat Assistant (bottom-left, n8n) */}
-      <ChatbotWidget />
     </div>
     </CartProvider>
   );
