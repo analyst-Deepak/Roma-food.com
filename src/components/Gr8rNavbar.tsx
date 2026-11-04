@@ -75,7 +75,7 @@ export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
               src="/assets/romas-logo-gold.png"
               alt="ROMAS Spreading Happiness"
               className={`w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(249,189,3,0.35)] transition-all duration-300 ${
-                variant === 'solid' ? 'h-7 sm:h-8' : isScrolled ? 'h-6 sm:h-7' : 'h-7 sm:h-9 md:h-10'
+                variant === 'solid' ? 'h-7 sm:h-8' : 'h-7 sm:h-9 md:h-10'
               }`}
             />
           </button>
