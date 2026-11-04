@@ -68,9 +68,6 @@ export const Gr8rBranches: React.FC = () => {
                     alt={branch.name}
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
                   />
-                  <div className="absolute top-4 left-4 px-3.5 py-1 rounded-full bg-[#381A0E] text-[#FEE8B4] text-[10px] font-black uppercase tracking-wider">
-                    {branch.subtitle}
-                  </div>
                 </div>
 
                 {/* Content */}
