@@ -225,209 +225,123 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
   }
 
   // =========================================================================
-  // VIEW MODE: GRID (Flipkart Enhanced 3D Vertical Card)
+  // VIEW MODE: GRID (Authentic Flipkart Style Product Card)
   // =========================================================================
   return (
     <div
       ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className="relative select-none cursor-pointer h-full"
-      style={{ perspective: 1000 }}
+      className="group relative select-none cursor-pointer h-full bg-white p-3 sm:p-4 border border-transparent hover:border-gray-200 hover:shadow-[0_3px_16px_0_rgba(0,0,0,0.11)] transition-all duration-200 flex flex-col justify-between"
       onClick={() => onQuickView(product)}
     >
-      {/* 3D Transform Container on Ultra-Premium Luxury Card */}
-      <motion.div
-        animate={{
-          rotateX,
-          rotateY,
-          scale: isHovered ? 1.02 : 1,
-          y: isHovered ? -5 : 0,
-        }}
-        transition={{
-          type: 'spring',
-          stiffness: 300,
-          damping: 24,
-        }}
-        className="relative flex flex-col justify-between h-full p-2.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-[#EADBCC]/80 shadow-[0_2px_12px_rgba(42,19,8,0.05)] hover:shadow-[0_20px_40px_-12px_rgba(42,19,8,0.18)] hover:border-[#D4AF37]/80 hover:ring-1 hover:ring-[#D4AF37]/30 transition-all duration-300"
-        style={{
-          transformStyle: 'preserve-3d',
-        }}
-      >
-        {/* Product Image Stage (Seamless Flipkart Style — No Container Border) */}
-        <div
-          className="relative w-full h-56 sm:h-64 flex items-center justify-center select-none pt-2 pb-1"
-          style={{ transform: 'translateZ(30px)' }}
+      <div>
+        {/* Wishlist Heart Button (Flipkart Style subtle top-right heart) */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleWishlist(product);
+          }}
+          className="absolute top-2.5 right-2.5 z-10 p-1 text-[#c2c2c2] hover:text-[#ff4343] transition-colors cursor-pointer"
+          aria-label="Wishlist"
+          title={isItemWishlisted ? 'In Wishlist' : 'Add to Wishlist'}
         >
-          {/* Top Left: Badges */}
-          <div className="absolute top-1 left-1 flex items-center gap-1.5 flex-wrap z-10">
-            {discountPercent > 0 && (
-              <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#E8F5E9] text-[#2E7D32] border border-[#A5D6A7]/60 font-sans shadow-2xs">
-                {discountPercent}% off
-              </span>
-            )}
-            {product.tag && (
-              <span
-                className={`text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full shadow-2xs ${
-                  product.badgeColor || 'bg-[#1C0E07] text-[#F9BD03] border border-[#F9BD03]/35'
-                }`}
-              >
-                {product.tag}
-              </span>
-            )}
-          </div>
+          <Heart
+            className={`w-4 h-4 transition-colors ${
+              isItemWishlisted ? 'text-[#ff4343] fill-[#ff4343]' : 'fill-transparent text-[#c2c2c2]'
+            }`}
+          />
+        </button>
 
-          {/* Top Right: Wishlist Heart Button (Flipkart Style subtle heart) */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleWishlist(product);
-            }}
-            className="absolute top-1 right-1 w-8 h-8 rounded-full flex items-center justify-center text-gray-300 hover:text-red-500 hover:bg-neutral-50 z-10 transition-all cursor-pointer active:scale-90"
-            aria-label="Wishlist"
-            title={isItemWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
-          >
-            <Heart
-              className={`w-4 h-4 transition-colors ${
-                isItemWishlisted ? 'text-red-500 fill-red-500' : 'text-gray-300 fill-gray-200/40 hover:text-red-400'
-              }`}
-            />
-          </button>
-
-          {/* Full-View Product Image — Floating Seamlessly on Clean White Card */}
-          <motion.img
+        {/* Product Image Stage */}
+        <div className="relative w-full aspect-square flex items-center justify-center p-2 mb-2 bg-white overflow-hidden">
+          <img
             src={product.image}
             alt={product.name}
-            width={640}
-            height={640}
-            className="relative max-h-full max-w-[95%] w-auto h-auto object-contain filter drop-shadow-[0_12px_22px_rgba(42,19,8,0.18)] transition-transform duration-300 group-hover:scale-106 group-hover:-translate-y-1.5"
+            className="max-h-[180px] sm:max-h-[210px] w-auto h-auto object-contain transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
-            decoding="async"
-          />
-
-          {/* Dynamic 3D Floor Shadow */}
-          <motion.div
-            animate={{
-              scale: isHovered ? 1.1 : 0.9,
-              opacity: isHovered ? 0.35 : 0.18,
-              y: isHovered ? 8 : 2,
-            }}
-            transition={{ duration: 0.3 }}
-            className="absolute bottom-1 w-36 sm:w-44 h-3.5 rounded-full bg-[#2A1308]/20 blur-sm pointer-events-none"
           />
         </div>
 
-        {/* Product Details Section */}
-        <div
-          className="w-full text-left mt-1.5 z-10 flex flex-col flex-1 justify-between"
-          style={{ transform: 'translateZ(20px)' }}
-        >
-          <div>
-            {/* Category Subtitle & Ratings Row */}
-            <div className="flex items-center justify-between text-xs mb-1 flex-wrap gap-1">
-              <span className="text-[10px] font-black text-[#8C7A6B] uppercase tracking-widest">
-                ROMAS &bull; {product.categoryLabel}
-              </span>
+        {/* Brand / Sponsored Tag (Flipkart Style) */}
+        <span className="text-[11px] font-normal text-[#878787] block leading-none mb-1">
+          {product.tag ? product.tag : 'ROMAS'}
+        </span>
 
-              {/* Boutique Dark + Gold Rating Pill */}
-              <div className="flex items-center gap-1.5">
-                <span className="bg-[#1C0E07] text-[#F9BD03] text-[10px] font-bold px-1.5 py-0.5 rounded flex items-center gap-0.5 shadow-2xs font-sans">
-                  <span>{product.rating}</span>
-                  <Star className="w-2.5 h-2.5 fill-[#F9BD03] text-[#F9BD03]" />
-                </span>
-                <span className="text-[11px] text-gray-400 font-medium">
-                  ({product.reviewCount})
-                </span>
-              </div>
-            </div>
+        {/* Product Title */}
+        <h3 className="text-[13px] sm:text-sm font-normal text-[#212121] group-hover:text-[#2874f0] line-clamp-2 h-9 leading-tight cursor-pointer">
+          {product.name}
+        </h3>
 
-            {/* Product Title */}
-            <h3
-              className="text-sm sm:text-base font-bold text-[#1C0E07] group-hover:text-[#8C4724] transition-colors leading-snug line-clamp-1"
-              style={{ fontFamily: "'Cabin Condensed', sans-serif" }}
-            >
-              {product.name}
-            </h3>
+        {/* Weight / Variant */}
+        <span className="text-xs text-[#878787] mt-1 block font-normal">
+          {product.weight}
+        </span>
 
-            {/* Subtitle / Cocoa Profile */}
-            <p className="text-xs text-[#7A6B60] mt-0.5 line-clamp-1 font-normal">
-              {product.subtitle}
-            </p>
+        {/* Rating Pill (Flipkart Signature Green Pill) */}
+        <div className="flex items-center gap-1.5 mt-1.5">
+          <span className="bg-[#388e3c] text-white text-[11px] font-bold px-1.5 py-0.5 rounded flex items-center gap-0.5 leading-none shadow-2xs font-sans">
+            <span>{product.rating}</span>
+            <Star className="w-2.5 h-2.5 fill-white text-white" />
+          </span>
+          <span className="text-xs font-semibold text-[#878787]">
+            ({product.reviewCount})
+          </span>
+        </div>
 
-            {/* Weight & Quality Tag */}
-            <div className="flex items-center gap-2 mt-1.5">
-              <span className="text-[10px] font-bold text-[#8C4724] bg-[#FAF0E4] px-2 py-0.5 rounded-full border border-[#EADBCC]">
-                {product.weight}
-              </span>
-              <span className="hidden sm:inline text-[10px] text-gray-500 font-medium">
-                100% Pure Cocoa Butter
-              </span>
-            </div>
-          </div>
-
-          {/* Pricing & Dual Action Buttons */}
-          <div className="pt-2.5 mt-2 border-t border-[#EADBCC]/60">
-            {/* Price Row */}
-            <div className="flex items-baseline gap-2 mb-1">
-              <span className="text-xl sm:text-2xl font-black font-sans text-[#1C0E07]">
-                ₹{product.price}
-              </span>
-              {product.mrp > product.price && (
-                <span className="text-xs text-gray-400 line-through font-sans">
-                  ₹{product.mrp}
-                </span>
-              )}
-              {discountPercent > 0 && (
-                <span className="text-xs font-bold text-[#2E7D32] bg-emerald-50 px-1.5 py-0.5 rounded font-sans">
-                  {discountPercent}% off
-                </span>
-              )}
-            </div>
-
-            <span className="text-[10px] text-[#2E7D32] font-semibold block mb-2 truncate">
-              ✓ Free Delivery over ₹799<span className="hidden sm:inline"> &bull; Insulated Pack</span>
+        {/* Pricing Section (Flipkart Bold Black Price + Strike MRP + Green Off) */}
+        <div className="flex items-baseline gap-2 mt-2">
+          <span className="text-base sm:text-lg font-bold font-sans text-[#212121]">
+            ₹{product.price}
+          </span>
+          {product.mrp > product.price && (
+            <span className="text-xs text-[#878787] line-through font-sans">
+              ₹{product.mrp}
             </span>
-
-            {/* Dual Action Buttons: Add to Cart & Buy Now */}
-            <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
-              {/* Yellow Add to Cart Button */}
-              <button
-                onClick={handleAddToCart}
-                disabled={isAdding}
-                aria-label={`Add ${product.name} to cart`}
-                className={`py-2 px-2 sm:px-2.5 rounded-full font-bold text-[11px] sm:text-xs uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm active:scale-95 cursor-pointer ${
-                  isAdding
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-[#FF8F2E] hover:bg-[#F07E1B] text-[#1C0E07]'
-                }`}
-              >
-                {isAdding ? (
-                  <>
-                    <Check className="w-3.5 h-3.5" />
-                    <span>Added</span>
-                  </>
-                ) : (
-                  <>
-                    <ShoppingCart className="w-3.5 h-3.5" />
-                    <span>Add</span>
-                  </>
-                )}
-              </button>
-
-              {/* Orange/Dark Buy Now Button */}
-              <button
-                onClick={handleQuickWhatsAppBuy}
-                aria-label={`Buy ${product.name} now`}
-                className="py-2 px-2 sm:px-2.5 rounded-full font-bold text-[11px] sm:text-xs uppercase tracking-wider bg-[#4A2412] hover:bg-[#36190C] text-[#FFEFE0] transition-all duration-200 flex items-center justify-center gap-1 shadow-sm active:scale-95 cursor-pointer"
-              >
-                <Zap className="w-3.5 h-3.5 fill-[#FF8F2E] text-[#FF8F2E]" />
-                <span>Buy</span>
-              </button>
-            </div>
-          </div>
+          )}
+          {discountPercent > 0 && (
+            <span className="text-xs font-bold text-[#388e3c] font-sans">
+              {discountPercent}% off
+            </span>
+          )}
         </div>
-      </motion.div>
+
+        {/* Stock / Urgency Note (Flipkart Pink Status) */}
+        <span className="text-[11px] font-bold text-[#c2185b] mt-1 block">
+          Only few left
+        </span>
+      </div>
+
+      {/* Flipkart Styled Action Buttons */}
+      <div className="grid grid-cols-2 gap-2 mt-3 pt-2 border-t border-gray-100">
+        <button
+          onClick={handleAddToCart}
+          disabled={isAdding}
+          className={`py-1.5 px-2 rounded-xs font-bold text-xs uppercase tracking-wide transition-all duration-200 flex items-center justify-center gap-1 shadow-2xs active:scale-95 cursor-pointer ${
+            isAdding
+              ? 'bg-emerald-600 text-white'
+              : 'bg-[#ff9f00] hover:bg-[#f39700] text-white'
+          }`}
+        >
+          {isAdding ? (
+            <>
+              <Check className="w-3.5 h-3.5" />
+              <span>Added</span>
+            </>
+          ) : (
+            <>
+              <ShoppingCart className="w-3.5 h-3.5" />
+              <span>Add</span>
+            </>
+          )}
+        </button>
+
+        <button
+          onClick={handleQuickWhatsAppBuy}
+          className="py-1.5 px-2 rounded-xs font-bold text-xs uppercase tracking-wide bg-[#fb641b] hover:bg-[#e85b17] text-white transition-all duration-200 flex items-center justify-center gap-1 shadow-2xs active:scale-95 cursor-pointer"
+        >
+          <Zap className="w-3.5 h-3.5 fill-white text-white" />
+          <span>Buy</span>
+        </button>
+      </div>
     </div>
   );
 };

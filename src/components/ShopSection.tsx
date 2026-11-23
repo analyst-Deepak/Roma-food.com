@@ -170,14 +170,14 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
         )}
 
         {/* 2-Column Flipkart Layout: Left Sidebar Filters + Right Product Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
+        <div className="flex flex-col md:flex-row gap-3 sm:gap-4 items-start">
 
           {/* =========================================================================
               LEFT COLUMN: Flipkart Style Filters Sidebar
               (Mobile: slide-up bottom sheet · Desktop: inline sidebar)
               ========================================================================= */}
           <aside
-            className={`bg-white divide-y divide-gray-100 fixed inset-x-0 bottom-0 z-50 max-h-[88vh] overflow-y-auto rounded-t-2xl shadow-2xl border-t border-gray-200 transition-transform duration-300 ease-out will-change-transform md:col-span-4 lg:col-span-3 md:static md:z-auto md:translate-y-0 md:max-h-none md:overflow-visible md:rounded-lg md:rounded-t-lg md:shadow-xs md:border md:border-gray-200 md:pointer-events-auto md:transition-none ${
+            className={`bg-white divide-y divide-gray-100 fixed inset-x-0 bottom-0 z-50 max-h-[88vh] overflow-y-auto rounded-t-2xl shadow-2xl border-t border-gray-200 transition-transform duration-300 ease-out will-change-transform w-full md:w-[260px] lg:w-[270px] shrink-0 md:static md:z-auto md:translate-y-0 md:max-h-none md:overflow-visible md:rounded-lg md:rounded-t-lg md:shadow-xs md:border md:border-gray-200 md:pointer-events-auto md:transition-none ${
               isMobileFilterOpen ? 'translate-y-0' : 'translate-y-full pointer-events-none'
             }`}
           >
@@ -387,7 +387,7 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
           {/* =========================================================================
               RIGHT COLUMN: Top Sorting Bar & Enhanced Product Cards Grid
               ========================================================================= */}
-          <main className="md:col-span-8 lg:col-span-9 space-y-4">
+          <main className="flex-1 min-w-0 space-y-3.5">
             
             {/* Flipkart Style Top Bar: Breadcrumb & Sort Tabs */}
             <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4 shadow-xs">
@@ -465,7 +465,7 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
             ) : (
               <motion.div
                 layout
-                className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-2.5 sm:gap-6"
+                className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 sm:gap-2.5 lg:gap-3"
               >
                 {filteredProducts.map((product) => (
                   <ProductCard3D

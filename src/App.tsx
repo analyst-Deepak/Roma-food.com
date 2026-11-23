@@ -133,25 +133,25 @@ export default function App() {
   // Set document title according to active route
   useEffect(() => {
     if (currentRoute === 'product' && selectedProduct) {
-      document.title = `${selectedProduct.name} | ROMAS Chocolates`;
+      document.title = `${selectedProduct.name} | Roma Foods`;
     } else if (currentRoute === 'cart') {
-      document.title = 'Shopping Cart | ROMAS Chocolates';
+      document.title = 'Shopping Cart | Roma Foods';
     } else if (currentRoute === 'shop') {
-      document.title = 'Shop Authentic 3D Chocolates | ROMAS Chocolates';
+      document.title = 'Roma Foods';
     } else if (currentRoute === 'privacy') {
-      document.title = 'Privacy Policy | ROMAS Chocolates - Roma Foods';
+      document.title = 'Privacy Policy | Roma Foods';
     } else if (currentRoute === 'terms') {
-      document.title = 'Terms & Conditions | ROMAS Chocolates - Roma Foods';
+      document.title = 'Terms & Conditions | Roma Foods';
     } else if (currentRoute === 'cookie') {
-      document.title = 'Cookie Policy | ROMAS Chocolates - Roma Foods';
+      document.title = 'Cookie Policy | Roma Foods';
     } else if (currentRoute === 'about') {
-      document.title = 'About ROMAS Chocolates | Pure Chocolate Craft';
+      document.title = 'About Roma Foods';
     } else if (currentRoute === 'career') {
-      document.title = 'Careers at ROMAS Chocolates | Roma Foods';
+      document.title = 'Careers | Roma Foods';
     } else if (currentRoute === 'admin') {
-      document.title = 'Admin · ROMAS Chocolates';
+      document.title = 'Admin · Roma Foods';
     } else {
-      document.title = 'ROMAS Chocolates – Spreading Happiness';
+      document.title = 'Roma Foods';
     }
   }, [currentRoute, selectedProduct]);
 

@@ -22,7 +22,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
 }) => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    document.title = 'Shop Authentic Chocolates | ROMAS Chocolates';
+    document.title = 'Roma Foods';
   }, []);
 
   return (

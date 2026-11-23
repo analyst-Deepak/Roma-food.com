@@ -53,7 +53,7 @@ export const CATEGORY_RANGES: CategoryRange[] = [
   {
     id: 'compounds',
     name: 'COMPOUNDS',
-    cutoutImage: '/assets/products_3d_png/compounds_cutout.png',
+    cutoutImage: '/assets/ecommerce/pinterest_dark_slab_55_cutout.png',
     cardImage: '/assets/categories/clean/card_compounds.jpg',
     bannerImage: '/assets/categories/clean/banner_compounds.jpg',
     subtitle: 'Effortless melting, enrobing, and mirror gloss for master patisserie.',
@@ -86,7 +86,7 @@ export const CATEGORY_RANGES: CategoryRange[] = [
   {
     id: 'couvertures',
     name: 'CHOCOLATE & COUVERTURES',
-    cutoutImage: '/assets/chocolate/romas_slab_cutout.png',
+    cutoutImage: '/assets/ecommerce/pinterest_milk_couverture_cutout.png',
     cardImage: '/assets/categories/clean/card_couverture.jpg',
     bannerImage: '/assets/categories/clean/banner_couverture.jpg',
     subtitle: 'Pure cocoa butter real chocolate crafted for exquisite snaps, ganache, and bonbons.',

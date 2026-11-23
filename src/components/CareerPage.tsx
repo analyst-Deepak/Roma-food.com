@@ -45,7 +45,7 @@ const VALUES = [
     num: '01',
     icon: Sparkles,
     tag: 'Artisan Excellence',
-    title: 'Craft Mastery',
+    title: 'Skill Mastery',
     body: 'Learn hands-on beside master chocolatiers, roasters and food technologists working with real cocoa butter couverture.',
     highlight: 'Pure Cocoa Butter',
   },
@@ -109,7 +109,7 @@ const RICH_OPENINGS: DetailedOpening[] = [
     requirements: [
       'Diploma / Degree in Culinary Arts, Pastry & Baking, or Food Technology.',
       'Demonstrated expertise in chocolate tempering, bean-to-bar roasting, and ganache emulsion.',
-      'Passion for fine cocoa craft and deep understanding of Indian bakery industry requirements.',
+      'Passion for fine chocolate making and deep understanding of Indian bakery industry requirements.',
     ],
     icon: ChefHat,
   },
@@ -334,7 +334,7 @@ export const CareerPage: React.FC<CareerPageProps> = ({
               requirements: [
                 'Relevant educational degree or professional certification.',
                 'Prior experience in food manufacturing or commercial FMCG operations.',
-                'Dedication to quality craftsmanship and collaborative teamwork.',
+                'Dedication to high quality standards and collaborative teamwork.',
               ],
               icon: Briefcase,
             };
@@ -535,7 +535,7 @@ export const CareerPage: React.FC<CareerPageProps> = ({
               transition={{ duration: 0.7, delay: 0.55, ease: EASE }}
               className="mt-6 text-sm sm:text-base lg:text-lg text-[#381A0E]/75 max-w-xl mx-auto font-light leading-relaxed"
             >
-              We craft premium couvertures, compounds and cocoa for master patisseries across India.
+              We make premium couvertures, compounds and cocoa for master patisseries across India.
               Come temper, roast, sell and dream with a team that lives to{' '}
               <span className="font-semibold text-[#8C4724]">spread happiness</span>.
             </motion.p>
@@ -576,10 +576,11 @@ export const CareerPage: React.FC<CareerPageProps> = ({
           </div>
         </section>
 
-        {/* 2. WHY JOIN (ENHANCED LUXURY SCROLL MOTION & HOVER STYLING) */}
-        <section className="py-20 sm:py-28 px-4 sm:px-6 bg-white border-y border-[#381A0E]/10 relative overflow-hidden">
-          {/* Subtle Background Accent Texture */}
-          <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[radial-gradient(#381A0E_1px,transparent_1px)] [background-size:20px_20px]" />
+        {/* 2. WHY JOIN (ENHANCED LUXURY ARTISAN STYLING) */}
+        <section className="py-20 sm:py-28 px-4 sm:px-6 bg-gradient-to-b from-[#FDFBF7] via-[#FAF5EC] to-[#FDFBF7] border-y border-[#EADBCC] relative overflow-hidden">
+          {/* Subtle Warm Amber & Gold Ambient Glows */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[850px] h-[380px] bg-gradient-to-b from-[#F5E6D3]/60 via-[#F9BD03]/10 to-transparent blur-3xl pointer-events-none rounded-full" />
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#381A0E_1px,transparent_1px)] [background-size:24px_24px]" />
 
           <div className="max-w-6xl mx-auto relative z-10">
             {/* Staggered Scroll Motion Header */}
@@ -589,8 +590,9 @@ export const CareerPage: React.FC<CareerPageProps> = ({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.5, ease: EASE }}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F7EFE6] border border-[#381A0E]/10 text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] mb-3"
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-[#D4AF37]/50 text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] mb-3 shadow-[0_2px_10px_rgba(200,145,43,0.12)] backdrop-blur-xs"
               >
+                <Sparkles className="w-3.5 h-3.5 text-[#C8912B]" />
                 <span>Why ROMAS</span>
               </motion.span>
 
@@ -599,104 +601,120 @@ export const CareerPage: React.FC<CareerPageProps> = ({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.6, delay: 0.08, ease: EASE }}
-                className="text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[#381A0E] leading-[0.95]"
+                className="text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[#2D1308] leading-[0.95]"
                 style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
               >
-                More than a job — a craft
+                More than a job — <span className="bg-gradient-to-r from-[#8C4724] via-[#C8912B] to-[#8C4724] bg-clip-text text-transparent">a career</span>
               </motion.h2>
 
               <motion.div
-                initial={{ opacity: 0, scaleX: 0 }}
-                whileInView={{ opacity: 1, scaleX: 1 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.7, delay: 0.16, ease: EASE }}
-                className="mx-auto mt-5 h-[2px] w-20 origin-center rounded-full bg-gradient-to-r from-transparent via-[#C8912B] to-transparent"
+                transition={{ duration: 0.6, delay: 0.16, ease: EASE }}
+                className="flex items-center justify-center gap-3 mt-5"
                 aria-hidden="true"
-              />
+              >
+                <span className="h-[1px] w-14 bg-gradient-to-r from-transparent to-[#C8912B]" />
+                <span className="w-2 h-2 rotate-45 bg-[#C8912B] shadow-xs" />
+                <span className="h-[1px] w-14 bg-gradient-to-l from-transparent to-[#C8912B]" />
+              </motion.div>
 
               <motion.p
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.6, delay: 0.22, ease: EASE }}
-                className="mt-4 text-xs sm:text-sm text-[#381A0E]/70 max-w-md mx-auto font-light leading-relaxed"
+                className="mt-4 text-xs sm:text-sm text-[#4A2617]/80 max-w-md mx-auto font-normal leading-relaxed"
               >
                 Four foundational pillars that drive our conching precision, employee wellbeing, and culinary excellence.
               </motion.p>
             </div>
 
-            {/* 4 Cards Grid with Smooth Staggered Scroll & Rich Hover Interactions */}
+            {/* 4 Cards Grid with Ultra-Luxury Styling & Smooth Hover Effects */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
               {VALUES.map((v, i) => {
                 const Icon = v.icon;
                 return (
                   <motion.div
                     key={v.title}
-                    initial={{ opacity: 0, y: 45, scale: 0.94 }}
+                    initial={{ opacity: 0, y: 40, scale: 0.95 }}
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
                     viewport={{ once: true, margin: '-50px' }}
                     transition={{
                       duration: 0.65,
-                      delay: i * 0.12,
+                      delay: i * 0.1,
                       ease: EASE,
                     }}
                     whileHover={{
                       y: -8,
                       scale: 1.02,
-                      transition: { duration: 0.28, ease: 'easeOut' },
+                      transition: { duration: 0.25, ease: 'easeOut' },
                     }}
-                    className="group relative rounded-3xl bg-[#FBF8F3] hover:bg-white border border-[#381A0E]/10 hover:border-[#F9BD03]/70 p-6 sm:p-7 flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-[0_24px_50px_-16px_rgba(56,26,14,0.18)] transition-all duration-300 cursor-default"
+                    className="group relative rounded-3xl bg-white/90 hover:bg-white border border-[#EADBCC] hover:border-[#D4AF37] p-6 sm:p-7 flex flex-col justify-between overflow-hidden shadow-[0_8px_25px_-8px_rgba(56,26,14,0.06)] hover:shadow-[0_24px_50px_-12px_rgba(56,26,14,0.2)] hover:ring-1 hover:ring-[#D4AF37]/40 transition-all duration-300 cursor-default"
                   >
                     {/* Top Golden Light Beam Accent that glows on hover */}
                     <div
-                      className="absolute top-0 inset-x-6 h-[3px] bg-gradient-to-r from-transparent via-[#F9BD03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"
+                      className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                       aria-hidden="true"
                     />
 
                     {/* Subtle Warm Gradient Wash Layer on Hover */}
                     <div
-                      className="absolute inset-0 bg-gradient-to-b from-[#FFFDF9] via-[#FAF7F2]/50 to-[#F5ECE0]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                      className="absolute inset-0 bg-gradient-to-b from-[#FFFDF9] via-[#FAF6EE]/60 to-[#F5ECE0]/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                       aria-hidden="true"
                     />
 
+                    {/* Background Subtle Large Watermark Number */}
+                    <span
+                      className="absolute -top-3 -right-2 text-6xl font-black font-serif text-[#381A0E]/[0.04] group-hover:text-[#C8912B]/[0.08] select-none pointer-events-none transition-colors duration-300"
+                      aria-hidden="true"
+                    >
+                      {v.num}
+                    </span>
+
                     {/* Card Content Top Section */}
                     <div className="relative z-10">
-                      {/* Top Row: Icon + Sequence Number */}
+                      {/* Top Row: Icon + Sequence Number Badge */}
                       <div className="flex items-center justify-between mb-5">
-                        <div className="w-13 h-13 rounded-2xl bg-[#381A0E] text-[#F9BD03] flex items-center justify-center shadow-md group-hover:bg-[#F9BD03] group-hover:text-[#1C0E07] group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300">
-                          <Icon className="w-6 h-6" />
+                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#2D1308] via-[#3E1C0D] to-[#1C0E07] text-[#F9BD03] flex items-center justify-center shadow-[0_8px_16px_-4px_rgba(42,19,8,0.25)] border border-[#D4AF37]/30 group-hover:border-[#D4AF37] group-hover:scale-108 group-hover:-rotate-3 group-hover:shadow-[0_12px_24px_-4px_rgba(200,145,43,0.35)] transition-all duration-300">
+                          <Icon className="w-6 h-6 transition-transform duration-300 group-hover:scale-110" />
                         </div>
-                        <span
-                          className="font-mono text-3xl font-black text-[#381A0E]/15 group-hover:text-[#C8912B]/40 transition-colors duration-300 select-none"
-                          aria-hidden="true"
-                        >
-                          {v.num}
-                        </span>
+                        <div className="px-2.5 py-1 rounded-full bg-[#FAF2E6] border border-[#EADBCC] group-hover:border-[#D4AF37]/50 transition-colors">
+                          <span
+                            className="font-mono text-xs font-black text-[#8C4724] group-hover:text-[#381A0E] select-none"
+                            aria-hidden="true"
+                          >
+                            {v.num}
+                          </span>
+                        </div>
                       </div>
 
                       {/* Domain Tag */}
-                      <span className="inline-block text-[10px] font-black uppercase tracking-[0.18em] text-[#8C4724] mb-1.5">
+                      <span className="inline-block text-[10px] font-black uppercase tracking-[0.2em] text-[#9A5028] mb-1.5">
                         {v.tag}
                       </span>
 
                       {/* Card Title */}
-                      <h3 className="text-lg sm:text-xl font-bold text-[#2A0E04] group-hover:text-[#8C4724] transition-colors duration-300 leading-snug">
+                      <h3 className="text-xl sm:text-[22px] font-bold text-[#220D05] group-hover:text-[#8C4724] transition-colors duration-300 leading-snug">
                         {v.title}
                       </h3>
 
                       {/* Card Body */}
-                      <p className="mt-2.5 text-xs sm:text-sm text-[#381A0E]/70 font-light leading-relaxed">
+                      <p className="mt-3 text-xs sm:text-[13px] text-[#4A2819]/80 leading-relaxed font-normal">
                         {v.body}
                       </p>
                     </div>
 
-                    {/* Bottom Highlight Pill with Dynamic Arrow Reveal */}
-                    <div className="relative z-10 mt-6 pt-4 border-t border-[#381A0E]/8 flex items-center justify-between">
-                      <span className="text-[11px] font-semibold text-[#8C4724] group-hover:text-[#381A0E] transition-colors duration-300 flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#C8912B] group-hover:scale-125 transition-transform" />
+                    {/* Bottom Highlight Pill with Elegant Styling */}
+                    <div className="relative z-10 mt-6 pt-4 border-t border-[#381A0E]/10 flex items-center justify-between">
+                      <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAF2E6] border border-[#EADBCC] text-[11px] font-bold text-[#8C4724] group-hover:bg-[#8C4724] group-hover:text-[#FFF5EB] group-hover:border-[#8C4724] transition-all duration-300 shadow-2xs">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#C8912B] group-hover:bg-[#F9BD03] transition-colors" />
                         <span>{v.highlight}</span>
                       </span>
-                      <ArrowRight className="w-3.5 h-3.5 text-[#C8912B] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                      <span className="w-7 h-7 rounded-full bg-[#FAF2E6]/60 flex items-center justify-center opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 group-hover:bg-[#8C4724] text-[#8C4724] group-hover:text-white">
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </span>
                     </div>
                   </motion.div>
                 );
@@ -861,7 +879,7 @@ export const CareerPage: React.FC<CareerPageProps> = ({
                             {/* Bottom Bar in Expanded View */}
                             <div className="mt-6 pt-4 border-t border-[#381A0E]/10 flex flex-col sm:flex-row items-center justify-between gap-3">
                               <p className="text-xs text-[#381A0E]/60 text-center sm:text-left">
-                                Ready to bring your confectionery craft to ROMAS?
+                                Ready to bring your confectionery skills to ROMAS?
                               </p>
                               <button
                                 type="button"
@@ -1244,7 +1262,7 @@ export const CareerPage: React.FC<CareerPageProps> = ({
                     rows={3}
                     value={form.message}
                     onChange={handleChange}
-                    placeholder="Tell us about your chocolate journey, patisserie craft, or commercial distribution experience..."
+                    placeholder="Tell us about your chocolate journey, patisserie skills, or commercial distribution experience..."
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-[#FBF8F3] text-sm text-[#2A0E04] focus:outline-none focus:border-[#C8912B]"
                   />
                 </div>
