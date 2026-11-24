@@ -29,12 +29,33 @@ export const isValidName = (name: string): boolean => {
   return nameRegex.test(name);
 };
 
-/** Validate URL format */
+/** Validate URL format and allowed protocols */
 export const isValidUrl = (url: string): boolean => {
   if (!url || url.length > MAX_URL_LENGTH) return false;
   try {
-    new URL(url);
-    return true;
+    const parsed = new URL(url);
+    // Only allow http(s) and prevent javascript: protocol injection
+    return ['http:', 'https:'].includes(parsed.protocol);
+  } catch {
+    return false;
+  }
+};
+
+/** Validate resume/document URL - more strict than general URLs */
+export const isValidResumeUrl = (url: string): boolean => {
+  if (!isValidUrl(url)) return false;
+  // Allow common document hosting services
+  const allowedDomains = [
+    'drive.google.com',
+    'docs.google.com',
+    'dropbox.com',
+    'onedrive.live.com',
+    'box.com',
+    'github.com',
+  ];
+  try {
+    const parsed = new URL(url);
+    return allowedDomains.some(domain => parsed.hostname?.includes(domain));
   } catch {
     return false;
   }

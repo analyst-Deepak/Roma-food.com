@@ -413,11 +413,14 @@ export const CartPage: React.FC<CartPageProps> = ({
   const [codCaptchaCode, setCodCaptchaCode] = useState('4829');
   const [codCaptchaError, setCodCaptchaError] = useState<string | null>(null);
 
-  // Card Dummy state
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardExpiry, setCardExpiry] = useState('');
-  const [cardCvv, setCardCvv] = useState('');
-  const [cardHolder, setCardHolder] = useState('Rahul Sharma');
+  // ⚠️ SECURITY: Card payment data is NOT stored in state for security.
+  // In production, use a PCI-DSS compliant payment gateway (Stripe, PayU, Razorpay).
+  // Never store full card numbers, CVV, or expiry dates in browser memory.
+  // Using ref-only form inputs to prevent state manipulation.
+  const cardNumberRef = React.useRef<HTMLInputElement>(null);
+  const cardExpiryRef = React.useRef<HTMLInputElement>(null);
+  const cardCvvRef = React.useRef<HTMLInputElement>(null);
+  const cardHolderRef = React.useRef<HTMLInputElement>(null);
 
   // Generated Order ID for success
   const [confirmedOrderId, setConfirmedOrderId] = useState('ROMA-2026-8942');
@@ -601,10 +604,17 @@ export const CartPage: React.FC<CartPageProps> = ({
   // Card Submit
   const handleCardPay = (e: React.FormEvent) => {
     e.preventDefault();
-    if (cardNumber.replace(/\s+/g, '').length < 12 || cardCvv.length < 3) {
+    const cardNum = cardNumberRef.current?.value.replace(/\s+/g, '') || '';
+    const cvv = cardCvvRef.current?.value || '';
+    if (cardNum.length < 12 || cvv.length < 3) {
       alert('Please enter valid card details');
       return;
     }
+    // Clear sensitive data immediately after validation
+    cardNumberRef.current && (cardNumberRef.current.value = '');
+    cardExpiryRef.current && (cardExpiryRef.current.value = '');
+    cardCvvRef.current && (cardCvvRef.current.value = '');
+    cardHolderRef.current && (cardHolderRef.current.value = '');
     executeConfirmOrder('card');
   };
 
@@ -1497,49 +1507,49 @@ export const CartPage: React.FC<CartPageProps> = ({
                         <div>
                           <label className="text-xs font-bold text-neutral-700 block mb-1">Card Number</label>
                           <input
+                            ref={cardNumberRef}
                             type="text"
                             required
                             maxLength={19}
-                            value={cardNumber}
-                            onChange={(e) => setCardNumber(e.target.value)}
                             placeholder="xxxx xxxx xxxx xxxx"
                             className="w-full px-3.5 py-2 rounded border border-neutral-300 font-mono text-xs focus:outline-none focus:border-[#2874F0] bg-white"
+                            autoComplete="off"
                           />
                         </div>
                         <div className="grid grid-cols-2 gap-3">
                           <div>
                             <label className="text-xs font-bold text-neutral-700 block mb-1">Valid Thru</label>
                             <input
+                              ref={cardExpiryRef}
                               type="text"
                               required
                               maxLength={5}
-                              value={cardExpiry}
-                              onChange={(e) => setCardExpiry(e.target.value)}
                               placeholder="MM/YY"
                               className="w-full px-3.5 py-2 rounded border border-neutral-300 font-mono text-xs focus:outline-none focus:border-[#2874F0] bg-white"
+                              autoComplete="off"
                             />
                           </div>
                           <div>
                             <label className="text-xs font-bold text-neutral-700 block mb-1">CVV</label>
                             <input
+                              ref={cardCvvRef}
                               type="password"
                               required
                               maxLength={4}
-                              value={cardCvv}
-                              onChange={(e) => setCardCvv(e.target.value)}
                               placeholder="123"
                               className="w-full px-3.5 py-2 rounded border border-neutral-300 font-mono text-xs focus:outline-none focus:border-[#2874F0] bg-white"
+                              autoComplete="off"
                             />
                           </div>
                         </div>
                         <div>
                           <label className="text-xs font-bold text-neutral-700 block mb-1">Name on Card</label>
                           <input
+                            ref={cardHolderRef}
                             type="text"
                             required
-                            value={cardHolder}
-                            onChange={(e) => setCardHolder(e.target.value)}
                             className="w-full px-3.5 py-2 rounded border border-neutral-300 text-xs focus:outline-none focus:border-[#2874F0] bg-white"
+                            autoComplete="off"
                           />
                         </div>
                         <button

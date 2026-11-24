@@ -446,7 +446,14 @@ export const CareerPage: React.FC<CareerPageProps> = ({
     }
     try {
       setUploading(true);
-      const ext = file.name.split('.').pop() || 'pdf';
+      // Validate file extension with whitelist
+      const allowedExts = ['pdf', 'doc', 'docx', 'txt', 'rtf'];
+      const ext = (file.name.split('.').pop() || '').toLowerCase();
+      if (!allowedExts.includes(ext)) {
+        setUploadMsg('Only PDF, DOC, DOCX files allowed');
+        setUploading(false);
+        return;
+      }
       const path = `applications/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
       const { error } = await supabase.storage
         .from('resumes')
@@ -556,6 +563,12 @@ export const CareerPage: React.FC<CareerPageProps> = ({
     setSubmitting(true);
 
     const hrEmail = COMPANY_INFO.hrEmail || 'Hr@roomafoods.com';
+    // Validate HR email configuration
+    if (!isValidEmail(hrEmail)) {
+      alert('HR email configuration error');
+      setSubmitting(false);
+      return;
+    }
     const positionApplied = form.position?.trim() || 'Open Application';
     const resumeDetails = form.resume.trim() || (resumeFile ? resumeFile.name : 'Not attached');
 

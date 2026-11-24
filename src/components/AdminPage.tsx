@@ -13,6 +13,7 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { isValidResumeUrl, isValidEmail } from '../lib/validation';
 
 interface AdminPageProps {
   onNavigateHome: () => void;
@@ -356,7 +357,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigateHome }) => {
                 <span>📞 {a.phone}</span>
                 <span>📍 {a.state}</span>
                 {a.experience && <span>🧭 {a.experience}</span>}
-                {a.resume && <a href={a.resume} target="_blank" rel="noreferrer" className="text-[#F9BD03] underline">Resume ↗</a>}
+                {a.resume && isValidResumeUrl(a.resume) && <a href={a.resume} target="_blank" rel="noopener noreferrer" className="text-[#F9BD03] underline">Resume ↗</a>}
+                {a.resume && !isValidResumeUrl(a.resume) && <span className="text-[#F9BD03] text-xs">(Invalid resume URL)</span>}
               </div>
               {a.message && <p className="text-xs text-[#FEE8B4]/60 mt-2 leading-relaxed">{a.message}</p>}
             </div>
