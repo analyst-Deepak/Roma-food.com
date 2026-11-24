@@ -39,10 +39,10 @@ export default function App() {
       return { route: 'cart' };
     }
     if (rawPath === '/product' || rawPath.startsWith('/product/')) {
-      return { route: 'product' };
+      return { route: 'home' };
     }
     if (rawPath === '/shop' || rawPath === '/store' || rawPath === '/products') {
-      return { route: 'shop' };
+      return { route: 'home' };
     }
     if (rawPath === '/privacy-policy' || rawPath === '/privacy' || rawPath === '/data-deletion') {
       return { route: 'privacy' };
@@ -68,10 +68,10 @@ export default function App() {
       return { route: 'cart' };
     }
     if (rawHash.startsWith('product')) {
-      return { route: 'product' };
+      return { route: 'home' };
     }
     if (rawHash === 'shop' || rawHash === 'store') {
-      return { route: 'shop' };
+      return { route: 'home' };
     }
     if (rawHash === 'privacy-policy' || rawHash === 'privacy' || rawHash === 'data-deletion') {
       return { route: 'privacy' };
@@ -169,22 +169,21 @@ export default function App() {
   };
 
   const handleNavigateShop = () => {
-    navigateTo('/shop', 'shop');
+    handleNavigateHome('menu');
   };
 
   const handleNavigateCart = () => {
-    navigateTo('/cart', 'cart');
+    handleNavigateHome('menu');
   };
 
   const handleOpenProduct = (prod: EcommerceProduct) => {
     setSelectedProduct(prod);
-    navigateTo(`/product?id=${prod.id}`, 'product');
+    handleNavigateHome('menu');
   };
 
   const handleNavigateHome = (sectionId?: string) => {
     if (sectionId === 'shop') {
-      handleNavigateShop();
-      return;
+      sectionId = 'menu';
     }
     if (sectionId === 'careers') {
       navigateTo('/careers', 'career');
@@ -299,32 +298,8 @@ export default function App() {
             />
           )}
 
-          {/* Dedicated Full Screen Product Details Page (Flipkart / Amazon Full Page Layout) */}
-          {currentRoute === 'product' && selectedProduct && (
-            <ProductDetailsPage
-              product={selectedProduct}
-              onBack={() => navigateTo('/shop', 'shop')}
-              onNavigateHome={(id) => handleNavigateHome(id)}
-              onNavigateShop={handleNavigateShop}
-              onNavigateCart={handleNavigateCart}
-              onSelectProduct={handleOpenProduct}
-              onOpenReservation={() => setIsSampleBagOpen(true)}
-              onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
-              onOpenLegal={handleNavigateLegal}
-            />
-          )}
-
-          {/* Dedicated 3D Shop Page (Clean White Background) */}
-          {currentRoute === 'shop' && (
-            <ShopPage
-              onNavigateHome={(id) => handleNavigateHome(id)}
-              onNavigateAbout={handleNavigateAbout}
-              onSelectProduct={handleOpenProduct}
-              onOpenReservation={() => setIsSampleBagOpen(true)}
-              onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
-              onOpenLegal={handleNavigateLegal}
-            />
-          )}
+          {/* Dedicated Full Screen Product & Shop Pages (Temporarily hidden) */}
+          {/* currentRoute === 'shop' && <ShopPage ... /> */}
 
           {/* Dedicated About Page featuring Monumental 3D ROMAS Chocolate Slab on Floor */}
           {currentRoute === 'about' && (

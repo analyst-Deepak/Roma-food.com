@@ -30,7 +30,6 @@ export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
   }, []);
 
   const navLinks = [
-    { label: 'SHOP', id: 'shop' },
     { label: 'ABOUT', id: 'about' },
     { label: 'PRODUCT', id: 'menu' },
     { label: 'CAREERS', id: 'careers' },
@@ -104,73 +103,8 @@ export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
             })}
           </nav>
 
-          {/* Wishlist, Cart & Motion Overlay Menu */}
+          {/* Motion Overlay Menu */}
           <div className="flex items-center gap-1.5 sm:gap-2">
-            {/* Mobile-only SHOP quick link */}
-            <button
-              onClick={(e) => handleLinkClick(e, 'shop')}
-              className={`md:hidden shrink-0 text-[11px] font-black tracking-widest uppercase px-3 py-1.5 rounded-full select-none cursor-pointer transition-all ${
-                currentPage === 'shop'
-                  ? 'bg-[#F9BD03] text-[#1C0E07] shadow-sm'
-                  : 'text-[#FEE8B4] border border-[#F9BD03]/35 hover:text-[#F9BD03]'
-              }`}
-              style={{ fontFamily: "'Inter', sans-serif" }}
-            >
-              Shop
-            </button>
-
-            {/* Wishlist (Heart) Trigger Button */}
-            <button
-              onClick={() => setIsWishlistOpen(true)}
-              aria-label={`Open wishlist (${wishlistCount} saved items)`}
-              title="My Wishlist"
-              className="relative w-8 h-8 sm:w-9 sm:h-9 shrink-0 rounded-full bg-[#1C0E07]/90 hover:bg-gr8r-brown border border-gr8r-yellow/35 hover:border-red-400/60 transition-all duration-200 flex items-center justify-center cursor-pointer shadow-md active:scale-95 group"
-            >
-              <Heart
-                className={`w-4 h-4 transition-transform group-hover:scale-110 ${
-                  wishlistCount > 0
-                    ? 'text-red-500 fill-red-500'
-                    : 'text-gr8r-cream group-hover:text-red-400'
-                }`}
-              />
-              {wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4.5 h-4.5 rounded-full bg-red-500 border-2 border-[#1C0E07] text-white text-[9px] font-black font-mono flex items-center justify-center shadow-md">
-                  {wishlistCount}
-                </span>
-              )}
-            </button>
-
-            {/* Cart Trigger Button (Navigates to Full-Screen Cart Page) */}
-            <button
-              onClick={() => {
-                if (onNavigateCart) {
-                  onNavigateCart();
-                } else {
-                  setIsCartOpen(true);
-                }
-              }}
-              aria-label={`Open shopping bag (${cartCount} items)`}
-              className="relative w-8 h-8 sm:w-9 sm:h-9 shrink-0 rounded-full bg-[#1C0E07]/90 hover:bg-gr8r-yellow border border-gr8r-yellow/35 transition-all duration-200 flex items-center justify-center cursor-pointer shadow-md active:scale-95 group"
-            >
-              <ShoppingCart className="w-4 h-4 text-gr8r-cream group-hover:text-[#1C0E07] transition-transform group-hover:scale-110" />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4.5 h-4.5 rounded-full bg-gr8r-yellow border-2 border-[#1C0E07] text-[#1C0E07] text-[9px] font-black font-mono flex items-center justify-center shadow-md">
-                  {cartCount}
-                </span>
-              )}
-            </button>
-
-            {/* Cart Total (desktop only, shown alongside the bag button, clickable) */}
-            {cartTotal > 0 && (
-              <button
-                onClick={() => onNavigateCart?.()}
-                className="hidden sm:inline text-xs font-bold font-mono text-gr8r-cream hover:text-[#F9BD03] cursor-pointer transition-colors"
-                title="View Shopping Cart"
-              >
-                ₹{cartTotal}
-              </button>
-            )}
-
             <MotionOverlayMenu
               onNavigate={onNavigate}
               currentPage={currentPage}

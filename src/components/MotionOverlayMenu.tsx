@@ -31,7 +31,6 @@ interface MotionOverlayMenuProps {
 }
 
 const DEFAULT_LINKS: MenuItem[] = [
-  { label: 'SHOP', id: 'shop', badge: '3D' },
   { label: 'ABOUT', id: 'about' },
   { label: 'PRODUCT', id: 'menu' },
   { label: 'CAREERS', id: 'careers' },
