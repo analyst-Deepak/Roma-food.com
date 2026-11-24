@@ -115,10 +115,14 @@ export default function App() {
       const { route, section } = getRouteFromUrl();
       setCurrentRoute(route);
       if (route === 'home' && section) {
-        setTimeout(() => {
-          const el = document.getElementById(section);
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+        // Validate section ID to prevent DOM-based XSS
+        const validSectionPattern = /^[a-z0-9\-_]+$/i;
+        if (validSectionPattern.test(section)) {
+          setTimeout(() => {
+            const el = document.getElementById(section);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }
       }
     };
 

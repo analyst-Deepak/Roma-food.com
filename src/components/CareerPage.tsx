@@ -30,6 +30,7 @@ import { COMPANY_INFO } from '../data/products';
 import { Gr8rNavbar } from './Gr8rNavbar';
 import { Gr8rFooter, LegalTab } from './Gr8rFooter';
 import { supabase } from '../lib/supabase';
+import { validateCareerForm } from '../lib/validation';
 
 interface CareerPageProps {
   onNavigateHome: (sectionId?: string) => void;
@@ -526,12 +527,15 @@ export const CareerPage: React.FC<CareerPageProps> = ({
     setForm((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
   };
 
-  // Simple validation matching Avinash form
-  const isValid =
-    form.name.trim() !== '' &&
-    form.phone.trim() !== '' &&
-    form.email.trim() !== '' &&
-    form.agree;
+  // Enhanced validation with security checks
+  const validationResult = validateCareerForm({
+    name: form.name,
+    email: form.email,
+    phone: form.phone,
+    position: form.position,
+    message: form.message,
+  });
+  const isValid = validationResult.isValid && form.agree;
 
   const openWhatsApp = () => {
     const text = encodeURIComponent(
