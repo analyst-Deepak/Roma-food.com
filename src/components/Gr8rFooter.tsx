@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Heart,
@@ -31,6 +31,29 @@ export const Gr8rFooter: React.FC<Gr8rFooterProps> = ({
   onNavigate,
   onOpenLegal,
 }) => {
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [shouldLoadMap, setShouldLoadMap] = useState(false);
+  const [mapLoaded, setMapLoaded] = useState(false);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    if (!('IntersectionObserver' in window)) {
+      setShouldLoadMap(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry?.isIntersecting) return;
+      setShouldLoadMap(true);
+      observer.disconnect();
+    }, { rootMargin: '0px 0px 3000px 0px' });
+
+    observer.observe(map);
+    return () => observer.disconnect();
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -167,14 +190,22 @@ export const Gr8rFooter: React.FC<Gr8rFooterProps> = ({
             </p>
 
             {/* Interactive Embedded Google Map */}
-            <div className="relative w-full h-44 rounded-2xl overflow-hidden border border-[#FEE8B4]/20 shadow-lg bg-[#251006] group">
-              <iframe
-                title="ROMAS Dhamtari Works Location Map"
-                src="https://maps.google.com/maps?q=Kurud%2C+Dhamtari%2C+Chhattisgarh+493663&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                className="w-full h-full border-0 filter contrast-[1.05] opacity-90 group-hover:opacity-100 transition-opacity"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
+            <div ref={mapRef} className="relative w-full h-44 rounded-2xl overflow-hidden border border-[#FEE8B4]/20 shadow-lg bg-[#251006] group">
+              {!mapLoaded && (
+                <div className="absolute inset-0 grid place-content-center justify-items-center gap-2 text-xs text-[#FEE8B4]/75">
+                  <MapPin aria-hidden="true" className="size-5 text-[#F9BD03]" />
+                  <span>Kurud, Chhattisgarh</span>
+                </div>
+              )}
+              {shouldLoadMap && (
+                <iframe
+                  title="ROMAS Dhamtari Works Location Map"
+                  src="https://maps.google.com/maps?q=Kurud%2C+Dhamtari%2C+Chhattisgarh+493663&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                  className={`relative w-full h-full border-0 filter contrast-[1.05] transition-opacity ${mapLoaded ? 'opacity-90 group-hover:opacity-100' : 'invisible'}`}
+                  onLoad={() => setMapLoaded(true)}
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              )}
             </div>
 
             <div className="mt-3">
