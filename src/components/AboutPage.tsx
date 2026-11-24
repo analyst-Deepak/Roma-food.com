@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
   ShieldCheck,
   Building2,
@@ -199,6 +199,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
   onOpenReservation,
   onNavigateHome,
 }) => {
+  const reduceMotion = useReducedMotion();
   const leadershipTeam = [
     {
       name: 'NAND KISHORE AGRAWAL',
@@ -292,10 +293,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       <section className="relative w-full min-h-[70vh] sm:min-h-[82vh] lg:min-h-[88vh] flex items-center justify-center overflow-hidden bg-[#0D0704] border-b border-[#381A0E]/20">
         {/* Full-width Edge-to-Edge Image */}
         <div className="absolute inset-0 w-full h-full">
-          <img
+          <motion.img
             src="/assets/chocolate/roma_slab_official.jpg"
             alt="ROMA Official Embossed Chocolate Slab"
             className="w-full h-full object-cover object-center"
+            initial={reduceMotion ? false : { scale: 1.12 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.7, ease: 'easeOut' }}
           />
           {/* DP Chocolates style luxury dark cinematic gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0D0704] via-black/40 to-[#0D0704]/75" />
@@ -308,7 +312,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         {/* Centered Content over Full-Width Image */}
         <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-32 sm:pt-40 pb-16 sm:pb-24">
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-md mb-5"
@@ -319,9 +323,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 48 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.95, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
             className="text-4xl sm:text-6xl lg:text-7xl font-bold uppercase tracking-tight text-white leading-[0.92] drop-shadow-2xl"
             style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
           >
