@@ -79,7 +79,7 @@ export const Gr8rBranches: React.FC = () => {
               <div>
                 {/* Branch Image with Badge Pill */}
                 <div className="relative aspect-[16/10] bg-[#FAF8F5] overflow-hidden">
-                  <div className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-[#1C0E07]/80 backdrop-blur-md text-[#F9BD03] text-[10px] font-black uppercase tracking-widest border border-[#F9BD03]/30 shadow-md">
+                  <div className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-[#1C0E07]/80 backdrop-blur-md text-gr8r-yellow text-[10px] font-black uppercase tracking-widest border border-gr8r-yellow/30 shadow-md">
                     {branch.badge}
                   </div>
                   <img
@@ -115,36 +115,43 @@ export const Gr8rBranches: React.FC = () => {
                       <span className="font-normal text-[#2A0E04]">{branch.hours}</span>
                     </div>
 
-                    {/* Symmetrical, High-Contrast Company/Facility Details Box */}
-                    <div className="pt-2">
-                      <div className="bg-[#FAF6EE] rounded-2xl p-4 border border-[#EADBCC] space-y-2.5">
-                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#8C4724]">
-                          {branch.detailsTitle}
-                        </p>
-                        <div className="grid grid-cols-2 gap-3 pt-0.5">
-                          {branch.details.map((item, dIdx) => (
-                            <div key={dIdx} className="flex flex-col">
-                              <span className="text-[10px] font-bold text-[#8C4724]/80 uppercase tracking-wider">
-                                {item.label}
-                              </span>
-                              {item.href ? (
-                                <a
-                                  href={item.href}
-                                  target={item.href.startsWith('http') ? '_blank' : undefined}
-                                  rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                                  className="text-xs font-semibold text-[#2A0E04] hover:text-[#8C4724] transition-colors truncate"
-                                >
-                                  {item.value}
-                                </a>
-                              ) : (
-                                <span className="text-xs font-semibold text-[#2A0E04] truncate">
-                                  {item.value}
-                                </span>
-                              )}
+                    {/* Why Choose Us Benefits */}
+                    <div className="pt-4">
+                      {index === 0 ? (
+                        <div className="space-y-3">
+                          <div className="flex items-start gap-3">
+                            <ShieldCheck className="w-4 h-4 text-gr8r-yellow shrink-0 mt-0.5" />
+                            <div>
+                              <p className="text-[10px] font-black uppercase tracking-widest text-[#8C4724]">Bean to Bar Excellence</p>
+                              <p className="text-xs text-[#2A0E04] font-light mt-0.5">Premium selection & conching perfection</p>
                             </div>
-                          ))}
+                          </div>
+                          <div className="flex items-start gap-3">
+                            <ShieldCheck className="w-4 h-4 text-gr8r-yellow shrink-0 mt-0.5" />
+                            <div>
+                              <p className="text-[10px] font-black uppercase tracking-widest text-[#8C4724]">Sustainable Sourcing</p>
+                              <p className="text-xs text-[#2A0E04] font-light mt-0.5">Direct farmer relationships & ethical practices</p>
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                      ) : (
+                        <div className="space-y-3">
+                          <div className="flex items-start gap-3">
+                            <ShieldCheck className="w-4 h-4 text-gr8r-yellow shrink-0 mt-0.5" />
+                            <div>
+                              <p className="text-[10px] font-black uppercase tracking-widest text-[#8C4724]">Award-Winning Blends</p>
+                              <p className="text-xs text-[#2A0E04] font-light mt-0.5">Recognized excellence in craft chocolate</p>
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-3">
+                            <ShieldCheck className="w-4 h-4 text-gr8r-yellow shrink-0 mt-0.5" />
+                            <div>
+                              <p className="text-[10px] font-black uppercase tracking-widest text-[#8C4724]">Artisanal Innovation</p>
+                              <p className="text-xs text-[#2A0E04] font-light mt-0.5">Blending tradition with modern techniques</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
