@@ -3,13 +3,9 @@ import React, { useEffect, useRef, useState } from 'react';
 export const Gr8rStatement: React.FC = () => {
   const trackRef = useRef<HTMLDivElement>(null);
   const clipRef = useRef<HTMLVideoElement>(null);
-  const bootRef = useRef<HTMLDivElement>(null);
-  const bootBarRef = useRef<HTMLElement>(null);
-  const bootPctRef = useRef<HTMLParagraphElement>(null);
   const meterRef = useRef<HTMLElement>(null);
   const panelsRef = useRef<(HTMLElement | null)[]>([]);
 
-  // On phones, skip the heavy scroll-scrub video entirely for a fast, lag-free load.
   const [isMobile] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
   );
@@ -19,17 +15,13 @@ export const Gr8rStatement: React.FC = () => {
     const VIDEO_URL = isMobile
       ? '/assets/video/choco_crush_mobile.mp4'
       : '/assets/video/choco_crush.mp4';
-    const FALLBACK_URL = VIDEO_URL;
 
     const track = trackRef.current;
     const clip = clipRef.current;
-    const boot = bootRef.current;
-    const bootBar = bootBarRef.current;
-    const bootPct = bootPctRef.current;
     const meter = meterRef.current;
     const panels = panelsRef.current.filter(Boolean) as HTMLElement[];
 
-    if (!track || !clip || !boot || !bootBar || !bootPct || !meter) return;
+    if (!track || !clip || !meter) return;
     const videoEl = clip;
 
     // Cue table: Each panel owns [fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd] in 0..1 scroll progress.
@@ -59,7 +51,6 @@ export const Gr8rStatement: React.FC = () => {
     let seekAt = 0;
     let duration = 0;
     let ready = false;
-    let started = false;
     let attached = false;
     let animId = 0;
 
@@ -107,60 +98,42 @@ export const Gr8rStatement: React.FC = () => {
       animId = requestAnimationFrame(frame);
     }
 
-    function start() {
-      if (started) return;
-      started = true;
-      ready = true;
-      if (boot) boot.classList.add('done');
+    function syncVideoPosition() {
+      duration = videoEl.duration || 0;
       readScroll();
       seekAt = seekTo;
+      videoEl.currentTime = seekAt;
     }
 
-    function attach(src: string) {
+    function start() {
+      ready = true;
+      syncVideoPosition();
+    }
+
+    function attach() {
       if (attached) return;
       attached = true;
-
-      videoEl.addEventListener('loadedmetadata', function () {
-        duration = videoEl.duration || 0;
-        videoEl.pause();
-        readScroll();
-        seekAt = seekTo;
-        try {
-          videoEl.currentTime = seekAt;
-        } catch (e) {}
-      });
-      videoEl.addEventListener('loadeddata', start);
-      videoEl.addEventListener('canplaythrough', start);
-      videoEl.addEventListener('error', () => {
-        // Fallback to local copy if remote fails
-        if (src !== FALLBACK_URL) {
-          attached = false;
-          attach(FALLBACK_URL);
-        } else {
-          start();
-        }
-      });
-
-      videoEl.src = src;
+      videoEl.src = VIDEO_URL;
       videoEl.load();
-      setTimeout(start, 12000); // Failsafe so a stalled decode never strands page behind preloader
+      animId = requestAnimationFrame(frame);
     }
 
     // iOS unlock: iOS will not paint a frame from a video that has never been played, so nudge it once on first interaction and pause immediately.
     function unlock() {
-      if (!clip) return;
-      const p = clip.play();
+      if (!attached) return;
+      unlockEvents.forEach((event) => window.removeEventListener(event, unlock));
+      const p = videoEl.play();
       if (p && p.then) {
         p.then(function () {
-          clip.pause();
+          videoEl.pause();
         }).catch(function () {});
       } else {
-        clip.pause();
+        videoEl.pause();
       }
     }
     const unlockEvents = ['touchstart', 'pointerdown', 'wheel', 'keydown'] as const;
     unlockEvents.forEach((ev) => {
-      window.addEventListener(ev, unlock, { once: true, passive: true });
+      window.addEventListener(ev, unlock, { passive: true });
     });
 
     // Wiring listeners
@@ -169,13 +142,25 @@ export const Gr8rStatement: React.FC = () => {
 
     readScroll();
     paint();
-    // Stream the local all-intra clip directly (it seeks fine once buffered) instead of
-    // blocking on a full blob download — the preloader clears the moment the first frame decodes.
-    attach(VIDEO_URL);
-    animId = requestAnimationFrame(frame);
+    videoEl.addEventListener('loadeddata', start, { once: true });
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      attach();
+    }, { rootMargin: '0px 0px -1px 0px' });
+
+    // Begin fetching as the next section approaches from below.
+    observer.observe(track);
 
     return () => {
+      observer.disconnect();
       cancelAnimationFrame(animId);
+      unlockEvents.forEach((event) => window.removeEventListener(event, unlock));
+      videoEl.removeEventListener('loadeddata', start);
+      if (attached) {
+        videoEl.removeAttribute('src');
+        videoEl.load();
+      }
       window.removeEventListener('scroll', readScroll);
       window.removeEventListener('resize', readScroll);
     };
@@ -206,46 +191,6 @@ export const Gr8rStatement: React.FC = () => {
             --pill-bg: #0a0908;
             --pill-fg: #ffffff;
             font-family: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-          }
-
-          /* PRELOADER */
-          .cnr-boot {
-            position: absolute;
-            inset: 0;
-            z-index: 90;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            background: var(--shade);
-            transition: opacity .7s var(--ease), visibility .7s;
-          }
-          .cnr-boot.done {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-          }
-          .cnr-boot p {
-            font-size: 12.5px;
-            letter-spacing: .05em;
-            color: var(--fg-faint);
-            font-weight: 500;
-          }
-          .cnr-bar {
-            width: 150px;
-            height: 1px;
-            background: var(--rule);
-            overflow: hidden;
-          }
-          .cnr-bar i {
-            display: block;
-            height: 100%;
-            width: 100%;
-            background: var(--fg);
-            transform: scaleX(0);
-            transform-origin: 0 50%;
-            transition: transform .15s ease-out;
           }
 
           /* STAGE VIDEO & VEIL */
@@ -448,16 +393,6 @@ export const Gr8rStatement: React.FC = () => {
           }
         `}</style>
 
-        {/* 1. Preloader */}
-        <div ref={bootRef} className="cnr-boot" id="boot">
-          <div className="cnr-bar">
-            <i ref={bootBarRef} id="bootBar"></i>
-          </div>
-          <p ref={bootPctRef} id="bootPct">
-            LOADING 0%
-          </p>
-        </div>
-
         {/* 2. Fixed Background Video Stage — chocolate-bar crushing scrub */}
         <div className="cnr-stage">
           <video
@@ -485,17 +420,11 @@ export const Gr8rStatement: React.FC = () => {
             className="cnr-panel"
             data-panel
           >
-            <div className="cnr-eyebrow">
-              Artisan Chocolate Atelier <span>&middot;</span> Kurod Works
-            </div>
             <h1 className="cnr-h1">
               Crafted from bean.
               <br />
               Tempered to shine.
             </h1>
-            <p className="cnr-sub">
-              Single-origin cocoa beans slow-roasted and stone-conched with pure cocoa butter. No shortcuts, no compromises.
-            </p>
             <div className="cnr-cta">
               <a
                 className="cnr-pill"
@@ -518,11 +447,7 @@ export const Gr8rStatement: React.FC = () => {
             className="cnr-panel"
             data-panel
           >
-            <div className="cnr-eyebrow">The Art of Conching</div>
             <h1 className="cnr-h1">Pure velvet melt.</h1>
-            <p className="cnr-sub">
-              Micro-refined below twenty microns for an immaculate melt curve. Every drop releases rich roasted cocoa and golden caramel notes.
-            </p>
             <div className="cnr-cta">
               <a
                 className="cnr-pill"

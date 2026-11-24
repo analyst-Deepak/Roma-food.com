@@ -85,6 +85,8 @@ export const Gr8rBranches: React.FC = () => {
                   <img
                     src={branch.image}
                     alt={branch.name}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />

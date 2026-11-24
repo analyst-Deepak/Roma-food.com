@@ -30,7 +30,7 @@ import { COMPANY_INFO } from '../data/products';
 import { Gr8rNavbar } from './Gr8rNavbar';
 import { Gr8rFooter, LegalTab } from './Gr8rFooter';
 import { supabase } from '../lib/supabase';
-import { validateCareerForm } from '../lib/validation';
+import { isValidEmail, validateCareerForm } from '../lib/validation';
 
 interface CareerPageProps {
   onNavigateHome: (sectionId?: string) => void;

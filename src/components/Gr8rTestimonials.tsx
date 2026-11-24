@@ -22,7 +22,7 @@ const TESTIMONIALS_DATA: Omit<TestimonialEntry, 'words' | 'initials'>[] = [
     company: 'Maison Royale',
     rating: 5,
     tint: '#FFD9B8',
-    avatarUrl: '/assets/testimonials/avatar_1.jpg',
+    avatarUrl: '/assets/testimonials/indian-portrait-1.webp',
   },
   {
     quote:
@@ -32,7 +32,7 @@ const TESTIMONIALS_DATA: Omit<TestimonialEntry, 'words' | 'initials'>[] = [
     company: 'The Velvet Whisk',
     rating: 5,
     tint: '#CFE3FF',
-    avatarUrl: '/assets/testimonials/avatar_2.jpg',
+    avatarUrl: '/assets/testimonials/indian-portrait-2.webp',
   },
   {
     quote:
@@ -42,7 +42,7 @@ const TESTIMONIALS_DATA: Omit<TestimonialEntry, 'words' | 'initials'>[] = [
     company: 'Atelier Cocoa',
     rating: 5,
     tint: '#D6F0D8',
-    avatarUrl: '/assets/testimonials/avatar_3.jpg',
+    avatarUrl: '/assets/testimonials/indian-portrait-3.webp',
   },
   {
     quote:
@@ -52,7 +52,7 @@ const TESTIMONIALS_DATA: Omit<TestimonialEntry, 'words' | 'initials'>[] = [
     company: 'Patisserie Lumière',
     rating: 5,
     tint: '#F3D6F0',
-    avatarUrl: '/assets/testimonials/avatar_4.jpg',
+    avatarUrl: '/assets/testimonials/indian-portrait-4.webp',
   },
   {
     quote:
@@ -62,7 +62,7 @@ const TESTIMONIALS_DATA: Omit<TestimonialEntry, 'words' | 'initials'>[] = [
     company: 'Artisan Loaf & Co',
     rating: 5,
     tint: '#FFF0B8',
-    avatarUrl: '/assets/testimonials/avatar_5.jpg',
+    avatarUrl: '/assets/testimonials/indian-portrait-5.webp',
   },
   {
     quote:
@@ -72,7 +72,7 @@ const TESTIMONIALS_DATA: Omit<TestimonialEntry, 'words' | 'initials'>[] = [
     company: 'Sweet Alchemy',
     rating: 5,
     tint: '#D9D4FF',
-    avatarUrl: '/assets/testimonials/avatar_6.jpg',
+    avatarUrl: '/assets/testimonials/indian-portrait-6.webp',
   },
   {
     quote:
@@ -82,7 +82,7 @@ const TESTIMONIALS_DATA: Omit<TestimonialEntry, 'words' | 'initials'>[] = [
     company: 'Grand Heritage Hotels',
     rating: 5,
     tint: '#FFD1D1',
-    avatarUrl: '/assets/testimonials/avatar_7.jpg',
+    avatarUrl: '/assets/testimonials/indian-portrait-7.webp',
   },
   {
     quote:
@@ -92,7 +92,7 @@ const TESTIMONIALS_DATA: Omit<TestimonialEntry, 'words' | 'initials'>[] = [
     company: 'Corvo Academy',
     rating: 5,
     tint: '#C9F0EC',
-    avatarUrl: '/assets/testimonials/avatar_8.jpg',
+    avatarUrl: '/assets/testimonials/indian-portrait-8.webp',
   },
 ];
 
@@ -394,7 +394,9 @@ export const Gr8rTestimonials: React.FC = () => {
                     </span>
                     <img
                       src={entry.avatarUrl}
-                      alt={entry.author}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
                       className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                       onError={(e) => {
                         (e.currentTarget as HTMLElement).style.display = 'none';
@@ -536,6 +538,7 @@ export const Gr8rTestimonials: React.FC = () => {
                   <div className="text-xs sm:text-sm text-[#7A5C4D] font-medium mt-0.5">
                     {activeEntry.role} · <span className="text-[#7A5C4D] font-semibold">{activeEntry.company}</span>
                   </div>
+                  <div className="mt-1 text-xs text-[#7A5C4D]">AI-generated illustrative portrait</div>
                 </div>
 
                 {/* Counter & Prev/Next Arrow Buttons */}

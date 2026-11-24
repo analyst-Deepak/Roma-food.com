@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 import { Product } from './types';
 import { PRODUCTS } from './data/products';
 import { Gr8rNavbar } from './components/Gr8rNavbar';
@@ -11,20 +11,29 @@ import { Gr8rTestimonials } from './components/Gr8rTestimonials';
 import { Gr8rFaq } from './components/Gr8rFaq';
 import { Gr8rBlog } from './components/Gr8rBlog';
 import { Gr8rFooter } from './components/Gr8rFooter';
-import { AboutPage } from './components/AboutPage';
-import { LegalPage, LegalTabType } from './components/LegalPage';
-import { CareerPage } from './components/CareerPage';
-import { AdminPage } from './components/AdminPage';
-import { ShopPage } from './components/ShopPage';
-import { ProductDetailsPage } from './components/ProductDetailsPage';
-import { CartPage } from './components/CartPage';
+
+import type { LegalTabType } from './components/LegalPage';
+
+
 import { ECOMMERCE_PRODUCTS } from './data/ecommerceProducts';
 import { EcommerceProduct } from './types/ecommerce';
-import { CartDrawer } from './components/CartDrawer';
 import { WishlistDrawer } from './components/WishlistDrawer';
 import { CartProvider } from './context/CartContext';
-import { BrandGuideModal } from './components/BrandGuideModal';
-import { SampleInquiryDrawer } from './components/SampleInquiryDrawer';
+
+
+const AboutPage = lazy(() => import('./components/AboutPage').then((module) => ({ default: module.AboutPage })));
+
+const LegalPage = lazy(() => import('./components/LegalPage').then((module) => ({ default: module.LegalPage })));
+
+const CareerPage = lazy(() => import('./components/CareerPage').then((module) => ({ default: module.CareerPage })));
+
+const AdminPage = lazy(() => import('./components/AdminPage').then((module) => ({ default: module.AdminPage })));
+
+const CartPage = lazy(() => import('./components/CartPage').then((module) => ({ default: module.CartPage })));
+
+const BrandGuideModal = lazy(() => import('./components/BrandGuideModal').then((module) => ({ default: module.BrandGuideModal })));
+
+const SampleInquiryDrawer = lazy(() => import('./components/SampleInquiryDrawer').then((module) => ({ default: module.SampleInquiryDrawer })));
 
 export type AppRoute = 'home' | 'shop' | 'product' | 'cart' | 'about' | 'terms' | 'privacy' | 'cookie' | 'career' | 'admin';
 
@@ -107,6 +116,12 @@ export default function App() {
   });
   const [isBrandGuideOpen, setIsBrandGuideOpen] = useState(false);
   const [isSampleBagOpen, setIsSampleBagOpen] = useState(false);
+  const [hasOpenedSampleBag, setHasOpenedSampleBag] = useState(false);
+
+  const openSampleBag = () => {
+    setHasOpenedSampleBag(true);
+    setIsSampleBagOpen(true);
+  };
   const [requestedSamples, setRequestedSamples] = useState<Product[]>([]);
 
   // Listen to browser forward/backward buttons and hash changes
@@ -223,7 +238,7 @@ export default function App() {
     if (!requestedSamples.some((p) => p.id === product.id)) {
       setRequestedSamples((prev) => [...prev, product]);
     }
-    setIsSampleBagOpen(true);
+    openSampleBag();
   };
 
   const handleRemoveSample = (productId: string) => {
@@ -255,7 +270,7 @@ export default function App() {
         {/* 1. Show Main Navbar on Home, Shop and About pages (Cart, Career, Admin, Legal render their own) */}
         {!isLegalRoute && !isCareerRoute && !isAdminRoute && !isCartRoute && (
           <Gr8rNavbar
-            onOpenReservation={() => setIsSampleBagOpen(true)}
+            onOpenReservation={openSampleBag}
             onNavigateCart={handleNavigateCart}
             onNavigate={(id) => {
               if (id === 'shop') {
@@ -276,97 +291,107 @@ export default function App() {
 
         {/* Main Content Layout based on Current Active Route */}
         <main className="flex-1 w-full">
-          {/* Dedicated Full Screen Professional E-Commerce Cart Page (Flipkart / Amazon Layout) */}
-          {currentRoute === 'cart' && (
-            <CartPage
-              onNavigateHome={(id) => handleNavigateHome(id)}
-              onNavigateShop={handleNavigateShop}
-              onSelectProduct={handleOpenProduct}
-              onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
-              onOpenLegal={handleNavigateLegal}
-            />
-          )}
-          {/* Dedicated Legal Routes (for Meta API / WhatsApp Cloud API verification) */}
-          {isLegalRoute && (
-            <LegalPage
-              currentTab={currentRoute as LegalTabType}
-              onSelectTab={handleNavigateLegal}
-              onNavigateHome={(id) => handleNavigateHome(id)}
-              onNavigateAbout={handleNavigateAbout}
-              onOpenReservation={() => setIsSampleBagOpen(true)}
-              onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
-            />
-          )}
-
-          {/* Dedicated Full Screen Product & Shop Pages (Temporarily hidden) */}
-          {/* currentRoute === 'shop' && <ShopPage ... /> */}
-
-          {/* Dedicated About Page featuring Monumental 3D ROMAS Chocolate Slab on Floor */}
-          {currentRoute === 'about' && (
-            <AboutPage
-              onOpenReservation={() => setIsSampleBagOpen(true)}
-              onNavigateHome={() => handleNavigateHome()}
-            />
-          )}
-
-          {/* Dedicated Careers Page */}
-          {isCareerRoute && (
-            <CareerPage
-              onNavigateHome={(id) => handleNavigateHome(id)}
-              onNavigateAbout={handleNavigateAbout}
-              onOpenReservation={() => setIsSampleBagOpen(true)}
-              onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
-              onOpenLegal={handleNavigateLegal}
-            />
-          )}
-
-          {/* Hidden Admin Dashboard (Supabase Auth) */}
-          {isAdminRoute && (
-            <AdminPage onNavigateHome={() => handleNavigateHome()} />
-          )}
-
-          {/* Home Page: Hero with 1080p Image Sequence + 3 Floating Canisters + Menu + Shop + Commitments + Branches */}
-          {currentRoute === 'home' && (
-            <>
-              <Gr8rHero />
-              <Gr8rStatement />
-              <Gr8rMenu onSelectItem={handleSelectMenuItem} />
-
-              <Gr8rFeatures />
-              <Gr8rBranches />
-              <Gr8rTestimonials />
-              <Gr8rFaq />
-              <Gr8rBlog />
-              
-              {/* Grand ROMAS Footer on Home Page */}
-              <Gr8rFooter
-                onOpenReservation={() => setIsSampleBagOpen(true)}
+          <Suspense fallback={<p role="status" className="pt-28 text-center">Loading?</p>}>
+            {/* Dedicated Full Screen Professional E-Commerce Cart Page (Flipkart / Amazon Layout) */}
+            {currentRoute === 'cart' && (
+              <CartPage
+                onNavigateHome={(id) => handleNavigateHome(id)}
+                onNavigateShop={handleNavigateShop}
+                onSelectProduct={handleOpenProduct}
                 onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
-                onNavigate={(id) => handleNavigateHome(id)}
                 onOpenLegal={handleNavigateLegal}
               />
-            </>
-          )}
+            )}
+            {/* Dedicated Legal Routes (for Meta API / WhatsApp Cloud API verification) */}
+            {isLegalRoute && (
+              <LegalPage
+                currentTab={currentRoute as LegalTabType}
+                onSelectTab={handleNavigateLegal}
+                onNavigateHome={(id) => handleNavigateHome(id)}
+                onNavigateAbout={handleNavigateAbout}
+                onOpenReservation={openSampleBag}
+                onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
+              />
+            )}
+
+            {/* Dedicated Full Screen Product & Shop Pages (Temporarily hidden) */}
+            {/* currentRoute === 'shop' && <ShopPage ... /> */}
+
+            {/* Dedicated About Page featuring Monumental 3D ROMAS Chocolate Slab on Floor */}
+            {currentRoute === 'about' && (
+              <AboutPage
+                onOpenReservation={openSampleBag}
+                onNavigateHome={() => handleNavigateHome()}
+              />
+            )}
+
+            {/* Dedicated Careers Page */}
+            {isCareerRoute && (
+              <CareerPage
+                onNavigateHome={(id) => handleNavigateHome(id)}
+                onNavigateAbout={handleNavigateAbout}
+                onOpenReservation={openSampleBag}
+                onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
+                onOpenLegal={handleNavigateLegal}
+              />
+            )}
+
+            {/* Hidden Admin Dashboard (Supabase Auth) */}
+            {isAdminRoute && (
+              <AdminPage onNavigateHome={() => handleNavigateHome()} />
+            )}
+
+            {/* Home Page: Hero with 1080p Image Sequence + 3 Floating Canisters + Menu + Shop + Commitments + Branches */}
+            {currentRoute === 'home' && (
+              <>
+                <Gr8rHero />
+                <Gr8rStatement />
+                <Gr8rMenu onSelectItem={handleSelectMenuItem} />
+
+                <Gr8rFeatures />
+                <Gr8rBranches />
+                <Gr8rTestimonials />
+                <Gr8rFaq />
+                <Gr8rBlog />
+
+                {/* Grand ROMAS Footer on Home Page */}
+                <Gr8rFooter
+                  onOpenReservation={openSampleBag}
+                  onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
+                  onNavigate={(id) => handleNavigateHome(id)}
+                  onOpenLegal={handleNavigateLegal}
+                />
+              </>
+            )}
+          </Suspense>
         </main>
 
         {/* Official Brand Standards & Usage Guidelines Modal */}
-      <BrandGuideModal
-        isOpen={isBrandGuideOpen}
-        onClose={() => setIsBrandGuideOpen(false)}
-      />
+      <Suspense fallback={null}>
+        {isBrandGuideOpen && (
+          <BrandGuideModal
+            isOpen={isBrandGuideOpen}
+            onClose={() => setIsBrandGuideOpen(false)}
+          />
+        )}
+      </Suspense>
 
       {/* B2B Sample Inquiry Drawer */}
-      <SampleInquiryDrawer
-        isOpen={isSampleBagOpen}
-        onClose={() => setIsSampleBagOpen(false)}
-        selectedSamples={requestedSamples}
-        onRemoveSample={handleRemoveSample}
-        onClearSamples={handleClearSamples}
-        onProceedToInquiry={() => {
-          setIsSampleBagOpen(false);
-          handleNavigateHome('contact');
-        }}
-      />
+      <Suspense fallback={null}>
+        {hasOpenedSampleBag && (
+          <SampleInquiryDrawer
+            isOpen={isSampleBagOpen}
+            onClose={() => setIsSampleBagOpen(false)}
+            selectedSamples={requestedSamples}
+            onRemoveSample={handleRemoveSample}
+            onClearSamples={handleClearSamples}
+            onProceedToInquiry={() => {
+              setIsSampleBagOpen(false);
+              handleNavigateHome('contact');
+            }}
+          />
+        )}
+      </Suspense>
 
       {/* Direct E-Commerce Wishlist (Heart) Drawer */}
       <WishlistDrawer
