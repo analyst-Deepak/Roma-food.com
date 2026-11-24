@@ -29,7 +29,7 @@ export default defineConfig(() => {
     // Prevent source maps in production to reduce attack surface
     build: {
       sourcemap: false,
-      minify: 'terser',
+      minify: 'esbuild',
     },
   };
 });
