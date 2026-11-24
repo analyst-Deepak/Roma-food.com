@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Cake, Hotel, IceCream, Sparkles, Factory, HeartHandshake, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Cake, Hotel, IceCream, Factory, HeartHandshake, CheckCircle2 } from 'lucide-react';
 import { MotionReveal } from './MotionReveal';
 
 interface IndustriesWeServeProps {
@@ -36,7 +36,7 @@ export const IndustriesWeServe: React.FC<IndustriesWeServeProps> = ({ onSelectSe
     {
       id: 'pastry-chefs',
       title: 'Chocolatiers & Artisans',
-      icon: Sparkles,
+      icon: HeartHandshake,
       tagline: 'Fine Bonbons, Pralines & Truffles',
       description: 'Pure cocoa butter couvertures with precise crystallization curves, delivering a resonant snap, satin gloss, and sublime mouth-melt.',
       popularProducts: ['70% Single Origin Noir', 'White Velvet Couverture', 'Cocoa Butter Deodorized'],

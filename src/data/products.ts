@@ -2739,7 +2739,7 @@ export const USAGE_APPLICATIONS: UsageApplication[] = [
     description: 'Distribute buttons throughout muffin batter for sweet chocolate surprises in every bite, topped with golden streusel.',
     tip: 'Lightly dust buttons in flour before folding into batter so they remain evenly suspended.',
     recommendedProduct: 'ROMAS Classic Chocolate Bites & Fillings',
-    iconName: 'Sparkles',
+    iconName: 'ChefHat',
   },
 ];
 

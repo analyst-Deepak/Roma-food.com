@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Flame, ShieldCheck, Award } from 'lucide-react';
+import { Flame, ShieldCheck, Award } from 'lucide-react';
 import { IMAGES } from '../data/products';
 import { MotionReveal } from './MotionReveal';
 
@@ -14,7 +14,7 @@ export const ProcessSection: React.FC = () => {
       subtitle: 'Sun-dried beans selected for intense aromatic profile',
       description:
         'Every batch begins with carefully fermented cocoa beans, evaluated for fat content and rich, roasted cocoa character before entering our roasting drums.',
-      icon: Sparkles,
+      icon: Award,
       tag: 'Bean Selection',
     },
     {

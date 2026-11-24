@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Eye, Plus, Check, ArrowRight, Droplets, Flame, Search, MessageSquare, Sparkles } from 'lucide-react';
+import { Eye, Plus, Check, ArrowRight, Droplets, Flame, Search, MessageSquare } from 'lucide-react';
 import { Product, AudienceSegment } from '../types';
 import { PRODUCTS, PRODUCT_CATEGORIES, AUDIENCE_SEGMENTS } from '../data/products';
 import { ProductQuickViewModal } from './ProductQuickViewModal';

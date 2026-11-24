@@ -10,7 +10,6 @@ import {
   Trash2,
   Heart,
   ChevronRight,
-  Sparkles,
   PhoneCall,
   MapPin,
   Clock,
@@ -2061,7 +2060,6 @@ export const CartPage: React.FC<CartPageProps> = ({
                   {appliedCoupon ? (
                     <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between">
                       <div className="flex items-center gap-2.5">
-                        <Sparkles className="w-4 h-4 text-emerald-700" />
                         <div>
                           <p className="text-xs font-bold text-emerald-900">
                             Code <span className="font-mono uppercase">{appliedCoupon.code}</span> applied successfully!

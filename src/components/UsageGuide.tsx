@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Cake, Cookie, IceCream, Sparkles, ChefHat, ArrowRight } from 'lucide-react';
+import { Cake, Cookie, IceCream, ChefHat, ArrowRight } from 'lucide-react';
 import { USAGE_APPLICATIONS } from '../data/products';
 import { Reveal } from './Reveal';
 
@@ -15,7 +15,7 @@ export const UsageGuide: React.FC<UsageGuideProps> = ({ onSelectProduct }) => {
     Cake: Cake,
     Cookie: Cookie,
     IceCream: IceCream,
-    Sparkles: Sparkles,
+    ChefHat: ChefHat,
   };
 
   return (

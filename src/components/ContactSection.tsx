@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, MessageSquare, Check, Sparkles, Truck } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, MessageSquare, Check, Truck } from 'lucide-react';
 import { COMPANY_INFO, PRODUCTS } from '../data/products';
 import { MotionReveal } from './MotionReveal';
 import { RomasLogo } from './RomasLogo';

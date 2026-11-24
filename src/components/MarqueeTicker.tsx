@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, ShieldCheck, Flame, Award, Truck, Package } from 'lucide-react';
+import { ShieldCheck, Flame, Award, Truck, Package } from 'lucide-react';
 
 interface MarqueeTickerProps {
   variant?: 'yellow' | 'brown';
@@ -7,14 +7,14 @@ interface MarqueeTickerProps {
 
 export const MarqueeTicker: React.FC<MarqueeTickerProps> = ({ variant = 'yellow' }) => {
   const items = [
-    { text: '100% Pure Cocoa Solids', icon: Sparkles },
+    { text: '100% Pure Cocoa Solids', icon: ShieldCheck },
     { text: 'Non-Temper 40°C–45°C Easy Melt', icon: Flame },
     { text: 'Free Trade Sample Kit for Bakeries', icon: Package },
     { text: 'Micro-Milled Under 20 Microns', icon: Award },
     { text: 'Nitrogen-Flushed Gold Barrier Pouch', icon: ShieldCheck },
     { text: 'FSSAI Lic. #10526005000033 · Dhamtari', icon: ShieldCheck },
     { text: 'Pan-India Temperature-Controlled Logistics', icon: Truck },
-    { text: 'Spreading Happiness in Every Bite', icon: Sparkles },
+    { text: 'Spreading Happiness in Every Bite', icon: Award },
   ];
 
   const isYellow = variant === 'yellow';

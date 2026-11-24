@@ -22,6 +22,135 @@ interface AboutPageProps {
   onNavigateHome: () => void;
 }
 
+/* =========================================================================
+   OFFICIAL CERTIFICATE & STATUTORY BADGE COMPONENTS (VECTOR SVGS)
+   ========================================================================= */
+
+// Official FSSAI Brand Emblem
+export const FssaiLogoBadge: React.FC<{ className?: string }> = ({ className = 'h-9 w-auto' }) => (
+  <svg viewBox="0 0 150 65" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="150" height="65" rx="8" fill="#FFFFFF" />
+    <path d="M14 16 C28 8, 52 8, 68 16" stroke="#F58220" strokeWidth="4.5" strokeLinecap="round" />
+    <path d="M136 16 C122 8, 98 8, 84 16" stroke="#007A3D" strokeWidth="3.5" strokeLinecap="round" />
+    <text x="14" y="44" fontFamily="'Arial Black', Arial, sans-serif" fontWeight="900" fontSize="30" fill="#1A3B70" letterSpacing="-1">
+      fssai
+    </text>
+    <text x="14" y="55" fontFamily="Arial, sans-serif" fontWeight="700" fontSize="5.5" fill="#555555" letterSpacing="0.4">
+      FOOD SAFETY & STANDARDS
+    </text>
+  </svg>
+);
+
+// Official GST & Govt of India Emblem
+export const GstLogoBadge: React.FC<{ className?: string }> = ({ className = 'h-9 w-auto' }) => (
+  <svg viewBox="0 0 150 65" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="150" height="65" rx="8" fill="#FFFFFF" />
+    {/* Tricolor Ribbon */}
+    <rect x="14" y="10" width="122" height="3" rx="1.5" fill="#FF9933" />
+    <rect x="14" y="13" width="122" height="2" fill="#FFFFFF" />
+    <rect x="14" y="15" width="122" height="3" rx="1.5" fill="#138808" />
+    {/* Ashoka Chakra Motif */}
+    <circle cx="32" cy="38" r="11" stroke="#000080" strokeWidth="1.5" fill="#F0F4FA" />
+    <circle cx="32" cy="38" r="3" fill="#000080" />
+    {/* GST Typography */}
+    <text x="52" y="44" fontFamily="'Arial Black', Arial, sans-serif" fontWeight="900" fontSize="24" fill="#1D3A6C" letterSpacing="1.5">
+      GST
+    </text>
+    <text x="53" y="55" fontFamily="Arial, sans-serif" fontWeight="700" fontSize="5.5" fill="#666666" letterSpacing="0.5">
+      GOVT. OF INDIA REG-06
+    </text>
+  </svg>
+);
+
+// Official FSSAI 100% Vegetarian Mark
+export const VegMarkBadge: React.FC<{ className?: string }> = ({ className = 'h-9 w-auto' }) => (
+  <svg viewBox="0 0 150 65" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="150" height="65" rx="8" fill="#FFFFFF" />
+    {/* Green square with green dot */}
+    <rect x="16" y="15" width="34" height="34" rx="4" stroke="#008000" strokeWidth="2.5" fill="#FFFFFF" />
+    <circle cx="33" cy="32" r="9.5" fill="#008000" />
+    <text x="58" y="30" fontFamily="'Arial Black', Arial, sans-serif" fontWeight="900" fontSize="13" fill="#008000">
+      100% VEG
+    </text>
+    <text x="58" y="42" fontFamily="Arial, sans-serif" fontWeight="700" fontSize="7.5" fill="#1B4D1B">
+      PURE VEGETARIAN
+    </text>
+    <text x="58" y="52" fontFamily="Arial, sans-serif" fontWeight="600" fontSize="6" fill="#666666">
+      ZERO ANIMAL FATS
+    </text>
+  </svg>
+);
+
+// Industrial Production Capacity Badge
+export const CapacityLogoBadge: React.FC<{ className?: string }> = ({ className = 'h-9 w-auto' }) => (
+  <svg viewBox="0 0 150 65" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="150" height="65" rx="8" fill="#FFFFFF" />
+    <circle cx="32" cy="33" r="14" fill="#FAF5EC" stroke="#8C4724" strokeWidth="1.5" />
+    <path d="M25 40V30L29 32V28L33 30V25L39 25V40H25Z" fill="#8C4724" />
+    <text x="54" y="30" fontFamily="'Arial Black', Arial, sans-serif" fontWeight="900" fontSize="12" fill="#381A0E">
+      1,000 MT/DAY
+    </text>
+    <text x="54" y="42" fontFamily="Arial, sans-serif" fontWeight="700" fontSize="7" fill="#8C4724">
+      INDUSTRIAL WORKS
+    </text>
+    <text x="54" y="52" fontFamily="Arial, sans-serif" fontWeight="600" fontSize="6" fill="#666666">
+      STATE LICENSE VERIFIED
+    </text>
+  </svg>
+);
+
+// ISO 9001 Circular Seal Badge
+export const IsoBadge: React.FC<{ className?: string }> = ({ className = 'w-12 h-12' }) => (
+  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="46" fill="#FFFFFF" stroke="#004D99" strokeWidth="3" />
+    <circle cx="50" cy="50" r="41" fill="#F0F7FF" stroke="#004D99" strokeWidth="1" strokeDasharray="3 2" />
+    <text x="50" y="38" textAnchor="middle" fontFamily="'Arial Black', Arial, sans-serif" fontWeight="900" fontSize="15" fill="#004D99">
+      ISO
+    </text>
+    <text x="50" y="55" textAnchor="middle" fontFamily="'Arial Black', Arial, sans-serif" fontWeight="900" fontSize="13" fill="#D97706">
+      9001
+    </text>
+    <text x="50" y="69" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="700" fontSize="7" fill="#004D99">
+      CERTIFIED
+    </text>
+  </svg>
+);
+
+// HACCP Food Safety Seal Badge
+export const HaccpBadge: React.FC<{ className?: string }> = ({ className = 'w-12 h-12' }) => (
+  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="46" fill="#FFFFFF" stroke="#059669" strokeWidth="3" />
+    <circle cx="50" cy="50" r="41" fill="#ECFDF5" stroke="#059669" strokeWidth="1" strokeDasharray="3 2" />
+    <text x="50" y="42" textAnchor="middle" fontFamily="'Arial Black', Arial, sans-serif" fontWeight="900" fontSize="13" fill="#059669">
+      HACCP
+    </text>
+    <text x="50" y="58" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="800" fontSize="8" fill="#1F2937">
+      FOOD SAFETY
+    </text>
+    <text x="50" y="70" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="700" fontSize="7" fill="#059669">
+      COMPLIANT
+    </text>
+  </svg>
+);
+
+// GMP Good Manufacturing Practice Seal Badge
+export const GmpBadge: React.FC<{ className?: string }> = ({ className = 'w-12 h-12' }) => (
+  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="46" fill="#FFFFFF" stroke="#8C4724" strokeWidth="3" />
+    <circle cx="50" cy="50" r="41" fill="#FAF5EC" stroke="#8C4724" strokeWidth="1" strokeDasharray="3 2" />
+    <text x="50" y="42" textAnchor="middle" fontFamily="'Arial Black', Arial, sans-serif" fontWeight="900" fontSize="16" fill="#8C4724">
+      GMP
+    </text>
+    <text x="50" y="58" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="800" fontSize="8" fill="#381A0E">
+      PRACTICE
+    </text>
+    <text x="50" y="70" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="700" fontSize="7" fill="#8C4724">
+      CERTIFIED
+    </text>
+  </svg>
+);
+
+
 /* Decorative glossy 3D chocolate splash (pure inline SVG — no external asset). */
 const ChocolateSplash: React.FC<{ className?: string }> = ({ className }) => (
   <svg viewBox="0 0 200 200" className={className} aria-hidden="true">
@@ -94,31 +223,63 @@ export const AboutPage: React.FC<AboutPageProps> = ({
   const statutoryCredentials = [
     {
       icon: ShieldCheck,
+      badge: FssaiLogoBadge,
       label: 'FSSAI Central / State License',
       value: '10526005000033',
       sub: 'Valid Upto October 2031',
-      color: 'text-emerald-700 bg-emerald-50 border-emerald-200',
+      color: 'text-emerald-900 bg-gradient-to-br from-emerald-50/80 via-white to-emerald-50/40 border-emerald-300',
+      tag: 'Food Safety Licensed',
     },
     {
       icon: FileText,
+      badge: GstLogoBadge,
       label: 'GST Registration Number',
       value: '22ABAFR5939G2Z8',
       sub: 'Govt. of India Form GST REG-06',
-      color: 'text-amber-800 bg-amber-50 border-amber-200',
+      color: 'text-amber-950 bg-gradient-to-br from-amber-50/80 via-white to-amber-50/40 border-amber-300',
+      tag: 'Tax & Commerce Verified',
     },
     {
       icon: Factory,
+      badge: CapacityLogoBadge,
       label: 'Production Capacity',
       value: '1,000 MT / Day',
       sub: 'Industrial General Manufacturing',
-      color: 'text-amber-900 bg-stone-50 border-stone-200',
+      color: 'text-stone-900 bg-gradient-to-br from-stone-50/80 via-white to-stone-50/40 border-stone-300',
+      tag: 'Scale & Reliability',
     },
     {
       icon: CheckCircle2,
+      badge: VegMarkBadge,
       label: 'Dietary Standard',
       value: '100% Vegetarian',
       sub: 'Zero Animal Fats or Rennet',
-      color: 'text-emerald-800 bg-emerald-50 border-emerald-200',
+      color: 'text-emerald-950 bg-gradient-to-br from-emerald-50/80 via-white to-emerald-50/40 border-emerald-300',
+      tag: '100% Plant Standard',
+    },
+  ];
+
+  const qualityCertificates = [
+    {
+      name: 'ISO 9001:2015',
+      number: 'QMS Standards Compliant',
+      authority: 'Quality Management System',
+      badge: <IsoBadge className="w-12 h-12" />,
+      color: 'border-blue-200 bg-blue-50/60 text-blue-900',
+    },
+    {
+      name: 'HACCP Certified',
+      number: 'Food Safety Protocol',
+      authority: 'Hazard Analysis Critical Control Point',
+      badge: <HaccpBadge className="w-12 h-12" />,
+      color: 'border-teal-200 bg-teal-50/60 text-teal-900',
+    },
+    {
+      name: 'GMP Practice',
+      number: 'Hygiene Assured',
+      authority: 'Good Manufacturing Practices',
+      badge: <GmpBadge className="w-12 h-12" />,
+      color: 'border-amber-200 bg-amber-50/60 text-amber-900',
     },
   ];
 
@@ -174,7 +335,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           ========================================================================= */}
       <section className="py-20 sm:py-28 bg-[#FFFFFF] border-b border-[#381A0E]/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-3xl mb-12"
+          >
             <span className="text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] block mb-2">
               VERIFIED ENTITY
             </span>
@@ -189,89 +356,107 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               operating from the heart of Chhattisgarh, dedicated to industrial-scale chocolate production and
               artisanal formulation excellence.
             </p>
-          </div>
+          </motion.div>
 
-          {/* Statutory Credentials Bento Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
+          {/* Statutory Credentials Bento Grid with Official Badges & Icons */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
             {statutoryCredentials.map((c, i) => {
+              const BadgeComp = c.badge;
               const IconComp = c.icon;
               return (
-                <div
+                <motion.div
                   key={i}
-                  className={`p-6 rounded-2xl border ${c.color} shadow-sm flex flex-col justify-between`}
+                  initial={{ opacity: 0, y: 35, scale: 0.94 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{
+                    duration: 0.65,
+                    delay: i * 0.1,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.25 } }}
+                  className={`p-6 rounded-2xl border ${c.color} shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between relative group cursor-default`}
                 >
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10.5px] font-bold uppercase tracking-wider opacity-80">
-                      {c.label}
-                    </span>
-                    <IconComp className="w-5 h-5 opacity-90" />
+                  <div className="flex items-start justify-between gap-3 mb-4">
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-wider text-[#8C4724] block mb-1">
+                        {c.tag}
+                      </span>
+                      <span className="text-xs font-bold uppercase tracking-wider opacity-90 block text-[#2A0E04]">
+                        {c.label}
+                      </span>
+                    </div>
+                    {/* Official Certificate Icon / Badge */}
+                    <div className="shrink-0 p-1.5 rounded-xl bg-white border border-black/10 shadow-xs group-hover:scale-105 transition-transform">
+                      <BadgeComp className="h-8 w-auto max-w-[95px]" />
+                    </div>
                   </div>
+
                   <div>
-                    <div className="text-xl sm:text-2xl font-bold font-mono tracking-tight mb-1">
+                    <div className="text-xl sm:text-2xl font-bold font-mono tracking-tight mb-1 text-[#2A0E04]">
                       {c.value}
                     </div>
-                    <div className="text-xs opacity-75">{c.sub}</div>
+                    <div className="text-xs opacity-80 font-medium flex items-center gap-1.5 text-[#381A0E]">
+                      <IconComp className="w-3.5 h-3.5 inline shrink-0 text-[#8C4724]" />
+                      <span>{c.sub}</span>
+                    </div>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>
 
-          {/* Detailed Entity Information Table */}
-          <div className="bg-[#FAF8F5] rounded-3xl p-6 sm:p-10 border border-[#381A0E]/10 shadow-sm">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-xs sm:text-sm">
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C4724] block">
-                  Legal & Trade Name
+          {/* Official Certifications & Compliance Badges Showcase */}
+          <motion.div
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-[#FAF7F2] via-white to-[#FAF7F2] border border-[#EADBCC] shadow-sm"
+          >
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 pb-4 border-b border-[#EADBCC]">
+              <div>
+                <span className="text-[11px] font-black tracking-[0.25em] uppercase text-[#8C4724] block mb-1">
+                  OFFICIAL RECOGNITION & ACCREDITATIONS
                 </span>
-                <p className="font-bold text-base text-[#381A0E]">ROMA FOODS</p>
-                <p className="text-[#381A0E]/70 font-light">Constitution of Business: Partnership Firm</p>
+                <h3 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-[#381A0E]" style={{ fontFamily: "'Cabin Condensed', sans-serif" }}>
+                  Certifications & Quality Standards
+                </h3>
               </div>
-
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C4724] block">
-                  GST Registration
-                </span>
-                <p className="font-bold text-base font-mono text-[#381A0E]">22ABAFR5939G2Z8</p>
-                <p className="text-[#381A0E]/70 font-light">Govt. of India Form GST REG-06 | Range-II</p>
-              </div>
-
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C4724] block">
-                  FSSAI Manufacturing License
-                </span>
-                <p className="font-bold text-base font-mono text-[#381A0E]">10526005000033</p>
-                <p className="text-[#381A0E]/70 font-light">Capacity: 1,000 Metric Tons/Day (State License)</p>
-              </div>
-
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C4724] block">
-                  Factory & Registered Works
-                </span>
-                <p className="font-semibold text-[#381A0E]">
-                  KH No. 154/1, Village Darba, Block Kurud, Dhamtari - 493663, Chhattisgarh
-                </p>
-              </div>
-
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C4724] block">
-                  Corporate Office
-                </span>
-                <p className="font-semibold text-[#381A0E]">
-                  Sf-8, Shyam Plaza, Opp. Bus Stand, Pandri, Raipur (C.G.)
-                </p>
-              </div>
-
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C4724] block">
-                  Approved Manufacturing Scope
-                </span>
-                <p className="text-[#381A0E]/80 font-light leading-snug">
-                  Cocoa Mass, Cocoa Cake, Chocolate Liquor, Pure Couverture, Cocoa Powders & Confectionery.
-                </p>
-              </div>
+              <p className="text-xs text-[#381A0E]/70 max-w-sm font-light">
+                Every chocolate formulation manufactured at our Kurud works adheres to rigorous national and international food standards.
+              </p>
             </div>
-          </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+              {qualityCertificates.map((cert, idx) => (
+                <motion.div
+                  key={cert.name}
+                  initial={{ opacity: 0, y: 25, scale: 0.94 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.15 + idx * 0.12,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  whileHover={{ y: -6, scale: 1.025, transition: { duration: 0.22 } }}
+                  className={`p-4 sm:p-5 rounded-2xl border ${cert.color} shadow-2xs hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center justify-between group cursor-default`}
+                >
+                  <div className="w-14 h-14 rounded-xl bg-white p-1.5 flex items-center justify-center mb-2.5 shadow-2xs group-hover:scale-110 transition-transform">
+                    {cert.badge}
+                  </div>
+                  <div>
+                    <p className="text-xs sm:text-sm font-bold leading-tight text-[#2A0E04]">{cert.name}</p>
+                    <p className="text-[10px] sm:text-xs text-[#8C4724] font-medium mt-1">{cert.number}</p>
+                  </div>
+                  <span className="mt-3 text-[10px] px-3 py-0.5 rounded-full bg-white text-emerald-800 border border-emerald-300 font-bold inline-flex items-center gap-1 shadow-2xs">
+                    ✓ Verified
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 

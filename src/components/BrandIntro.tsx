@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Eye, ChevronRight, Award, ShieldCheck, Check, Sparkles, X } from 'lucide-react';
+import { Eye, ChevronRight, Award, ShieldCheck, Check, X } from 'lucide-react';
 import { IMAGES, PRODUCTS, COMPANY_INFO } from '../data/products';
 import { RomasLogo } from './RomasLogo';
 

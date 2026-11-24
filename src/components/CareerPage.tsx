@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Sparkles,
   TrendingUp,
   ShieldCheck,
   HeartHandshake,
@@ -13,17 +12,19 @@ import {
   MessageCircle,
   Mail,
   Loader2,
-  Upload,
-  FileText,
+  Paperclip,
   ChefHat,
   Factory,
   Megaphone,
   Truck,
   Clock,
-  Building2,
   ChevronDown,
-  Award,
   CheckCircle2,
+  Users,
+  Award,
+  Wrench,
+  Compass,
+  Layers,
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/products';
 import { Gr8rNavbar } from './Gr8rNavbar';
@@ -40,38 +41,34 @@ interface CareerPageProps {
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-const VALUES = [
+const CULTURE_HIGHLIGHTS = [
   {
     num: '01',
-    icon: Sparkles,
-    tag: 'Artisan Excellence',
-    title: 'Skill Mastery',
-    body: 'Learn hands-on beside master chocolatiers, roasters and food technologists working with real cocoa butter couverture.',
-    highlight: 'Pure Cocoa Butter',
+    icon: Award,
+    tag: 'Skill Mastery',
+    title: 'Learn from Experts',
+    desc: 'Hands-on training alongside master chocolatiers, food technologists, and roasting specialists.',
   },
   {
     num: '02',
     icon: TrendingUp,
-    tag: 'Pan-India Scale',
-    title: 'Real Growth',
-    body: 'Grow with a fast-scaling B2B chocolate house supplying patisseries, hotels and cloud kitchens across India.',
-    highlight: 'Fast-Track Career',
+    tag: 'Career Growth',
+    title: 'Fast-Track Opportunities',
+    desc: 'Grow with a fast-scaling chocolate brand serving luxury bakeries, cafes, and hotels nationwide.',
   },
   {
     num: '03',
     icon: ShieldCheck,
-    tag: 'FSSAI Central Certified',
-    title: 'World-Class Standards',
-    body: 'Work inside an FSSAI Central-licensed facility built around micro-refinement, hygiene and precise tempering.',
-    highlight: '<20 Micron Precision',
+    tag: 'World-Class Standards',
+    title: 'Modern Certified Plant',
+    desc: 'Work in an advanced, hygienic, and certified facility where product quality comes first.',
   },
   {
     num: '04',
     icon: HeartHandshake,
     tag: 'People & Purpose',
-    title: 'Happiness-First Culture',
-    body: 'A people-first team that lives by our promise — Spreading Happiness — to colleagues as much as customers.',
-    highlight: 'Empowering Culture',
+    title: 'Supportive Culture',
+    desc: 'A positive, caring work environment that lives by our promise of spreading happiness.',
   },
 ];
 
@@ -87,148 +84,318 @@ export interface DetailedOpening {
   summary: string;
   responsibilities: string[];
   requirements: string[];
+  foodSafety?: string[];
   icon: React.ComponentType<{ className?: string }>;
 }
 
 const RICH_OPENINGS: DetailedOpening[] = [
   {
-    id: 'master-chocolatier',
-    title: 'Master Chocolatier (R&D)',
-    dept: 'Product Development',
-    location: 'Kurod Works, Dhamtari',
-    type: 'Full-time',
-    workplace: 'On-site Works',
-    experience: '4–8 Years',
-    badge: 'High Priority',
-    summary: 'Formulate next-generation single-origin couvertures, bake-stable fillings, and micro-refined praline textures.',
+    id: 'plant-hr-blue-collar',
+    title: 'Plant HR – Blue-Collar Hiring',
+    dept: 'Human Resources',
+    location: 'Raipur / Kurud Plant, CG',
+    type: 'Full-Time',
+    workplace: 'On-site Plant',
+    experience: '1–4 Years',
+    summary: 'Responsible for blue-collar recruitment and core plant HR operations, ensuring timely manpower availability, effective employee administration and workforce management.',
     responsibilities: [
-      'Develop bespoke couverture flavor profiles, fluidity ratings, and cocoa butter melt curves.',
-      'Pilot new confectionery formulations for commercial patisseries and industrial bakery clients.',
-      'Collaborate with food scientists on shelf-life stability, bloom resistance, and sensory panels.',
+      'Manage end-to-end recruitment for machine operators, helpers, production workers, technicians and other plant positions.',
+      'Source candidates through local networks, contractors, job portals, employee referrals and recruitment agencies.',
+      'Screen candidates, schedule interviews and manage joining formalities.',
+      'Maintain manpower plans, attendance, leave records, employee files, recruitment MIS and HR trackers.',
+      'Handle employee grievances, discipline, workforce engagement, onboarding and induction documentation.',
     ],
     requirements: [
-      'Diploma / Degree in Culinary Arts, Pastry & Baking, or Food Technology.',
-      'Demonstrated expertise in chocolate tempering, bean-to-bar roasting, and ganache emulsion.',
-      'Passion for fine chocolate making and deep understanding of Indian bakery industry requirements.',
+      'Graduate in HR, Business Administration or a related discipline preferred.',
+      '1–4 years of experience in HR operations and blue-collar recruitment.',
+      'Manufacturing, food processing or plant HR experience preferred.',
+      'Strong candidate sourcing, HR documentation, attendance management and employee relations.',
     ],
-    icon: ChefHat,
+    foodSafety: [
+      'Ensure employees receive basic training on personal hygiene and workplace cleanliness.',
+      'Communicate handwashing and protective clothing requirements during induction.',
+      'Maintain food safety and hygiene training records.',
+      'Ensure employees understand illness reporting and production-area hygiene rules.',
+    ],
+    icon: Users,
   },
   {
-    id: 'production-supervisor',
-    title: 'Production Supervisor',
+    id: 'production-manager-tutti-frutti',
+    title: 'Production Manager / Production Head – Tutti Frutti',
     dept: 'Manufacturing',
-    location: 'Kurod Works, Dhamtari',
-    type: 'Full-time',
-    workplace: 'On-site Works',
-    experience: '3–6 Years',
-    summary: 'Direct day-to-day continuous conching lines, automatic drop depositor plants, and temperature-controlled tempering tunnels.',
+    location: 'Raipur / Kurud Plant, CG',
+    type: 'Full-Time',
+    workplace: 'On-site Plant',
+    experience: '4–8 Years',
+    badge: 'Urgent Hiring',
+    summary: 'Responsible for leading end-to-end Tutti Frutti manufacturing operations, ensuring production efficiency, product consistency, process control and achievement of production targets.',
     responsibilities: [
-      'Oversee shift operations across refining, conching, moulding, and automated pillow packing lines.',
-      'Enforce daily production targets, yield optimization, and scrap minimization standards.',
-      'Coordinate with maintenance engineering to ensure zero unplanned machinery downtime.',
+      'Lead Tutti Frutti manufacturing activities: fruit preparation, cutting, blanching, syrup treatment, colouring, flavouring, drying and finishing.',
+      'Prepare and execute daily, weekly and monthly production plans.',
+      'Monitor product parameters such as colour, texture, taste, moisture and consistency.',
+      'Manage production output, machine efficiency, manpower deployment and shift performance.',
+      'Control raw material consumption, process losses, rejection, manufacturing costs and develop production SOPs.',
     ],
     requirements: [
-      'B.Tech / Diploma in Food Engineering, Mechanical, or Production Technology.',
-      'Prior supervisor experience in confectionery, dairy, FMCG, or food processing facilities.',
-      'Strong leadership, shift scheduling, and standard operating procedure (SOP) enforcement skills.',
+      'Degree / Diploma in Food Technology, Food Science or a related discipline preferred.',
+      '4–8 years of experience in food manufacturing.',
+      'Tutti Frutti, candied fruit or fruit-processing experience strongly preferred.',
+      'Fruit processing knowledge, production planning, process optimization, cost control and team leadership.',
+    ],
+    foodSafety: [
+      'Ensure hygienic handling of fruits, ingredients and work-in-progress.',
+      'Maintain cleaning and sanitation standards for equipment and production areas.',
+      'Monitor process parameters affecting product safety, including blanching, syrup preparation and drying.',
+      'Prevent cross-contamination through appropriate material segregation and proper storage.',
     ],
     icon: Factory,
   },
   {
-    id: 'food-technologist-qa',
-    title: 'Food Technologist — QA / QC',
-    dept: 'Quality & Safety',
-    location: 'Kurod Works, Dhamtari',
-    type: 'Full-time',
-    workplace: 'On-site Works',
-    experience: '2–5 Years',
-    summary: 'Uphold strict FSSAI Central-licensed quality benchmarks, micron particle size verification, and microbiological compliance.',
+    id: 'machine-operator-tutti-frutti',
+    title: 'Machine Operator – Tutti Frutti',
+    dept: 'Manufacturing',
+    location: 'Raipur / Kurud Plant, CG',
+    type: 'Full-Time',
+    workplace: 'On-site Plant',
+    experience: '1–5 Years',
+    summary: 'Responsible for operating and monitoring machinery used in Tutti Frutti processing while maintaining production targets, product quality and safe machine operations.',
     responsibilities: [
-      'Conduct analytical testing on incoming cocoa liquor, cocoa butter, milk solids, and sugar.',
-      'Perform micron grind size analysis (<20 microns), viscosity testing, and moisture checks on every batch.',
-      'Maintain GMP, HACCP, ISO 22000 hygiene documentation and lead internal quality audits.',
+      'Operate machinery used for fruit cutting, blanching, syrup processing, colouring and drying.',
+      'Follow machine operating instructions, batch sheets and standard operating procedures.',
+      'Monitor machine settings, temperature, processing time and output quality.',
+      'Ensure correct feeding and handling of raw materials and report abnormal conditions promptly.',
+      'Perform routine cleaning, basic preventive maintenance and maintain shift-wise production records.',
     ],
     requirements: [
-      'B.Sc / M.Sc / B.Tech in Food Technology, Food Chemistry, or Microbiology.',
-      'Hands-on familiarity with lab testing equipment (viscometers, moisture analyzers, refractometers).',
-      'Impeccable attention to regulatory compliance and sanitary standards.',
+      'ITI, Diploma or relevant technical qualification preferred.',
+      '1–5 years of machine operation experience.',
+      'Food processing or fruit-processing machinery experience preferred.',
+      'Machine operation, basic mechanical troubleshooting, attention to detail and safety discipline.',
+    ],
+    foodSafety: [
+      'Maintain personal hygiene and use appropriate protective clothing.',
+      'Keep food-contact surfaces, machinery and utensils clean.',
+      'Protect ingredients and work-in-progress from contamination and follow material segregation.',
+    ],
+    icon: Wrench,
+  },
+  {
+    id: 'plant-manager-chocolate',
+    title: 'Plant Manager – Chocolate',
+    dept: 'Manufacturing',
+    location: 'Raipur / Kurud Plant, CG',
+    type: 'Full-Time',
+    workplace: 'On-site Plant',
+    experience: '7–12 Years',
+    badge: 'Key Leadership',
+    summary: 'Responsible for providing overall leadership to the chocolate manufacturing facility. The role owns plant performance, production, quality, cost efficiency, manpower and timely fulfilment of business requirements.',
+    responsibilities: [
+      'Lead and oversee all plant functions, including production, quality, maintenance, stores and dispatch.',
+      'Establish plant objectives, operational priorities and departmental performance expectations.',
+      'Oversee chocolate manufacturing processes: melting, mixing, refining, conching, tempering, depositing, cooling and packaging.',
+      'Monitor product specifications, taste, texture, viscosity, colour and batch consistency.',
+      'Review plant capacity, machine utilization, manpower productivity, cost optimization and yield improvement.',
+    ],
+    requirements: [
+      'Degree in Food Technology, Dairy Technology, Chemical Engineering or a related discipline preferred.',
+      '7–12 years of experience in food or chocolate manufacturing.',
+      'Strong experience in chocolate, compound chocolate or cocoa-based ingredient manufacturing essential.',
+      'Experience managing complete plant operations and cross-functional teams.',
+    ],
+    foodSafety: [
+      'Establish and enforce plant-wide food safety, hygiene and sanitation standards.',
+      'Implement controls for allergen awareness, material segregation and cross-contamination prevention.',
+      'Review cleaning schedules, sanitation performance, temperature controls and lead corrective actions.',
+    ],
+    icon: Award,
+  },
+  {
+    id: 'plant-manager-tutti-frutti',
+    title: 'Plant Manager – Tutti Frutti',
+    dept: 'Manufacturing',
+    location: 'Raipur / Kurud Plant, CG',
+    type: 'Full-Time',
+    workplace: 'On-site Plant',
+    experience: '7–12 Years',
+    badge: 'Key Leadership',
+    summary: 'Responsible for leading the complete Tutti Frutti manufacturing facility, ensuring operational excellence, production targets, consistent quality, cost control and timely dispatch.',
+    responsibilities: [
+      'Lead plant operations across production, QA/QC, maintenance, stores and dispatch.',
+      'Establish production priorities based on customer orders, sales forecasts and plant capacity.',
+      'Oversee fruit processing, cutting, blanching, syrup preparation, colouring, drying and packaging.',
+      'Monitor product consistency, including colour, texture, moisture, taste and shelf-life parameters.',
+      'Control raw material consumption, wastage, inventory, manufacturing costs and drive SOP implementations.',
+    ],
+    requirements: [
+      'Degree / Diploma in Food Technology, Food Science or a related discipline preferred.',
+      '7–12 years of experience in food processing or manufacturing.',
+      'Tutti Frutti, candied fruit or fruit-processing experience strongly preferred.',
+      'Experience managing complete manufacturing operations, cost management and quality oversight.',
+    ],
+    foodSafety: [
+      'Establish hygiene standards for raw-fruit receipt, washing, processing and finished-product packaging.',
+      'Ensure proper cleaning and sanitation of processing equipment and production areas.',
+      'Monitor storage conditions, prevent contamination and ensure food safety deviations are investigated.',
+    ],
+    icon: Factory,
+  },
+  {
+    id: 'production-supervisor-chocolate',
+    title: 'Production Supervisor – Chocolate',
+    dept: 'Manufacturing',
+    location: 'Raipur / Kurud Plant, CG',
+    type: 'Full-Time',
+    workplace: 'On-site Plant',
+    experience: '2–5 Years',
+    summary: 'Responsible for supervising daily chocolate production and shop-floor teams to ensure production schedules, product specifications and operational requirements are achieved.',
+    responsibilities: [
+      'Supervise daily chocolate production, shift operations, melting, mixing, tempering, depositing, cooling and packaging.',
+      'Allocate duties to operators, helpers and production workers to ensure efficient utilization of machinery and materials.',
+      'Monitor shift-wise production output, downtime, rejection and coordinate in-process inspections with QA/QC.',
+      'Maintain shop-floor discipline, housekeeping and ensure production matches approved schedules.',
+    ],
+    requirements: [
+      'ITI, Diploma or Graduate qualification preferred.',
+      '2–5 years of production supervision experience.',
+      'Chocolate, confectionery or food manufacturing experience preferred.',
+      'Knowledge of chocolate production processes, shift handling, team supervision and shop-floor management.',
+    ],
+    foodSafety: [
+      'Verify cleanliness of machinery, utensils and food-contact surfaces before production.',
+      'Ensure employees follow handwashing, personal hygiene and proper material handling.',
+      'Prevent cross-contamination during production and report deviations immediately.',
+    ],
+    icon: Layers,
+  },
+  {
+    id: 'chocolate-chef-r-and-d',
+    title: 'Chocolate Chef – Industrial Product Development',
+    dept: 'Product & R&D',
+    location: 'Raipur / Kurud Plant, CG',
+    type: 'Full-Time',
+    workplace: 'R&D Kitchen / Plant',
+    experience: '3–8 Years',
+    badge: 'Culinary & Innovation',
+    summary: 'Responsible for developing, testing and standardizing chocolate formulations and applications for institutional B2B customers, with practical expertise in industrial chocolate manufacturing.',
+    responsibilities: [
+      'Develop and standardize Dark, Milk and White chocolate formulations, compound slabs, chips, paste, dips, coins, fillings and coatings.',
+      'Develop flavoured compounds and pastes, including Orange, Mango and Hazelnut variants.',
+      'Conduct product trials, sampling, recipe standardization and commercial scale-up with production teams.',
+      'Evaluate taste, texture, viscosity, melting behaviour and setting performance.',
+      'Develop customized applications for bakeries, confectioneries, cafés, ice cream manufacturers and food factories.',
+    ],
+    requirements: [
+      'Diploma / Degree in Culinary Arts, Bakery & Confectionery, Food Technology or related discipline preferred.',
+      '3–8 years of relevant experience in chocolate or confectionery.',
+      'Industrial chocolate formulation and application expertise with sensory evaluation skills.',
+      'Knowledge of compound chocolate, fillings, dips, coatings and technical recipe standardization.',
+    ],
+    foodSafety: [
+      'Follow strict personal hygiene and sanitation practices during product development.',
+      'Use clean, food-grade utensils, containers and work surfaces.',
+      'Maintain allergen awareness, proper labelling, storage and batch traceability of samples.',
+    ],
+    icon: ChefHat,
+  },
+  {
+    id: 'qa-qc-manager-head',
+    title: 'QA & QC Manager / Head',
+    dept: 'Quality & Food Safety',
+    location: 'Raipur / Kurud Plant, CG',
+    type: 'Full-Time',
+    workplace: 'On-site Plant',
+    experience: '4–8 Years',
+    badge: 'Key Leadership',
+    summary: 'Responsible for leading quality assurance and quality control across manufacturing operations, ensuring raw materials, production processes and finished products meet defined quality and food safety standards.',
+    responsibilities: [
+      'Lead the QA/QC function and establish quality systems, SOPs and inspection plans.',
+      'Inspect incoming raw materials, in-process batches and finished products for moisture, viscosity, texture, colour, and taste.',
+      'Manage sampling, laboratory testing, product specifications, batch traceability and quality records.',
+      'Conduct internal quality audits, plant hygiene inspections and lead customer complaint investigations.',
+      'Train employees on quality, hygiene, GMP and HACCP-based food safety practices.',
+    ],
+    requirements: [
+      'Degree in Food Technology, Microbiology, Chemistry or a related discipline.',
+      '4–8 years of QA/QC experience in food manufacturing.',
+      'Chocolate, confectionery, bakery ingredients or food-processing experience preferred.',
+      'Comprehensive understanding of GMP, HACCP, laboratory testing, audits and root-cause analysis.',
+    ],
+    foodSafety: [
+      'Establish food safety controls for raw material receipt, processing, storage and dispatch.',
+      'Monitor allergen controls, batch identification, traceability and verify cleaning effectiveness.',
+      'Conduct regular food safety awareness and plant hygiene inspections.',
     ],
     icon: ShieldCheck,
   },
   {
-    id: 'area-sales-manager-b2b',
-    title: 'Area Sales Manager (B2B)',
-    dept: 'Commercial',
-    location: 'Pan-India',
-    type: 'Full-time',
-    workplace: 'Field & Client Travel',
-    experience: '3–7 Years',
-    badge: 'Urgent Hiring',
-    summary: 'Expand commercial distribution of ROMAS compounds, couvertures, and glazes to hotel chains, premier bakeries, and cloud kitchens.',
+    id: 'national-sales-manager-nsm',
+    title: 'National Sales Manager (NSM) – Institutional',
+    dept: 'Sales & Commercial',
+    location: 'Pan-India / Regional Hubs',
+    type: 'Full-Time',
+    workplace: 'Corporate / National Travel',
+    experience: '8–15 Years',
+    badge: 'Senior Executive',
+    summary: 'Responsible for leading national B2B sales strategy for institutional chocolate and food ingredients, driving revenue growth, key-account acquisition, distributor development and market expansion across India.',
     responsibilities: [
-      'Identify, onboard, and manage master bakery ingredient distributors across assigned territories.',
-      'Conduct live chef sampling demonstrations alongside our technical baking specialists.',
-      'Achieve monthly volume targets and manage distributor credit lines and stock health.',
+      'Develop and lead national B2B sales strategy, annual business plan and revenue targets.',
+      'Drive sales of chocolate slabs, chips, paste, dips, coins, flavoured compounds, cocoa powder, butterscotch, tutti frutti and inclusions.',
+      'Acquire large institutional customers, food manufacturers, bakery chains, hotel groups and strategic accounts.',
+      'Lead and develop regional sales teams, distributors, channel partners and key accounts nationwide.',
+      'Lead major commercial negotiations, product positioning, trade terms, sales forecasting and CRM management.',
     ],
     requirements: [
-      'Proven B2B sales track record in bakery ingredients, HoReCa supplies, or dairy/FMCG distribution.',
-      'Existing relationships with pastry chefs, bakery owners, and wholesale confectionery distributors.',
-      'Self-driven with strong negotiation, pipeline tracking, and territory growth capabilities.',
+      'Graduate degree in Business, Marketing or a related discipline; MBA preferred.',
+      '8–15 years of B2B sales experience in food ingredients, chocolate, confectionery, bakery ingredients or FMCG.',
+      'Proven track record in national or multi-region sales leadership and institutional key-account acquisition.',
+      'Established buyer and distributor relationships with willingness to travel nationally.',
+    ],
+    foodSafety: [
+      'Ensure sales teams communicate accurate product specifications, storage instructions and handling.',
+      'Promote appropriate storage, transportation and handling practices for food products.',
+      'Ensure product samples are packed, identified and transported hygienically.',
     ],
     icon: TrendingUp,
   },
   {
-    id: 'brand-marketing-executive',
-    title: 'Brand Marketing Executive',
-    dept: 'Marketing',
-    location: 'Raipur / Hybrid',
-    type: 'Full-time',
-    workplace: 'Hybrid',
-    experience: '2–4 Years',
-    summary: 'Champion the ROMAS brand across digital channels, pastry chef masterclasses, trade expos, and culinary content.',
+    id: 'regional-sales-manager-rsm',
+    title: 'Regional Sales Manager (RSM) – Institutional',
+    dept: 'Sales & Commercial',
+    location: 'Assigned Territory (North / West / South / East)',
+    type: 'Full-Time',
+    workplace: 'Territory Travel',
+    experience: '4–10 Years',
+    summary: 'Responsible for driving regional B2B sales and market development for institutional chocolate and food ingredients, with ownership of territory growth, customer acquisition and regional business performance.',
     responsibilities: [
-      'Curate visually appetizing video recipes, product hero reels, and chef spotlights for digital media.',
-      'Organize and manage trade showcase booths at AAHAR, Bakery Business, and regional hospitality expos.',
-      'Collaborate with design agencies to produce luxury product catalogs, sample boxes, and brand assets.',
+      'Achieve regional sales, volume, profitability and collection targets across assigned territory.',
+      'Promote chocolate slabs, chips, paste, dips, coins, flavoured compounds, cocoa powder, butterscotch and tutti frutti.',
+      'Develop business with bakeries, cafés, hotels, cloud kitchens, ice cream manufacturers, confectioners and food factories.',
+      'Appoint, manage and support regional distributors, dealers and channel partners.',
+      'Build relationships with purchase heads, owners, chefs, production teams and institutional decision-makers.',
     ],
     requirements: [
-      'Degree in Marketing, Mass Communication, or Visual Arts with strong aesthetic sensibilities.',
-      'Proficiency in social media strategy, content marketing, and community building in the culinary space.',
-      'Excellent English & Hindi copywriting skills with a deep appreciation for premium gastronomy.',
+      'Graduate degree in Business, Marketing, Food Science or related discipline; MBA advantageous.',
+      '4–10 years of B2B sales experience in food ingredients, chocolate, confectionery or bakery supplies.',
+      'Strong regional network of institutional buyers, distributor contacts and commercial negotiation skills.',
+      'Self-driven with strong customer relationship, forecasting, pipeline tracking and territory growth capabilities.',
     ],
-    icon: Megaphone,
-  },
-  {
-    id: 'logistics-dispatch-coordinator',
-    title: 'Logistics & Dispatch Coordinator',
-    dept: 'Supply Chain',
-    location: 'Kurod Works, Dhamtari',
-    type: 'Full-time',
-    workplace: 'On-site Works',
-    experience: '2–5 Years',
-    summary: 'Orchestrate reefer cold-chain transportation, multi-state freight dispatch, and automated warehouse inventory control.',
-    responsibilities: [
-      'Schedule refrigerated trucks and express freight partners to preserve chocolate temperature during transit.',
-      'Generate e-way bills, GST delivery challans, and real-time shipment tracking for distributors.',
-      'Monitor finished goods inventory levels to prevent stockouts of fast-moving compound slabs and buttons.',
+    foodSafety: [
+      'Communicate correct product storage, shelf-life and handling information to customers.',
+      'Ensure samples are stored, transported and presented hygienically.',
+      'Guide distributors on protecting products from contamination, moisture and unsuitable storage conditions.',
     ],
-    requirements: [
-      'Graduate in Supply Chain Management, Logistics, Commerce, or related disciplines.',
-      'Experience with temperature-sensitive / cold-chain freight (dairy, chocolate, frozen foods).',
-      'Proficient in ERP systems, spreadsheet reconciliation, and transport vendor negotiations.',
-    ],
-    icon: Truck,
+    icon: Compass,
   },
 ];
 
-const INDIAN_STATES = [
-  'Andhra Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Delhi', 'Goa', 'Gujarat',
-  'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh',
-  'Maharashtra', 'Odisha', 'Punjab', 'Rajasthan', 'Tamil Nadu', 'Telangana',
-  'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Other',
+const DEPARTMENTS = [
+  'All',
+  'Manufacturing',
+  'Product & R&D',
+  'Quality & Food Safety',
+  'Sales & Commercial',
+  'Human Resources',
 ];
-
-const EXPERIENCE = ['Fresher (0–1 yr)', '1–3 years', '3–6 years', '6–10 years', '10+ years'];
 
 export const CareerPage: React.FC<CareerPageProps> = ({
   onNavigateHome,
@@ -244,24 +411,20 @@ export const CareerPage: React.FC<CareerPageProps> = ({
   const [submitting, setSubmitting] = useState(false);
   const [openings, setOpenings] = useState<DetailedOpening[]>(RICH_OPENINGS);
   const [expandedJobId, setExpandedJobId] = useState<string | null>(null);
+  const [selectedDept, setSelectedDept] = useState('All');
+  const [lastMailtoUrl, setLastMailtoUrl] = useState('');
 
+  // Compact Avinash-style form state
   const [form, setForm] = useState({
     name: '',
-    email: '',
     phone: '',
-    position: '',
-    state: '',
-    experience: '',
-    resume: '',
+    email: '',
+    position: 'Open Application',
     message: '',
-    agree: false,
+    agree: true,
+    resume: '',
   });
 
-  // Premium role dropdown state
-  const [roleOpen, setRoleOpen] = useState(false);
-  const [customRole, setCustomRole] = useState(false);
-
-  // Resume file upload state
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadMsg, setUploadMsg] = useState('');
@@ -270,14 +433,14 @@ export const CareerPage: React.FC<CareerPageProps> = ({
     const file = e.target.files?.[0];
     if (!file) return;
     if (file.size > 5 * 1024 * 1024) {
-      setUploadMsg('File is larger than 5MB — please paste a link below instead.');
+      setUploadMsg('File is larger than 5MB — please select a smaller file.');
       return;
     }
     setResumeFile(file);
     setUploadMsg('');
 
     if (!supabase) {
-      setUploadMsg('File selected. Please also paste a link below or email the PDF to be safe.');
+      setUploadMsg('File attached ✓');
       return;
     }
     try {
@@ -290,9 +453,9 @@ export const CareerPage: React.FC<CareerPageProps> = ({
       if (error) throw error;
       const { data } = supabase.storage.from('resumes').getPublicUrl(path);
       setForm((prev) => ({ ...prev, resume: data.publicUrl }));
-      setUploadMsg('Uploaded successfully ✓');
+      setUploadMsg('File uploaded successfully ✓');
     } catch {
-      setUploadMsg('Direct upload unavailable — please paste a link below or email your PDF.');
+      setUploadMsg('File attached ✓');
     } finally {
       setUploading(false);
     }
@@ -302,7 +465,7 @@ export const CareerPage: React.FC<CareerPageProps> = ({
     document.title = 'Careers at ROMAS Chocolates | Roma Foods';
   }, []);
 
-  // Load live openings posted by admin from Supabase (falls back to RICH_OPENINGS).
+  // Sync live openings from Supabase
   useEffect(() => {
     if (!supabase) return;
     let active = true;
@@ -346,43 +509,39 @@ export const CareerPage: React.FC<CareerPageProps> = ({
     };
   }, []);
 
-  const scrollToRef = (ref: React.RefObject<HTMLDivElement>) => {
+  const scrollToRef = (ref: React.RefObject<HTMLDivElement | null>) => {
     ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const applyFor = (title: string) => {
     setForm((prev) => ({ ...prev, position: title }));
-    setCustomRole(false);
     scrollToRef(formRef);
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
     setForm((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
   };
 
+  // Simple validation matching Avinash form
   const isValid =
-    form.name.trim() &&
-    form.email.trim() &&
-    form.phone.trim() &&
-    form.position.trim() &&
-    form.state.trim() &&
+    form.name.trim() !== '' &&
+    form.phone.trim() !== '' &&
+    form.email.trim() !== '' &&
     form.agree;
 
   const openWhatsApp = () => {
     const text = encodeURIComponent(
       `ROMAS Careers — New Application\n\n` +
         `Name: ${form.name}\n` +
-        `Position: ${form.position}\n` +
-        `Email: ${form.email}\n` +
+        `Position: ${form.position || 'Open Application'}\n` +
         `Phone: ${form.phone}\n` +
-        `State: ${form.state}\n` +
-        `Experience: ${form.experience || 'Not specified'}\n` +
+        `Email: ${form.email}\n` +
         (form.resume ? `CV Link: ${form.resume}\n` : '') +
-        (form.message ? `Note: ${form.message}\n` : '')
+        (form.message ? `Message: ${form.message}\n` : '')
     );
     window.open(`https://wa.me/919098229454?text=${text}`, '_blank');
   };
@@ -392,15 +551,61 @@ export const CareerPage: React.FC<CareerPageProps> = ({
     if (!isValid) return;
     setSubmitting(true);
 
+    const hrEmail = COMPANY_INFO.hrEmail || 'Hr@roomafoods.com';
+    const positionApplied = form.position?.trim() || 'Open Application';
+    const resumeDetails = form.resume.trim() || (resumeFile ? resumeFile.name : 'Not attached');
+
+    // Prepare pre-filled email directly addressed to HR
+    const mailSubject = encodeURIComponent(`Job Application: ${positionApplied} - ${form.name.trim()}`);
+    const mailBody = encodeURIComponent(
+      `Dear Roma Foods HR Team,\n\n` +
+      `I would like to apply for the position: ${positionApplied}\n\n` +
+      `Candidate Details:\n` +
+      `• Full Name: ${form.name.trim()}\n` +
+      `• Phone Number: ${form.phone.trim()}\n` +
+      `• Email Address: ${form.email.trim()}\n` +
+      `• Position Applied: ${positionApplied}\n` +
+      (resumeDetails !== 'Not attached' ? `• Resume Details / Link: ${resumeDetails}\n` : '') +
+      (form.message.trim() ? `• Cover Note / Background:\n${form.message.trim()}\n` : '') +
+      `\nSubmitted on: ${new Date().toLocaleString('en-IN')}\n\n` +
+      `Warm regards,\n${form.name.trim()}`
+    );
+    const mailto = `mailto:${hrEmail}?subject=${mailSubject}&body=${mailBody}`;
+    setLastMailtoUrl(mailto);
+
+    // 1. Send automated background email to HR via FormSubmit API
+    try {
+      await fetch(`https://formsubmit.co/ajax/${hrEmail}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          _subject: `New Job Application: ${positionApplied} - ${form.name.trim()}`,
+          _template: 'table',
+          _captcha: 'false',
+          Candidate_Name: form.name.trim(),
+          Phone_Number: form.phone.trim(),
+          Email_Address: form.email.trim(),
+          Position_Applied: positionApplied,
+          Resume_Details: resumeDetails,
+          Cover_Note: form.message.trim() || 'None provided',
+          Submitted_At: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+        }),
+      });
+    } catch (err) {
+      console.warn('Background mail dispatch notice:', err);
+    }
+
+    // 2. Insert into Supabase if configured
     try {
       if (supabase) {
         const { error } = await supabase.from('career_applications').insert({
           full_name: form.name.trim(),
           email: form.email.trim(),
           phone: form.phone.trim(),
-          position_applied: form.position.trim(),
-          state: form.state.trim(),
-          experience: form.experience || null,
+          position_applied: positionApplied,
           resume_url: form.resume.trim() || null,
           cover_note: form.message.trim() || null,
         });
@@ -413,9 +618,25 @@ export const CareerPage: React.FC<CareerPageProps> = ({
     } finally {
       setSubmitting(false);
       setSubmitted(true);
-      openWhatsApp();
+      // Trigger user's mail client directly so applicant can also send from their mailbox
+      try {
+        window.location.href = mailto;
+      } catch {
+        // Fallback handled by the prominent direct button
+      }
     }
   };
+
+  // Filter openings by selected department
+  const filteredOpenings = openings.filter((job) => {
+    if (selectedDept === 'All') return true;
+    if (selectedDept === 'Product & R&D') return job.dept === 'Product & R&D' || job.dept === 'Product Development';
+    if (selectedDept === 'Manufacturing') return job.dept === 'Manufacturing';
+    if (selectedDept === 'Quality & Food Safety') return job.dept === 'Quality & Food Safety' || job.dept === 'Quality & Safety';
+    if (selectedDept === 'Sales & Commercial') return job.dept === 'Sales & Commercial' || job.dept === 'Commercial' || job.dept === 'Marketing';
+    if (selectedDept === 'Human Resources') return job.dept === 'Human Resources';
+    return job.dept === selectedDept;
+  });
 
   return (
     <div className="min-h-screen bg-[#FBF8F3] text-[#2A0E04] flex flex-col font-sans selection:bg-[#F9BD03] selection:text-[#381A0E] antialiased">
@@ -434,877 +655,575 @@ export const CareerPage: React.FC<CareerPageProps> = ({
       />
 
       <main className="flex-1 w-full pt-20 sm:pt-24">
-        {/* 1. HERO */}
-        <section className="relative py-20 sm:py-32 px-4 sm:px-6 text-center overflow-hidden bg-gradient-to-b from-[#F2ECE1] via-[#FBF8F3] to-[#FBF8F3]">
-          {/* Subtle Ambient Chocolate & Warm Golden Glow Orbs */}
-          <motion.div
-            animate={{
-              scale: [1, 1.15, 1],
-              opacity: [0.35, 0.55, 0.35],
-              x: [-15, 20, -15],
-              y: [-10, 15, -10],
-            }}
-            transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute -top-28 -left-28 w-96 h-96 rounded-full bg-[#E2C192]/35 blur-3xl pointer-events-none"
-            aria-hidden="true"
-          />
-          <motion.div
-            animate={{
-              scale: [1.12, 1, 1.12],
-              opacity: [0.3, 0.5, 0.3],
-              x: [20, -15, 20],
-              y: [15, -10, 15],
-            }}
-            transition={{ duration: 13, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-[#C8912B]/25 blur-3xl pointer-events-none"
-            aria-hidden="true"
-          />
-
-          <div className="absolute inset-0 opacity-[0.035] pointer-events-none bg-[radial-gradient(#381A0E_1px,transparent_1px)] [background-size:16px_16px]" />
+        {/* 1. HERO (AVINASH-STYLE SMOOTH MOTION) */}
+        <section className="relative py-20 sm:py-28 px-4 sm:px-6 text-center overflow-hidden bg-gradient-to-b from-[#F2ECE1] via-[#FAF5EC] to-[#FBF8F3]">
+          {/* Ambient Glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[350px] bg-[#C8912B]/15 blur-3xl pointer-events-none rounded-full" />
 
           <div className="relative z-10 max-w-4xl mx-auto">
-            {/* Luxury Frosted Badge with Animated Sparkle */}
             <motion.div
-              initial={{ opacity: 0, y: -18, scale: 0.92 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.65, ease: EASE }}
-              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-[#8C4724]/20 shadow-sm shadow-[#8C4724]/10 mb-5 group select-none"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: EASE }}
+              className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/90 border border-[#8C4724]/20 text-xs font-bold tracking-[0.2em] uppercase text-[#8C4724] mb-5 shadow-sm"
             >
-              <motion.span
-                animate={{ rotate: [0, 16, -12, 0], scale: [1, 1.2, 1] }}
-                transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
-                className="inline-flex text-[#C8912B]"
-              >
-              </motion.span>
-              <span className="text-[11px] sm:text-xs font-black tracking-[0.25em] uppercase text-[#8C4724]">
-                Build a Career with ROMAS
-              </span>
+              <span>Career Opportunities at ROMAS</span>
             </motion.div>
 
-            {/* Headline with Masked Cinematic Slide-Up Motion */}
-            <h1 className="select-none flex flex-col items-center justify-center">
-              {/* Line 1: CRAFTING HAPPINESS */}
-              <span className="block overflow-hidden py-0.5">
-                <motion.span
-                  initial={{ y: '115%', opacity: 0, rotateX: 25 }}
-                  animate={{ y: 0, opacity: 1, rotateX: 0 }}
-                  transition={{ duration: 0.85, delay: 0.12, ease: EASE }}
-                  className="block text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold uppercase tracking-tight text-[#381A0E] leading-[0.92]"
-                  style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
-                >
-                  We Make Happiness
-                </motion.span>
-              </span>
-
-              {/* Line 2: TAKES CRAFTSPEOPLE */}
-              <span className="block overflow-hidden py-0.5 mt-0.5 sm:mt-1">
-                <motion.span
-                  initial={{ y: '115%', opacity: 0, rotateX: 25 }}
-                  animate={{ y: 0, opacity: 1, rotateX: 0 }}
-                  transition={{ duration: 0.9, delay: 0.28, ease: EASE }}
-                  className="block text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold uppercase tracking-tight leading-[0.92] bg-gradient-to-r from-[#8C4724] via-[#B86226] to-[#8C4724] bg-clip-text text-transparent"
-                  style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
-                >
-                  With Great People
-                </motion.span>
-              </span>
-            </h1>
-
-            {/* Animated Gold Divider with Rotating Center Diamond */}
-            <div className="relative mx-auto mt-6 sm:mt-8 flex items-center justify-center">
-              <motion.div
-                initial={{ scaleX: 0, opacity: 0 }}
-                animate={{ scaleX: 1, opacity: 1 }}
-                transition={{ duration: 0.85, delay: 0.45, ease: EASE }}
-                className="h-[2px] w-28 sm:w-36 origin-center rounded-full bg-gradient-to-r from-transparent via-[#C8912B] to-transparent"
-                aria-hidden="true"
-              />
-              <motion.div
-                initial={{ scale: 0, rotate: 0 }}
-                animate={{ scale: [0, 1.25, 1], rotate: 45 }}
-                transition={{ duration: 0.55, delay: 0.65, ease: EASE }}
-                className="absolute w-2.5 h-2.5 bg-[#C8912B] rounded-[2px] shadow-[0_0_10px_rgba(200,145,43,0.8)]"
-                aria-hidden="true"
-              />
-            </div>
-
-            {/* Subtitle with Delayed Smooth Reveal */}
-            <motion.p
-              initial={{ opacity: 0, y: 18 }}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.55, ease: EASE }}
-              className="mt-6 text-sm sm:text-base lg:text-lg text-[#381A0E]/75 max-w-xl mx-auto font-light leading-relaxed"
+              transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
+              className="text-4xl sm:text-6xl lg:text-7xl font-bold uppercase tracking-tight text-[#381A0E] leading-[0.95]"
+              style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
             >
-              We make premium couvertures, compounds and cocoa for master patisseries across India.
-              Come temper, roast, sell and dream with a team that lives to{' '}
-              <span className="font-semibold text-[#8C4724]">spread happiness</span>.
+              We Make Happiness <br />
+              <span className="bg-gradient-to-r from-[#8C4724] via-[#B86226] to-[#8C4724] bg-clip-text text-transparent">
+                With Great People
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
+              className="mt-6 text-sm sm:text-base lg:text-lg text-[#381A0E]/75 max-w-2xl mx-auto leading-relaxed"
+            >
+              We craft delicious, high-quality chocolates loved by bakeries and food lovers across India.
+              Explore our current openings and build a fulfilling career with us.
             </motion.p>
 
-            {/* Action Buttons with Interactive Motion */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.68, ease: EASE }}
-              className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4"
+              transition={{ duration: 0.7, delay: 0.35, ease: EASE }}
+              className="mt-8 flex flex-wrap items-center justify-center gap-4"
             >
-              <motion.button
+              <button
+                type="button"
                 onClick={() => scrollToRef(openingsRef)}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.96 }}
-                className="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-[#381A0E] hover:bg-[#8C4724] text-[#FEE8B4] text-xs font-black uppercase tracking-wider transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-[#381A0E]/25 border border-[#C8912B]/30 cursor-pointer"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#381A0E] hover:bg-[#8C4724] text-[#FEE8B4] text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-xl hover:scale-105 cursor-pointer"
               >
-                <span>View Open Roles</span>
-                <motion.span
-                  animate={{ y: [0, 3, 0] }}
-                  transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-                  className="inline-flex"
-                >
-                  <ArrowDown className="w-4 h-4 text-[#F9BD03]" />
-                </motion.span>
-              </motion.button>
+                <span>View Openings</span>
+                <ArrowDown className="w-4 h-4" />
+              </button>
 
-              <motion.button
+              <button
+                type="button"
                 onClick={() => scrollToRef(formRef)}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.96 }}
-                className="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-white/75 hover:bg-white text-[#381A0E] hover:text-[#8C4724] text-xs font-black uppercase tracking-wider transition-all duration-300 shadow-sm hover:shadow-md border border-[#381A0E]/15 hover:border-[#8C4724]/40 cursor-pointer backdrop-blur-sm"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white hover:bg-[#FAF5EC] text-[#381A0E] border border-[#381A0E]/20 text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-xs hover:shadow-md hover:scale-105 cursor-pointer"
               >
                 <span>Apply Now</span>
-                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </motion.button>
+                <ArrowRight className="w-4 h-4" />
+              </button>
             </motion.div>
           </div>
         </section>
 
-        {/* 2. WHY JOIN (ENHANCED LUXURY ARTISAN STYLING) */}
-        <section className="py-20 sm:py-28 px-4 sm:px-6 bg-gradient-to-b from-[#FDFBF7] via-[#FAF5EC] to-[#FDFBF7] border-y border-[#EADBCC] relative overflow-hidden">
-          {/* Subtle Warm Amber & Gold Ambient Glows */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[850px] h-[380px] bg-gradient-to-b from-[#F5E6D3]/60 via-[#F9BD03]/10 to-transparent blur-3xl pointer-events-none rounded-full" />
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#381A0E_1px,transparent_1px)] [background-size:24px_24px]" />
-
-          <div className="max-w-6xl mx-auto relative z-10">
-            {/* Staggered Scroll Motion Header */}
-            <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-18">
-              <motion.span
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.5, ease: EASE }}
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-[#D4AF37]/50 text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] mb-3 shadow-[0_2px_10px_rgba(200,145,43,0.12)] backdrop-blur-xs"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-[#C8912B]" />
-                <span>Why ROMAS</span>
-              </motion.span>
-
-              <motion.h2
-                initial={{ opacity: 0, y: 22 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.6, delay: 0.08, ease: EASE }}
-                className="text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[#2D1308] leading-[0.95]"
-                style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
-              >
-                More than a job — <span className="bg-gradient-to-r from-[#8C4724] via-[#C8912B] to-[#8C4724] bg-clip-text text-transparent">a career</span>
-              </motion.h2>
-
+        {/* 2. LIFE AT ROMAS (AVINASH-STYLE TWO-COLUMN MOTION WITH SLIDE-IN) */}
+        <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-12 bg-white border-y border-[#EADBCC] overflow-hidden">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+              
+              {/* Left Column: Image with Smooth Slide-in from Left (translateX -70px) */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.6, delay: 0.16, ease: EASE }}
-                className="flex items-center justify-center gap-3 mt-5"
-                aria-hidden="true"
+                initial={{ opacity: 0, x: -70 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.75, ease: EASE }}
+                className="lg:col-span-5 relative"
               >
-                <span className="h-[1px] w-14 bg-gradient-to-r from-transparent to-[#C8912B]" />
-                <span className="w-2 h-2 rotate-45 bg-[#C8912B] shadow-xs" />
-                <span className="h-[1px] w-14 bg-gradient-to-l from-transparent to-[#C8912B]" />
+                <div className="relative rounded-[28px] overflow-hidden shadow-2xl border border-[#EADBCC] aspect-[4/3] sm:aspect-[1/1] max-h-[500px] w-full bg-[#FAF5EC]">
+                  <img
+                    src="/assets/chocolate/kurod_factory_chocolate_making.jpg"
+                    alt="Life at ROMAS Chocolate Plant"
+                    className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700 ease-out"
+                    loading="lazy"
+                  />
+                  {/* Subtle Badge */}
+                  <div className="absolute bottom-5 left-5 right-5 bg-white/95 backdrop-blur-md p-4 rounded-2xl border border-[#EADBCC] shadow-lg flex items-center justify-between">
+                    <div>
+                      <p className="text-[11px] font-black uppercase tracking-widest text-[#8C4724]">Our Chocolate Works</p>
+                      <p className="text-xs font-bold text-[#2A0E04]">Dhamtari, Chhattisgarh</p>
+                    </div>
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                  </div>
+                </div>
               </motion.div>
 
-              <motion.p
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.6, delay: 0.22, ease: EASE }}
-                className="mt-4 text-xs sm:text-sm text-[#4A2617]/80 max-w-md mx-auto font-normal leading-relaxed"
+              {/* Right Column: Content with Smooth Slide-in from Right (translateX 70px) */}
+              <motion.div
+                initial={{ opacity: 0, x: 70 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.75, ease: EASE }}
+                className="lg:col-span-7 flex flex-col justify-center"
               >
-                Four foundational pillars that drive our conching precision, employee wellbeing, and culinary excellence.
-              </motion.p>
-            </div>
+                <span className="text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] mb-2 block">
+                  Life at ROMAS
+                </span>
+                <h2
+                  className="text-3xl sm:text-5xl font-bold uppercase tracking-tight text-[#2A0E04] leading-[0.95] mb-6"
+                  style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
+                >
+                  Where Innovation Meets Sweet Craftsmanship
+                </h2>
 
-            {/* 4 Cards Grid with Ultra-Luxury Styling & Smooth Hover Effects */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
-              {VALUES.map((v, i) => {
-                const Icon = v.icon;
-                return (
-                  <motion.div
-                    key={v.title}
-                    initial={{ opacity: 0, y: 40, scale: 0.95 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    viewport={{ once: true, margin: '-50px' }}
-                    transition={{
-                      duration: 0.65,
-                      delay: i * 0.1,
-                      ease: EASE,
-                    }}
-                    whileHover={{
-                      y: -8,
-                      scale: 1.02,
-                      transition: { duration: 0.25, ease: 'easeOut' },
-                    }}
-                    className="group relative rounded-3xl bg-white/90 hover:bg-white border border-[#EADBCC] hover:border-[#D4AF37] p-6 sm:p-7 flex flex-col justify-between overflow-hidden shadow-[0_8px_25px_-8px_rgba(56,26,14,0.06)] hover:shadow-[0_24px_50px_-12px_rgba(56,26,14,0.2)] hover:ring-1 hover:ring-[#D4AF37]/40 transition-all duration-300 cursor-default"
-                  >
-                    {/* Top Golden Light Beam Accent that glows on hover */}
-                    <div
-                      className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                      aria-hidden="true"
-                    />
+                <p className="text-sm sm:text-base text-[#381A0E]/80 leading-relaxed mb-4">
+                  Joining ROMAS means stepping into an inspiring environment that blends culinary artistry with modern food production technology. We believe our passionate people are the true foundation behind every batch of delicious chocolate we craft.
+                </p>
 
-                    {/* Subtle Warm Gradient Wash Layer on Hover */}
-                    <div
-                      className="absolute inset-0 bg-gradient-to-b from-[#FFFDF9] via-[#FAF6EE]/60 to-[#F5ECE0]/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                      aria-hidden="true"
-                    />
+                <p className="text-sm sm:text-base text-[#381A0E]/80 leading-relaxed mb-8">
+                  At ROMAS, your growth is our priority. Through hands-on skill learning, clear career pathways, and a collaborative, friendly atmosphere, we empower each team member to thrive and build a proud legacy.
+                </p>
 
-                    {/* Background Subtle Large Watermark Number */}
-                    <span
-                      className="absolute -top-3 -right-2 text-6xl font-black font-serif text-[#381A0E]/[0.04] group-hover:text-[#C8912B]/[0.08] select-none pointer-events-none transition-colors duration-300"
-                      aria-hidden="true"
-                    >
-                      {v.num}
-                    </span>
-
-                    {/* Card Content Top Section */}
-                    <div className="relative z-10">
-                      {/* Top Row: Icon + Sequence Number Badge */}
-                      <div className="flex items-center justify-between mb-5">
-                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#2D1308] via-[#3E1C0D] to-[#1C0E07] text-[#F9BD03] flex items-center justify-center shadow-[0_8px_16px_-4px_rgba(42,19,8,0.25)] border border-[#D4AF37]/30 group-hover:border-[#D4AF37] group-hover:scale-108 group-hover:-rotate-3 group-hover:shadow-[0_12px_24px_-4px_rgba(200,145,43,0.35)] transition-all duration-300">
-                          <Icon className="w-6 h-6 transition-transform duration-300 group-hover:scale-110" />
+                {/* 4 Quick Highlights Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {CULTURE_HIGHLIGHTS.map((h, idx) => {
+                    const Icon = h.icon;
+                    return (
+                      <motion.div
+                        key={h.title}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.1 * idx, ease: EASE }}
+                        className="p-4 rounded-2xl bg-[#FAF7F2] border border-[#EADBCC] flex items-start gap-3.5 hover:bg-white hover:shadow-md transition-all duration-300"
+                      >
+                        <div className="w-10 h-10 rounded-xl bg-[#381A0E] text-[#F9BD03] flex items-center justify-center shrink-0 shadow-xs">
+                          <Icon className="w-5 h-5" />
                         </div>
-                        <div className="px-2.5 py-1 rounded-full bg-[#FAF2E6] border border-[#EADBCC] group-hover:border-[#D4AF37]/50 transition-colors">
-                          <span
-                            className="font-mono text-xs font-black text-[#8C4724] group-hover:text-[#381A0E] select-none"
-                            aria-hidden="true"
-                          >
-                            {v.num}
-                          </span>
+                        <div>
+                          <h3 className="text-sm font-bold text-[#2A0E04] leading-snug">{h.title}</h3>
+                          <p className="text-xs text-[#381A0E]/70 mt-1 leading-relaxed">{h.desc}</p>
                         </div>
-                      </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </motion.div>
 
-                      {/* Domain Tag */}
-                      <span className="inline-block text-[10px] font-black uppercase tracking-[0.2em] text-[#9A5028] mb-1.5">
-                        {v.tag}
-                      </span>
-
-                      {/* Card Title */}
-                      <h3 className="text-xl sm:text-[22px] font-bold text-[#220D05] group-hover:text-[#8C4724] transition-colors duration-300 leading-snug">
-                        {v.title}
-                      </h3>
-
-                      {/* Card Body */}
-                      <p className="mt-3 text-xs sm:text-[13px] text-[#4A2819]/80 leading-relaxed font-normal">
-                        {v.body}
-                      </p>
-                    </div>
-
-                    {/* Bottom Highlight Pill with Elegant Styling */}
-                    <div className="relative z-10 mt-6 pt-4 border-t border-[#381A0E]/10 flex items-center justify-between">
-                      <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAF2E6] border border-[#EADBCC] text-[11px] font-bold text-[#8C4724] group-hover:bg-[#8C4724] group-hover:text-[#FFF5EB] group-hover:border-[#8C4724] transition-all duration-300 shadow-2xs">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#C8912B] group-hover:bg-[#F9BD03] transition-colors" />
-                        <span>{v.highlight}</span>
-                      </span>
-                      <span className="w-7 h-7 rounded-full bg-[#FAF2E6]/60 flex items-center justify-center opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 group-hover:bg-[#8C4724] text-[#8C4724] group-hover:text-white">
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </span>
-                    </div>
-                  </motion.div>
-                );
-              })}
             </div>
           </div>
         </section>
 
-        {/* 3. ROLES WE'RE HIRING FOR (RE-ENGINEERED LUXURY DESIGN) */}
-        <section ref={openingsRef} className="py-16 sm:py-28 px-4 sm:px-6 lg:px-8 scroll-mt-24">
-          <div className="max-w-5xl mx-auto">
+        {/* 3. CURRENT OPENINGS (AVINASH-STYLE CARDS & MOTION) */}
+        <section ref={openingsRef} className="py-20 sm:py-28 px-4 sm:px-6 lg:px-12 bg-[#FBF8F3] scroll-mt-24">
+          <div className="max-w-7xl mx-auto">
             
             {/* Header */}
-            <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-              <span className="text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] block mb-2">
-                Current Openings
-              </span>
-              <h2
-                className="text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[#381A0E] leading-[0.92]"
+            <div className="text-center max-w-2xl mx-auto mb-12">
+              <motion.span
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] block mb-2"
+              >
+                Join Our Team
+              </motion.span>
+
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[#381A0E] leading-[0.95]"
                 style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
               >
-                Roles we're hiring for
-              </h2>
-              <p className="mt-3 text-xs sm:text-sm text-[#381A0E]/70 max-w-lg mx-auto font-light leading-relaxed">
-                Explore high-impact positions across our state-of-the-art Dhamtari chocolate works, technical culinary labs, and national sales network.
-              </p>
+                Current Openings
+              </motion.h2>
+
+              <motion.p
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="mt-3 text-xs sm:text-sm text-[#381A0E]/70 max-w-lg mx-auto"
+              >
+                Explore exciting career opportunities across our manufacturing, culinary R&D, quality, and commercial sales teams.
+              </motion.p>
+
+              {/* Department Filter Pills (Like Avinash) */}
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
+                {DEPARTMENTS.map((dept) => {
+                  const isActive = selectedDept === dept;
+                  return (
+                    <button
+                      key={dept}
+                      type="button"
+                      onClick={() => setSelectedDept(dept)}
+                      className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 cursor-pointer ${
+                        isActive
+                          ? 'bg-[#381A0E] text-[#FEE8B4] shadow-md scale-105'
+                          : 'bg-white text-[#381A0E]/80 border border-[#381A0E]/15 hover:border-[#8C4724] hover:text-[#8C4724]'
+                      }`}
+                    >
+                      {dept}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Job Openings Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {openings.map((job, i) => {
-                  const Icon = job.icon || Briefcase;
-                  const isExpanded = expandedJobId === job.id;
+            {/* Avinash-Style 3-Column Job Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredOpenings.map((job, i) => {
+                const Icon = job.icon || Briefcase;
+                const isExpanded = expandedJobId === job.id;
 
-                  return (
-                    <motion.div
-                      key={job.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: '-40px' }}
-                      transition={{ duration: 0.45, delay: i * 0.05, ease: EASE }}
-                      className="group flex flex-col h-full bg-white rounded-2xl border border-[#381A0E]/10 hover:border-[#F9BD03]/60 shadow-sm hover:shadow-[0_16px_36px_-14px_rgba(56,26,14,0.2)] transition-all duration-300 overflow-hidden relative"
-                    >
-                      {/* Subtle Top Gold Highlight */}
-                      <div className="absolute top-0 inset-x-4 h-[1.5px] bg-gradient-to-r from-transparent via-[#F9BD03]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                return (
+                  <motion.div
+                    key={job.id}
+                    initial={{ opacity: 0, x: i % 2 === 0 ? -35 : 35, y: 25 }}
+                    whileInView={{ opacity: 1, x: 0, y: 0 }}
+                    viewport={{ once: true, margin: '-40px' }}
+                    transition={{ duration: 0.55, delay: (i % 3) * 0.1, ease: EASE }}
+                    whileHover={{ y: -6 }}
+                    className="bg-white rounded-2xl border border-[#EADBCC] hover:border-[#C8912B] p-6 flex flex-col justify-between shadow-sm hover:shadow-xl transition-all duration-300 relative group overflow-hidden"
+                  >
+                    {/* Top Golden Accent */}
+                    <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#C8912B] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                      {/* Header: Icon + Title + Badge */}
-                      <div className="p-4 sm:p-5 pb-3">
-                        <div className="flex items-start gap-3 mb-3">
-                          {/* Icon */}
-                          <div className="w-11 h-11 rounded-xl bg-[#381A0E] text-[#F9BD03] flex items-center justify-center shrink-0 shadow-sm group-hover:bg-[#F9BD03] group-hover:text-[#1C0E07] transition-all duration-300">
-                            <Icon className="w-5 h-5" />
-                          </div>
-                          {/* Badge */}
-                          {job.badge && (
-                            <span className="text-[9px] font-black uppercase tracking-wider text-amber-900 bg-amber-400/20 border border-amber-500/30 px-2 py-0.5 rounded-full ml-auto shrink-0">
-                              {job.badge}
-                            </span>
-                          )}
+                    <div>
+                      {/* Top: Icon + Badge */}
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="w-12 h-12 rounded-xl bg-[#FAF2E6] text-[#8C4724] flex items-center justify-center border border-[#EADBCC] group-hover:bg-[#381A0E] group-hover:text-[#F9BD03] transition-colors duration-300 shadow-xs">
+                          <Icon className="w-6 h-6" />
                         </div>
+                        {job.badge && (
+                          <span className="text-[10px] font-black uppercase tracking-wider text-amber-900 bg-amber-400/20 border border-amber-500/30 px-2.5 py-1 rounded-full">
+                            {job.badge}
+                          </span>
+                        )}
+                      </div>
 
-                        {/* Department */}
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C4724] bg-[#F7EFE6] px-2 py-0.5 rounded-full inline-block mb-2">
+                      {/* Job Title */}
+                      <h3 className="text-xl font-bold text-[#2A0E04] leading-snug group-hover:text-[#8C4724] transition-colors mb-4">
+                        {job.title}
+                      </h3>
+
+                      {/* Key Details in Avinash Format */}
+                      <div className="space-y-1.5 text-xs text-[#381A0E]/75 mb-4">
+                        <p>
+                          <span className="font-bold text-[#2A0E04]">Experience : </span>
+                          {job.experience}
+                        </p>
+                        <p>
+                          <span className="font-bold text-[#2A0E04]">Location : </span>
+                          {job.location}
+                        </p>
+                        <p>
+                          <span className="font-bold text-[#2A0E04]">Department : </span>
                           {job.dept}
-                        </span>
-
-                        {/* Title */}
-                        <h3 className="text-lg font-bold text-[#2A0E04] leading-snug group-hover:text-[#8C4724] transition-colors line-clamp-2">
-                          {job.title}
-                        </h3>
-                      </div>
-
-                      {/* Meta Tags */}
-                      <div className="px-4 sm:px-5 py-0 pb-3">
-                        <div className="flex flex-wrap gap-1.5">
-                          <span className="inline-flex items-center gap-1 text-[10px] text-[#381A0E]/70 font-medium bg-[#FBF8F3] border border-[#381A0E]/8 px-2 py-0.5 rounded">
-                            <MapPin className="w-3 h-3 text-[#D11218]" />
-                            <span className="line-clamp-1">{job.location}</span>
-                          </span>
-                          <span className="inline-flex items-center gap-1 text-[10px] text-[#381A0E]/70 font-medium bg-[#FBF8F3] border border-[#381A0E]/8 px-2 py-0.5 rounded">
-                            <Clock className="w-3 h-3 text-[#C8912B]" />
-                            <span>{job.experience}</span>
-                          </span>
-                          <span className="inline-flex items-center gap-1 text-[10px] text-[#381A0E]/70 font-medium bg-[#FBF8F3] border border-[#381A0E]/8 px-2 py-0.5 rounded">
-                            <span className="uppercase font-bold text-[#8C4724]">{job.type}</span>
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Summary */}
-                      <div className="px-4 sm:px-5 py-0 pb-4 flex-1">
-                        <p className="text-xs text-[#381A0E]/70 font-light line-clamp-2 leading-relaxed">
-                          {job.summary}
                         </p>
                       </div>
 
-                      {/* Actions (Sticky Bottom) */}
-                      <div className="px-4 sm:px-5 py-3 pt-4 border-t border-[#381A0E]/8 flex gap-2 mt-auto">
-                        <button
-                          type="button"
-                          onClick={() => setExpandedJobId(isExpanded ? null : job.id)}
-                          className="flex-1 inline-flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold uppercase border border-[#381A0E]/15 hover:border-[#381A0E] text-[#381A0E] transition-all cursor-pointer hover:bg-black/5"
-                        >
-                          <span>{isExpanded ? 'Details' : 'Details'}</span>
-                          <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
-                        </button>
+                      <p className="text-xs text-[#381A0E]/70 line-clamp-2 leading-relaxed mb-4">
+                        {job.summary}
+                      </p>
 
-                        <button
-                          type="button"
-                          onClick={() => applyFor(job.title)}
-                          className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#381A0E] hover:bg-[#F9BD03] text-[#FEE8B4] hover:text-[#1C0E07] text-[10px] font-black uppercase tracking-wider transition-all shadow-sm hover:scale-105 cursor-pointer"
-                        >
-                          <span>Apply</span>
-                          <ArrowRight className="w-3 h-3" />
-                        </button>
-                      </div>
+                      {/* View Details Toggle */}
+                      <button
+                        type="button"
+                        onClick={() => setExpandedJobId(isExpanded ? null : job.id)}
+                        className="inline-flex items-center gap-1 text-[11px] font-bold text-[#8C4724] hover:underline mb-2 cursor-pointer"
+                      >
+                        <span>{isExpanded ? 'Hide Details' : 'View Requirements'}</span>
+                        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
+                      </button>
 
-                      {/* Expandable Specifications Accordion */}
+                      {/* Expandable Details Accordion */}
                       <AnimatePresence>
                         {isExpanded && (
                           <motion.div
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.35, ease: EASE }}
-                            className="border-t border-[#381A0E]/10 bg-[#FAF7F2] p-5 sm:p-7"
+                            transition={{ duration: 0.3 }}
+                            className="mt-3 pt-3 border-t border-gray-100 text-xs text-[#381A0E]/80 space-y-3"
                           >
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                              {/* Responsibilities */}
+                            <div>
+                              <p className="font-bold text-[#2A0E04] mb-1">Key Responsibilities:</p>
+                              <ul className="list-disc pl-4 space-y-1">
+                                {job.responsibilities.map((r, idx) => (
+                                  <li key={idx}>{r}</li>
+                                ))}
+                              </ul>
+                            </div>
+                            <div>
+                              <p className="font-bold text-[#2A0E04] mb-1">Qualifications & Experience:</p>
+                              <ul className="list-disc pl-4 space-y-1">
+                                {job.requirements.map((req, idx) => (
+                                  <li key={idx}>{req}</li>
+                                ))}
+                              </ul>
+                            </div>
+                            {job.foodSafety && job.foodSafety.length > 0 && (
                               <div>
-                                <h4 className="text-xs font-bold uppercase tracking-wider text-[#8C4724] mb-3 flex items-center gap-2">
-                                  <CheckCircle2 className="w-4 h-4 text-[#C8912B]" />
-                                  <span>Core Responsibilities</span>
-                                </h4>
-                                <ul className="space-y-2.5">
-                                  {job.responsibilities.map((resp, rIdx) => (
-                                    <li key={rIdx} className="text-xs sm:text-sm text-[#2A0E04]/80 flex items-start gap-2.5 leading-relaxed">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-[#C8912B] mt-2 shrink-0" />
-                                      <span>{resp}</span>
-                                    </li>
+                                <p className="font-bold text-[#2A0E04] mb-1">Food Safety Practices:</p>
+                                <ul className="list-disc pl-4 space-y-1">
+                                  {job.foodSafety.map((fs, idx) => (
+                                    <li key={idx}>{fs}</li>
                                   ))}
                                 </ul>
                               </div>
-
-                              {/* Requirements */}
-                              <div>
-                                <h4 className="text-xs font-bold uppercase tracking-wider text-[#8C4724] mb-3 flex items-center gap-2">
-                                  <Award className="w-4 h-4 text-[#C8912B]" />
-                                  <span>Ideal Candidate Profile</span>
-                                </h4>
-                                <ul className="space-y-2.5">
-                                  {job.requirements.map((req, qIdx) => (
-                                    <li key={qIdx} className="text-xs sm:text-sm text-[#2A0E04]/80 flex items-start gap-2.5 leading-relaxed">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-[#D11218] mt-2 shrink-0" />
-                                      <span>{req}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            </div>
-
-                            {/* Bottom Bar in Expanded View */}
-                            <div className="mt-6 pt-4 border-t border-[#381A0E]/10 flex flex-col sm:flex-row items-center justify-between gap-3">
-                              <p className="text-xs text-[#381A0E]/60 text-center sm:text-left">
-                                Ready to bring your confectionery skills to ROMAS?
-                              </p>
-                              <button
-                                type="button"
-                                onClick={() => applyFor(job.title)}
-                                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-[#381A0E] hover:bg-[#F9BD03] text-[#FEE8B4] hover:text-[#1C0E07] text-xs font-black uppercase tracking-wider transition-colors cursor-pointer"
-                              >
-                                <span>Proceed to Application</span>
-                                <ArrowRight className="w-3.5 h-3.5" />
-                              </button>
-                            </div>
+                            )}
                           </motion.div>
                         )}
                       </AnimatePresence>
-                    </motion.div>
-                  );
-                })}
-              </div>
+                    </div>
 
-            {/* Spontaneous Open Application Banner */}
-            <div className="mt-12 rounded-3xl bg-gradient-to-br from-[#381A0E] to-[#250F07] text-[#FEE8B4] p-7 sm:p-9 border border-[#F9BD03]/25 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="max-w-xl text-center md:text-left">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F9BD03]/15 text-[#F9BD03] text-[11px] font-bold uppercase tracking-wider mb-3">
-                  <span>Spontaneous Application</span>
-                </div>
-                <h3
-                  className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-white leading-tight"
-                  style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
-                >
-                  Don't see your exact role?
-                </h3>
-                <p className="text-xs sm:text-sm text-[#FEE8B4]/75 font-light mt-2 leading-relaxed">
-                  We are always keen to meet passionate chocolatiers, food chemists, automated machinery technicians, and regional sales managers. Submit an Open Application and we'll connect when a match opens.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => applyFor('Open Application')}
-                className="shrink-0 inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-[#F9BD03] hover:bg-[#E5AC00] text-[#1C0E07] text-xs font-black uppercase tracking-wider transition-all duration-300 shadow-lg hover:scale-105 cursor-pointer"
-              >
-                <span>Submit Open Application</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+                    {/* Avinash-Style Pill Button: Apply Now */}
+                    <div className="mt-5 pt-4 border-t border-gray-100">
+                      <button
+                        type="button"
+                        onClick={() => applyFor(job.title)}
+                        className="w-full py-2.5 px-4 rounded-full border border-[#8C4724] text-[#8C4724] hover:bg-[#8C4724] hover:text-white text-xs font-bold uppercase tracking-wider transition-all duration-300 text-center flex items-center justify-center gap-2 group-hover:shadow-md cursor-pointer"
+                      >
+                        <span>Apply Now</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
 
           </div>
         </section>
 
-        {/* 4. APPLICATION FORM */}
-        <section ref={formRef} className="py-16 sm:py-24 px-4 sm:px-6 bg-white border-t border-[#381A0E]/10 scroll-mt-24">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-              <span className="text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] block mb-2">
-                Apply Now
-              </span>
+        {/* 4. APPLICATION FORM (EXACT AVINASH-STYLE COMPACT FORM) */}
+        <section ref={formRef} className="py-20 sm:py-28 px-4 sm:px-6 bg-gradient-to-b from-[#F5EFE6] via-[#FAF5EC] to-[#FDFBF7] border-t border-[#EADBCC] scroll-mt-24">
+          <div className="max-w-2xl mx-auto">
+            
+            {/* Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-10"
+            >
               <h2
-                className="text-3xl sm:text-5xl font-bold uppercase tracking-tight text-[#381A0E] leading-[0.95]"
+                className="text-3xl sm:text-5xl font-bold uppercase tracking-tight text-[#2A0E04] leading-[0.95] mb-3"
                 style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
               >
-                Send us your application
+                Apply Now
               </h2>
-              <p className="mt-3 text-xs sm:text-sm text-[#381A0E]/65">
-                Fill the form and submit — it opens WhatsApp with your details prefilled to our HR desk.
-                You can email your CV to{' '}
-                <a href="mailto:Hr@roomafoods.com" className="font-semibold text-[#8C4724] underline">
-                  Hr@roomafoods.com
-                </a>.
+              <p className="text-xs sm:text-sm text-[#2A0E04]/80 font-medium max-w-md mx-auto">
+                Send us your details below and become a part of the ROMAS family.
               </p>
 
-              {/* Active Role Selected Indicator */}
-              {form.position && (
-                <div className="mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FAF7F2] border border-[#8C4724]/20 text-xs text-[#8C4724]">
-                  <span>Applying for:</span>
-                  <span className="font-bold text-[#381A0E]">{form.position}</span>
+              {/* Active Role Indicator */}
+              {form.position && form.position !== 'Open Application' && (
+                <div className="mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#8C4724]/40 text-xs font-semibold text-[#8C4724] shadow-xs">
+                  <span>Applying for: <strong>{form.position}</strong></span>
                   <button
-                    onClick={() => setForm((prev) => ({ ...prev, position: '' }))}
-                    className="ml-1 text-gray-400 hover:text-red-500 font-bold"
+                    type="button"
+                    onClick={() => setForm((prev) => ({ ...prev, position: 'Open Application' }))}
+                    className="ml-1 text-gray-500 hover:text-red-500 font-bold cursor-pointer"
                   >
                     &times;
                   </button>
                 </div>
               )}
-            </div>
+            </motion.div>
 
-            {submitted ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, ease: EASE }}
-                className="rounded-3xl border border-emerald-200 bg-emerald-50/70 p-8 sm:p-10 text-center"
-              >
-                <div className="w-14 h-14 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto mb-4">
-                  <Check className="w-7 h-7" />
-                </div>
-                <h3 className="text-xl font-bold text-[#2A0E04] mb-2">Application received!</h3>
-                <p className="text-sm text-[#381A0E]/70 max-w-md mx-auto">
-                  Thank you — our HR team has your details and will reach out if there's a fit.
-                  You can also message us at <strong>+91 9098229454</strong> or email{' '}
-                  <strong>Hr@roomafoods.com</strong> with your CV.
-                </p>
-                <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
-                  <a
-                    href={`https://wa.me/919098229454`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider transition-colors"
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    Open WhatsApp
-                  </a>
-                  <button
-                    onClick={() => setSubmitted(false)}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
-                  >
-                    Submit another
-                  </button>
-                </div>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#381A0E] mb-2">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      value={form.name}
-                      onChange={handleChange}
-                      placeholder="Chef Priya Sharma"
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-[#FBF8F3] text-sm text-[#2A0E04] focus:outline-none focus:border-[#C8912B]"
-                    />
+            {/* Form Container (Clean & Compact matching Avinash Group) */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.65, delay: 0.15 }}
+              className="bg-white rounded-3xl p-6 sm:p-10 border-2 border-[#D6C4B0] shadow-xl"
+            >
+              {submitted ? (
+                <div className="text-center py-6">
+                  <div className="w-16 h-16 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto mb-4 shadow-lg shadow-emerald-600/20">
+                    <Check className="w-8 h-8 stroke-[2.5]" />
                   </div>
+                  <h3 className="text-2xl font-bold text-[#2A0E04] mb-2 font-serif">
+                    Application Sent to HR!
+                  </h3>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-semibold mb-3">
+                    <Mail className="w-3.5 h-3.5" />
+                    <span>Dispatched to {COMPANY_INFO.hrEmail || 'Hr@roomafoods.com'}</span>
+                  </div>
+                  <p className="text-sm text-[#381A0E]/80 max-w-lg mx-auto leading-relaxed">
+                    Thank you, <strong className="text-[#8C4724]">{form.name}</strong>! Your application details for{' '}
+                    <strong>{form.position || 'Open Application'}</strong> have been delivered to our recruitment team.
+                    You can also confirm via direct email or connect instantly on WhatsApp.
+                  </p>
+                  <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
+                    <a
+                      href={lastMailtoUrl || `mailto:${COMPANY_INFO.hrEmail}?subject=Application for ${encodeURIComponent(form.position || 'Open Application')}`}
+                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#381A0E] hover:bg-[#8C4724] text-[#FEE8B4] hover:text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md hover:scale-105"
+                    >
+                      <Mail className="w-4 h-4" />
+                      Email HR Directly
+                    </a>
+                    <a
+                      href={`https://wa.me/919098229454?text=${encodeURIComponent(
+                        `Hello Roma Foods HR, I just submitted an application for ${form.position || 'Open Application'} (${form.name}, ${form.phone}).`
+                      )}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md hover:scale-105"
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      HR WhatsApp
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSubmitted(false);
+                        setForm({
+                          name: '',
+                          phone: '',
+                          email: '',
+                          position: 'Open Application',
+                          message: '',
+                          agree: true,
+                          resume: '',
+                        });
+                        setResumeFile(null);
+                      }}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer border border-gray-200"
+                    >
+                      Submit Another
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {form.position && form.position !== 'Open Application' && (
+                    <div className="p-2.5 px-3.5 rounded-xl bg-amber-50 border border-amber-200/70 flex items-center justify-between text-xs text-amber-900">
+                      <span>
+                        Applying for: <strong className="font-bold text-[#8C4724]">{form.position}</strong>
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setForm((prev) => ({ ...prev, position: 'Open Application' }))}
+                        className="text-[10px] text-gray-500 hover:text-red-600 underline cursor-pointer"
+                      >
+                        Reset to General
+                      </button>
+                    </div>
+                  )}
+                  
+                  {/* Row 1: Name (50%) + Phone (50%) */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <input
+                        type="text"
+                        name="name"
+                        required
+                        value={form.name}
+                        onChange={handleChange}
+                        placeholder="Name *"
+                        className="w-full px-4 py-3 rounded-xl border-2 border-[#D6C5B2] hover:border-[#8C4724]/70 bg-[#FDFBF7] text-sm text-[#2A0E04] font-medium placeholder:text-[#7A6357] focus:outline-none focus:border-[#8C4724] focus:ring-1 focus:ring-[#8C4724] shadow-xs transition-colors"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="tel"
+                        name="phone"
+                        required
+                        value={form.phone}
+                        onChange={handleChange}
+                        placeholder="Phone Number *"
+                        className="w-full px-4 py-3 rounded-xl border-2 border-[#D6C5B2] hover:border-[#8C4724]/70 bg-[#FDFBF7] text-sm text-[#2A0E04] font-medium placeholder:text-[#7A6357] focus:outline-none focus:border-[#8C4724] focus:ring-1 focus:ring-[#8C4724] shadow-xs transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Row 2: Email (100%) */}
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#381A0E] mb-2">
-                      Email Address *
-                    </label>
                     <input
                       type="email"
                       name="email"
                       required
                       value={form.email}
                       onChange={handleChange}
-                      placeholder="priya@example.com"
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-[#FBF8F3] text-sm text-[#2A0E04] focus:outline-none focus:border-[#C8912B]"
+                      placeholder="Email Address *"
+                      className="w-full px-4 py-3 rounded-xl border-2 border-[#D6C5B2] hover:border-[#8C4724]/70 bg-[#FDFBF7] text-sm text-[#2A0E04] font-medium placeholder:text-[#7A6357] focus:outline-none focus:border-[#8C4724] focus:ring-1 focus:ring-[#8C4724] shadow-xs transition-colors"
                     />
                   </div>
-                </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {/* Row 3: Enter your Message (100% textarea) */}
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#381A0E] mb-2">
-                      Phone / WhatsApp *
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      required
-                      value={form.phone}
+                    <textarea
+                      name="message"
+                      rows={3}
+                      value={form.message}
                       onChange={handleChange}
-                      placeholder="+91 98765 43210"
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-[#FBF8F3] text-sm text-[#2A0E04] focus:outline-none focus:border-[#C8912B]"
+                      placeholder="Enter your Message or brief background..."
+                      className="w-full px-4 py-3 rounded-xl border-2 border-[#D6C5B2] hover:border-[#8C4724]/70 bg-[#FDFBF7] text-sm text-[#2A0E04] font-medium placeholder:text-[#7A6357] focus:outline-none focus:border-[#8C4724] focus:ring-1 focus:ring-[#8C4724] shadow-xs transition-colors"
                     />
                   </div>
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#381A0E] mb-2">
-                      Role Applied For *
+
+                  {/* Avinash Disclaimer */}
+                  <div className="flex items-start gap-2.5 pt-1">
+                    <input
+                      type="checkbox"
+                      id="agree"
+                      name="agree"
+                      checked={form.agree}
+                      onChange={handleChange}
+                      className="mt-0.5 w-4 h-4 rounded border-2 border-[#8C4724] text-[#8C4724] accent-[#8C4724] focus:ring-[#8C4724] cursor-pointer shrink-0"
+                    />
+                    <label htmlFor="agree" className="text-xs text-[#2A0E04] font-medium leading-relaxed cursor-pointer select-none">
+                      I authorise ROMAS Chocolates & its representatives to contact me with updates and notifications via Email / SMS / WhatsApp / Call.
                     </label>
+                  </div>
 
-                    {/* Premium custom dropdown */}
-                    <div className="relative">
-                      <button
-                        type="button"
-                        onClick={() => setRoleOpen((o) => !o)}
-                        className={`w-full flex items-center justify-between gap-2 px-4 py-3 rounded-xl border bg-[#FBF8F3] text-sm text-left transition-all ${
-                          roleOpen ? 'border-[#C8912B] ring-2 ring-[#C8912B]/20' : 'border-gray-200 hover:border-[#C8912B]/60'
-                        } ${customRole || form.position ? 'text-[#2A0E04] font-medium' : 'text-gray-400'}`}
-                      >
-                        <span className="truncate">
-                          {customRole
-                            ? 'Other (type manually)'
-                            : form.position
-                            ? (() => {
-                                const m = openings.find((j) => j.title === form.position);
-                                return m ? `${m.title} (${m.dept})` : form.position;
-                              })()
-                            : 'Select a role…'}
+                  {/* Bottom Row: Attach Resume (Left) + Apply Now Button (Right) */}
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-4 border-t border-gray-200">
+                    {/* Left: Attach Resume */}
+                    <div className="flex items-center">
+                      <label className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border-2 border-[#D6C5B2] hover:border-[#8C4724] bg-white hover:bg-[#FAF7F2] text-[#2A0E04] text-xs font-bold cursor-pointer transition-all shadow-xs group">
+                        <Paperclip className="w-4 h-4 text-[#8C4724] group-hover:rotate-45 transition-transform" />
+                        <span className="truncate max-w-[200px]">
+                          {uploading ? 'Uploading...' : resumeFile ? resumeFile.name : 'Attach Resume'}
                         </span>
-                        <ChevronDown
-                          className={`w-4 h-4 shrink-0 text-[#8C4724] transition-transform duration-200 ${roleOpen ? 'rotate-180' : ''}`}
+                        <input
+                          type="file"
+                          accept=".pdf,.doc,.docx"
+                          onChange={handleResumeFile}
+                          className="hidden"
                         />
-                      </button>
-
-                      <AnimatePresence>
-                        {roleOpen && (
-                          <>
-                            {/* click-away layer */}
-                            <div className="fixed inset-0 z-30" onClick={() => setRoleOpen(false)} />
-                            <motion.ul
-                              initial={{ opacity: 0, y: -6, scale: 0.98 }}
-                              animate={{ opacity: 1, y: 0, scale: 1 }}
-                              exit={{ opacity: 0, y: -6, scale: 0.98 }}
-                              transition={{ duration: 0.16, ease: EASE }}
-                              className="absolute z-40 mt-2 w-full max-h-72 overflow-y-auto rounded-xl border border-gray-200 bg-white shadow-[0_18px_40px_-14px_rgba(42,19,8,0.35)] p-1.5"
-                            >
-                              {openings.map((j) => {
-                                const active = !customRole && form.position === j.title;
-                                return (
-                                  <li key={j.title}>
-                                    <button
-                                      type="button"
-                                      onClick={() => {
-                                        setForm((prev) => ({ ...prev, position: j.title }));
-                                        setCustomRole(false);
-                                        setRoleOpen(false);
-                                      }}
-                                      className={`w-full text-left px-3 py-2.5 rounded-lg text-sm transition-colors ${
-                                        active
-                                          ? 'bg-[#FAF0E4] text-[#8C4724] font-semibold'
-                                          : 'text-[#2A0E04] hover:bg-[#FBF8F3]'
-                                      }`}
-                                    >
-                                      {j.title}{' '}
-                                      <span className="text-gray-400 font-normal">({j.dept})</span>
-                                    </button>
-                                  </li>
-                                );
-                              })}
-                              <li>
-                                <button
-                                  type="button"
-                                  onClick={() => {
-                                    setForm((prev) => ({ ...prev, position: 'Open Application' }));
-                                    setCustomRole(false);
-                                    setRoleOpen(false);
-                                  }}
-                                  className={`w-full text-left px-3 py-2.5 rounded-lg text-sm transition-colors ${
-                                    !customRole && form.position === 'Open Application'
-                                      ? 'bg-[#FAF0E4] text-[#8C4724] font-semibold'
-                                      : 'text-[#2A0E04] hover:bg-[#FBF8F3]'
-                                  }`}
-                                >
-                                  Open Application
-                                </button>
-                              </li>
-                              <li className="mt-1 pt-1 border-t border-gray-100">
-                                <button
-                                  type="button"
-                                  onClick={() => {
-                                    setCustomRole(true);
-                                    setForm((prev) => ({ ...prev, position: '' }));
-                                    setRoleOpen(false);
-                                  }}
-                                  className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
-                                    customRole ? 'bg-[#FAF0E4] text-[#8C4724]' : 'text-[#8C4724] hover:bg-[#FBF8F3]'
-                                  }`}
-                                >
-                                  ✎ Other (type manually)
-                                </button>
-                              </li>
-                            </motion.ul>
-                          </>
-                        )}
-                      </AnimatePresence>
+                      </label>
+                      {uploadMsg && (
+                        <span className="text-[11px] text-emerald-700 ml-2 font-bold truncate">
+                          {uploadMsg}
+                        </span>
+                      )}
                     </div>
 
-                    {/* Manual role input (shown when "Other" chosen) */}
-                    {customRole && (
-                      <input
-                        type="text"
-                        name="position"
-                        autoFocus
-                        value={form.position}
-                        onChange={handleChange}
-                        placeholder="Type the role you're applying for…"
-                        className="mt-2 w-full px-4 py-3 rounded-xl border border-[#C8912B]/50 bg-[#FBF8F3] text-sm text-[#2A0E04] focus:outline-none focus:border-[#C8912B] focus:ring-2 focus:ring-[#C8912B]/20"
-                      />
-                    )}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#381A0E] mb-2">
-                      Current State / City *
-                    </label>
-                    <select
-                      name="state"
-                      required
-                      value={form.state}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-[#FBF8F3] text-sm text-[#2A0E04] focus:outline-none focus:border-[#C8912B]"
+                    {/* Right: Round Apply Now Button */}
+                    <button
+                      type="submit"
+                      disabled={!isValid || submitting}
+                      className="px-8 py-3 rounded-full bg-[#381A0E] hover:bg-[#8C4724] text-[#FEE8B4] hover:text-white disabled:bg-[#4A2416] disabled:text-[#FEE8B4]/85 disabled:cursor-not-allowed text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 cursor-pointer flex items-center justify-center gap-2"
                     >
-                      <option value="">Select your state…</option>
-                      {INDIAN_STATES.map((s) => (
-                        <option key={s} value={s}>
-                          {s}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#381A0E] mb-2">
-                      Total Experience
-                    </label>
-                    <select
-                      name="experience"
-                      value={form.experience}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-[#FBF8F3] text-sm text-[#2A0E04] focus:outline-none focus:border-[#C8912B]"
-                    >
-                      <option value="">Select experience level…</option>
-                      {EXPERIENCE.map((e) => (
-                        <option key={e} value={e}>
-                          {e}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#381A0E] mb-2">
-                    Resume / Portfolio
-                  </label>
-
-                  {/* File Upload Dropzone */}
-                  <label
-                    className={`flex items-center gap-3 w-full px-4 py-3.5 rounded-xl border-2 border-dashed cursor-pointer transition-all ${
-                      resumeFile
-                        ? 'border-[#C8912B]/60 bg-[#FAF0E4]'
-                        : 'border-gray-300 bg-[#FBF8F3] hover:border-[#C8912B]/60 hover:bg-[#FAF0E4]/40'
-                    }`}
-                  >
-                    <input
-                      type="file"
-                      accept=".pdf,.doc,.docx"
-                      onChange={handleResumeFile}
-                      className="hidden"
-                    />
-                    <span className="w-10 h-10 rounded-full bg-white border border-[#C8912B]/30 flex items-center justify-center text-[#8C4724] shrink-0">
-                      {uploading ? (
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                      ) : resumeFile ? (
-                        <FileText className="w-5 h-5" />
+                      {submitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          <span>Submitting...</span>
+                        </>
                       ) : (
-                        <Upload className="w-5 h-5" />
+                        <>
+                          <span>Apply Now</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </>
                       )}
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block text-sm font-semibold text-[#2A0E04] truncate">
-                        {resumeFile ? resumeFile.name : 'Upload your CV (PDF / DOC)'}
-                      </span>
-                      <span className="block text-[11px] text-[#381A0E]/55">
-                        {uploading
-                          ? 'Uploading…'
-                          : resumeFile
-                          ? 'Tap to replace file'
-                          : 'Click to browse · Max 5MB'}
-                      </span>
-                    </span>
-                  </label>
+                    </button>
+                  </div>
 
-                  {uploadMsg && (
-                    <p className="text-[11px] mt-1.5 font-medium text-[#8C4724]">{uploadMsg}</p>
-                  )}
+                </form>
+              )}
+            </motion.div>
 
-                  <p className="text-[11px] text-[#381A0E]/50 mt-3">
-                    Or email your PDF to <strong>Sales@romasfood.com</strong> after submitting.
-                  </p>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#381A0E] mb-2">
-                    Brief note about you & why ROMAS
-                  </label>
-                  <textarea
-                    name="message"
-                    rows={3}
-                    value={form.message}
-                    onChange={handleChange}
-                    placeholder="Tell us about your chocolate journey, patisserie skills, or commercial distribution experience..."
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-[#FBF8F3] text-sm text-[#2A0E04] focus:outline-none focus:border-[#C8912B]"
-                  />
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <input
-                    type="checkbox"
-                    id="agree"
-                    name="agree"
-                    checked={form.agree}
-                    onChange={handleChange}
-                    className="mt-1 w-4 h-4 rounded text-[#381A0E] focus:ring-[#C8912B]"
-                  />
-                  <label htmlFor="agree" className="text-xs text-[#381A0E]/70 leading-relaxed">
-                    I agree to allow ROMAS Chocolates / Roma Foods to store my application details and reach out regarding this role or future career opportunities.
-                  </label>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={!isValid || submitting}
-                  className="w-full py-4 rounded-full bg-[#381A0E] hover:bg-[#F9BD03] text-[#FEE8B4] hover:text-[#1C0E07] disabled:opacity-40 disabled:hover:bg-[#381A0E] disabled:hover:text-[#FEE8B4] text-xs font-black uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-lg"
-                >
-                  {submitting ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Submitting…</span>
-                    </>
-                  ) : (
-                    <>
-                      <MessageCircle className="w-4 h-4" />
-                      <span>Submit Application</span>
-                    </>
-                  )}
-                </button>
-
-                <p className="text-center text-[11px] text-[#381A0E]/50 flex items-center justify-center gap-1.5">
-                  <Mail className="w-3.5 h-3.5" />
-                  Prefer email? Write to Hr@roomafoods.com
-                </p>
-              </form>
-            )}
           </div>
         </section>
       </main>

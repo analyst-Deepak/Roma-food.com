@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Flame, Droplets, Sparkles, Thermometer, Check } from 'lucide-react';
+import { Flame, Droplets, Thermometer, Check } from 'lucide-react';
 import { Reveal } from './Reveal';
 
 export const ChocolateExperience: React.FC = () => {
@@ -25,7 +25,7 @@ export const ChocolateExperience: React.FC = () => {
       title: 'Setting & Clean Snap',
       temp: '18°C – 20°C',
       description: 'Controlled cooling creates a clean audible snap, high surface gloss, and zero fat bloom over time.',
-      icon: Sparkles,
+      icon: Check,
     },
   ];
 
