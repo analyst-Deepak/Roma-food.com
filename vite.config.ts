@@ -26,10 +26,41 @@ export default defineConfig(() => {
         'Permissions-Policy': 'geolocation=(), microphone=(), camera=()',
       },
     },
-    // Prevent source maps in production to reduce attack surface
     build: {
       sourcemap: false,
       minify: 'esbuild',
+      target: 'es2020',
+      cssMinify: true,
+      assetsInlineLimit: 4096,
+      esbuild: {
+        drop: ['console', 'debugger'],
+        pure: ['console.log', 'console.info'],
+      },
+      rollupOptions: {
+        output: {
+          manualChunks: (id) => {
+            if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+              return 'vendor';
+            }
+            if (id.includes('node_modules/lucide-react')) {
+              return 'ui';
+            }
+          },
+          entryFileNames: 'js/[name]-[hash].js',
+          chunkFileNames: 'js/[name]-[hash].js',
+          assetFileNames: (assetInfo) => {
+            const filename = assetInfo.names?.[0] || '';
+            const ext = filename.split('.').pop() || '';
+            if (/png|jpe?g|gif|webp|svg|ico/i.test(ext)) {
+              return `images/[name]-[hash][extname]`;
+            } else if (/woff|woff2|ttf|otf|eot/i.test(ext)) {
+              return `fonts/[name]-[hash][extname]`;
+            }
+            return `assets/[name]-[hash][extname]`;
+          },
+        },
+      },
+      chunkSizeWarningLimit: 500,
     },
   };
 });
