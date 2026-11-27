@@ -54,17 +54,21 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
             />
           </div>
 
-          <img
-            src={product.image}
-            alt={product.name}
-            className="max-h-32 w-auto object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.3)] transition-transform duration-300 group-hover:scale-105 z-10"
-            loading="lazy"
-          />
+          <div className="relative h-28 sm:h-32 flex items-end justify-center">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="max-h-24 sm:max-h-28 w-auto object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.3)] transition-transform duration-300 group-hover:scale-105 z-10"
+              loading="lazy"
+            />
+          </div>
           {/* Mini 3D Marble Shelf */}
-          <div className="w-36 mx-auto mt-[-8px] z-10">
-            <div className="h-1.5 w-full bg-gradient-to-r from-[#DCDCDC] via-[#F4F4F4] to-[#D5D5D5] rounded-t-xs border-t border-[#DFDFDF]" />
-            <div className="h-2 w-full bg-gradient-to-b from-[#C8C8C8] via-[#BFBFBF] to-[#AEAEAE] rounded-b-xs border-b border-[#9E9E9E]" />
-            <div className="h-2.5 w-[92%] mx-auto bg-black/25 blur-xs rounded-full mt-[-1px]" />
+          <div className="w-28 sm:w-36 mx-auto mt-[-6px] pointer-events-none select-none z-10">
+            <img
+              src="/assets/textures/popat_marble_shelf_transparent.png"
+              alt="3D Marble Shelf"
+              className="w-full h-auto object-contain"
+            />
           </div>
         </div>
 
@@ -130,23 +134,22 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
         </div>
 
         {/* Product Packet Image Stage (Standing directly on shelf) */}
-        <div className="relative w-full h-36 sm:h-48 md:h-56 flex items-center justify-center p-1 sm:p-2 z-10">
+        <div className="relative w-full h-36 sm:h-48 md:h-56 flex items-end justify-center p-1 sm:p-2 z-10">
           <img
             src={product.image}
             alt={product.name}
-            className="max-h-[125px] sm:max-h-[175px] md:max-h-[210px] w-auto h-auto object-contain transition-transform duration-500 ease-out group-hover:scale-108 group-hover:-translate-y-2 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)]"
+            className="max-h-[125px] sm:max-h-[175px] md:max-h-[210px] w-auto h-auto object-contain transition-transform duration-500 ease-out group-hover:scale-108 group-hover:-translate-y-2 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)] z-10"
             loading="lazy"
           />
         </div>
 
-        {/* The Signature 3D Marble / Granite Shelf Pedestal */}
-        <div className="relative w-full max-w-[145px] sm:max-w-[210px] md:max-w-[250px] mx-auto mt-[-10px] sm:mt-[-14px] pointer-events-none select-none z-10">
-          {/* Shelf Top Surface with Marble Sheen */}
-          <div className="h-1.5 sm:h-2 md:h-2.5 w-full bg-gradient-to-r from-[#DCDCDC] via-[#F6F6F6] to-[#D5D5D5] rounded-t-xs border-t border-[#E5E5E5] shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)]" />
-          {/* Shelf Front Bevel Edge */}
-          <div className="h-2 sm:h-2.5 md:h-3 w-full bg-gradient-to-b from-[#C8C8C8] via-[#BFBFBF] to-[#AEAEAE] rounded-b-xs border-b border-[#9E9E9E]" />
-          {/* Deep Ambient Cast Shadow under Shelf */}
-          <div className="h-3 sm:h-4 md:h-5 w-[94%] mx-auto bg-black/25 blur-xs sm:blur-md rounded-full mt-[-2px]" />
+        {/* The Signature 3D Marble / Granite Tile Shelf Pedestal (Exact Popat Namkeen Authentic Texture) */}
+        <div className="relative w-full max-w-[155px] sm:max-w-[220px] md:max-w-[260px] mx-auto mt-[-8px] sm:mt-[-10px] pointer-events-none select-none z-10">
+          <img
+            src="/assets/textures/popat_marble_shelf_transparent.png"
+            alt="3D Marble Shelf"
+            className="w-full h-auto object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.2)]"
+          />
         </div>
 
         {/* Category in Italics */}

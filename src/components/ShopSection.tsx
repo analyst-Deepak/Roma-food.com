@@ -245,13 +245,17 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
                     className="flex items-center gap-3 group cursor-pointer border-b border-[#F0E6DC] pb-3 last:border-b-0 last:pb-0"
                   >
                     {/* Miniature Packet on Mini Marble Shelf */}
-                    <div className="w-12 h-14 shrink-0 flex flex-col items-center justify-center relative">
+                    <div className="w-12 h-14 shrink-0 flex flex-col items-center justify-end relative">
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="max-h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-110 filter drop-shadow-xs"
+                        className="max-h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-110 filter drop-shadow-xs z-10"
                       />
-                      <div className="w-10 h-1 bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300 rounded-full shadow-2xs mt-[-2px]" />
+                      <img
+                        src="/assets/textures/popat_marble_shelf_transparent.png"
+                        alt=""
+                        className="w-12 h-auto object-contain mt-[-3px] pointer-events-none select-none"
+                      />
                     </div>
 
                     <div className="flex-1 min-w-0">
