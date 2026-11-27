@@ -5,8 +5,9 @@ import { Gr8rNavbar } from './components/Gr8rNavbar';
 import { Gr8rHero } from './components/Gr8rHero';
 import { Gr8rStatement } from './components/Gr8rStatement';
 import { Gr8rMenu } from './components/Gr8rMenu';
+import { PopatStyleMotionBanner } from './components/PopatStyleMotionBanner';
+import { AuthModal } from './components/AuthModal';
 import { Gr8rFeatures } from './components/Gr8rFeatures';
-import { Gr8rBranches } from './components/Gr8rBranches';
 import { Gr8rTestimonials } from './components/Gr8rTestimonials';
 import { Gr8rFaq } from './components/Gr8rFaq';
 import { Gr8rBlog } from './components/Gr8rBlog';
@@ -31,6 +32,8 @@ const AdminPage = lazy(() => import('./components/AdminPage').then((module) => (
 
 const CartPage = lazy(() => import('./components/CartPage').then((module) => ({ default: module.CartPage })));
 
+const ShopPage = lazy(() => import('./components/ShopPage').then((module) => ({ default: module.ShopPage })));
+
 const BrandGuideModal = lazy(() => import('./components/BrandGuideModal').then((module) => ({ default: module.BrandGuideModal })));
 
 const SampleInquiryDrawer = lazy(() => import('./components/SampleInquiryDrawer').then((module) => ({ default: module.SampleInquiryDrawer })));
@@ -47,11 +50,14 @@ export default function App() {
     if (rawPath === '/cart' || rawPath === '/bag' || rawPath === '/checkout') {
       return { route: 'cart' };
     }
-    if (rawPath === '/product' || rawPath.startsWith('/product/')) {
-      return { route: 'home' };
-    }
-    if (rawPath === '/shop' || rawPath === '/store' || rawPath === '/products') {
-      return { route: 'home' };
+    if (
+      rawPath === '/product' ||
+      rawPath.startsWith('/product/') ||
+      rawPath === '/products' ||
+      rawPath === '/shop' ||
+      rawPath === '/store'
+    ) {
+      return { route: 'shop' };
     }
     if (rawPath === '/privacy-policy' || rawPath === '/privacy' || rawPath === '/data-deletion') {
       return { route: 'privacy' };
@@ -76,11 +82,8 @@ export default function App() {
     if (rawHash === 'cart' || rawHash === 'bag') {
       return { route: 'cart' };
     }
-    if (rawHash.startsWith('product')) {
-      return { route: 'home' };
-    }
-    if (rawHash === 'shop' || rawHash === 'store') {
-      return { route: 'home' };
+    if (rawHash === 'shop' || rawHash === 'store' || rawHash === 'products' || rawHash.startsWith('product')) {
+      return { route: 'shop' };
     }
     if (rawHash === 'privacy-policy' || rawHash === 'privacy' || rawHash === 'data-deletion') {
       return { route: 'privacy' };
@@ -115,6 +118,7 @@ export default function App() {
     return ECOMMERCE_PRODUCTS[0];
   });
   const [isBrandGuideOpen, setIsBrandGuideOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isSampleBagOpen, setIsSampleBagOpen] = useState(false);
   const [hasOpenedSampleBag, setHasOpenedSampleBag] = useState(false);
 
@@ -183,8 +187,23 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleNavigateShop = () => {
-    handleNavigateHome('menu');
+  const [shopCategory, setShopCategory] = useState<EcommerceCategory>('all');
+
+  const handleNavigateShop = (categoryId?: string) => {
+    const categoryMap: Record<string, EcommerceCategory> = {
+      choco_chips: 'choco-chips',
+      'choco-chips': 'choco-chips',
+      slabs: 'slabs',
+      buttons: 'buttons',
+      butterscotch: 'butterscotch',
+      tutti_frutti: 'tuttifrutti',
+      tuttifrutti: 'tuttifrutti',
+      paste: 'all',
+      all: 'all',
+    };
+    const targetCat = categoryId ? categoryMap[categoryId] || 'all' : 'all';
+    setShopCategory(targetCat);
+    navigateTo('/products', 'shop');
   };
 
   const handleNavigateCart = () => {
@@ -193,12 +212,14 @@ export default function App() {
 
   const handleOpenProduct = (prod: EcommerceProduct) => {
     setSelectedProduct(prod);
-    handleNavigateHome('menu');
+    if (currentRoute !== 'shop') {
+      handleNavigateHome('menu');
+    }
   };
 
   const handleNavigateHome = (sectionId?: string) => {
-    if (sectionId === 'shop') {
-      sectionId = 'menu';
+    if (sectionId === 'shop' || sectionId === 'product' || sectionId === 'products') {
+      sectionId = 'product-motion-banner';
     }
     if (sectionId === 'careers') {
       navigateTo('/careers', 'career');
@@ -271,9 +292,12 @@ export default function App() {
         {!isLegalRoute && !isCareerRoute && !isAdminRoute && !isCartRoute && (
           <Gr8rNavbar
             onOpenReservation={openSampleBag}
+            onOpenAuth={() => setIsAuthModalOpen(true)}
             onNavigateCart={handleNavigateCart}
             onNavigate={(id) => {
-              if (id === 'shop') {
+              if (id === 'product-motion-banner' || id === 'product' || id === 'products') {
+                handleNavigateHome('product-motion-banner');
+              } else if (id === 'shop') {
                 handleNavigateShop();
               } else if (id === 'cart') {
                 handleNavigateCart();
@@ -314,8 +338,18 @@ export default function App() {
               />
             )}
 
-            {/* Dedicated Full Screen Product & Shop Pages (Temporarily hidden) */}
-            {/* currentRoute === 'shop' && <ShopPage ... /> */}
+            {/* Dedicated Full Screen Product & Shop Pages */}
+            {currentRoute === 'shop' && (
+              <ShopPage
+                initialCategory={shopCategory}
+                onNavigateHome={(id) => handleNavigateHome(id)}
+                onNavigateAbout={handleNavigateAbout}
+                onSelectProduct={handleOpenProduct}
+                onOpenReservation={openSampleBag}
+                onOpenBrandGuide={() => setIsBrandGuideOpen(true)}
+                onOpenLegal={handleNavigateLegal}
+              />
+            )}
 
             {/* Dedicated About Page featuring Monumental 3D ROMAS Chocolate Slab on Floor */}
             {currentRoute === 'about' && (
@@ -346,10 +380,16 @@ export default function App() {
               <>
                 <Gr8rHero />
                 <Gr8rStatement />
+
+                {/* 1. OUR PRODUCT CATEGORY (UP) */}
                 <Gr8rMenu onSelectItem={handleSelectMenuItem} />
 
+                {/* 2. JUST BELOW: PRODUCT SHOWCASE SECTION WITH MOTION */}
+                <PopatStyleMotionBanner
+                  onExploreAllProducts={(categoryId) => handleNavigateShop(categoryId)}
+                />
+
                 <Gr8rFeatures />
-                <Gr8rBranches />
                 <Gr8rTestimonials />
                 <Gr8rFaq />
                 <Gr8rBlog />
@@ -397,6 +437,12 @@ export default function App() {
       <WishlistDrawer
         onNavigateToShop={handleNavigateShop}
         onSelectProduct={handleOpenProduct}
+      />
+
+      {/* Official Auth Login Modal with Product Pouch */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
       />
 
     </div>

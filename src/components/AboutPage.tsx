@@ -14,6 +14,9 @@ import {
   MapPin,
   Calendar,
   Layers,
+  Sparkles,
+  Truck,
+  Flame,
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/products';
 
@@ -200,24 +203,42 @@ export const AboutPage: React.FC<AboutPageProps> = ({
   onNavigateHome,
 }) => {
   const reduceMotion = useReducedMotion();
-  const leadershipTeam = [
+  const qualityCommitments = [
     {
-      name: 'NAND KISHORE AGRAWAL',
-      role: 'Managing Partner & Operations Head',
-      qualification: 'Graduate',
-      responsibilities:
-        'Person-in-charge of manufacturing operations under FSSAI license protocols. Directs industrial scaling, bean procurement, micro-refining facilities, and quality infrastructure at Kurud Works, Dhamtari.',
-      image: '/assets/team/nand_kishore_agrawal.jpg',
-      badge: 'Operational Head (FSSAI)',
+      icon: Sparkles,
+      num: '01',
+      tag: 'Silky Palate Melt',
+      title: 'Sub-20 Micron Refining',
+      description:
+        'Conched and micro-milled to sub-20 microns for a luxurious, velvety melt without graininess or waxy mouthfeel.',
+      highlight: '<20µ Precision Conching',
     },
     {
-      name: 'TRIPTI AGRAWAL',
-      role: 'Partner & Strategic Management',
-      qualification: 'Graduate',
-      responsibilities:
-        'Drives corporate governance, financial strategy, and national B2B supply-chain partnerships across commercial bakeries, 5-star patisseries, and distribution hubs across India.',
-      image: '/assets/team/tripti_agrawal.jpg',
-      badge: 'Authorized Partner (GST)',
+      icon: Award,
+      num: '02',
+      tag: 'Zero Palm Oil',
+      title: '100% Pure Cocoa Butter',
+      description:
+        'Pure chocolate couverture formulated exclusively with premium natural cocoa butter for authentic acoustic snap and clean flavor release.',
+      highlight: 'Real Couverture Standard',
+    },
+    {
+      icon: Flame,
+      num: '03',
+      tag: 'Engineered for India',
+      title: 'Bake-Stable & Climate-Tuned',
+      description:
+        'Specially calibrated for tropical handling, providing high fluidity (3-drop) for flawless dipping, enrobing, and oven stability.',
+      highlight: '42°C Fluidity & Temper',
+    },
+    {
+      icon: Truck,
+      num: '04',
+      tag: 'Direct from Kurod Works',
+      title: 'Cold-Chain Dispatch',
+      description:
+        'Temperature-controlled insulated shipping ensuring fresh, bloom-free deliveries across commercial kitchens nationwide.',
+      highlight: 'Insulated Fast Logistics',
     },
   ];
 
@@ -710,7 +731,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       </section>
 
       {/* =========================================================================
-          POINT 4: LEADERSHIP / MANAGEMENT
+          POINT 4: QUALITY COMMITMENT & CULINARY STANDARDS
           ========================================================================= */}
       <section className="relative overflow-hidden py-20 sm:py-28 bg-[#FAF8F5] border-b border-[#381A0E]/10">
         {/* Decorative floating chocolate — right side */}
@@ -740,83 +761,97 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] block mb-2">
-              GOVERNANCE & STEWARDSHIP
+              THE ROMA FOODS STANDARD
             </span>
             <h2
               className="text-3xl sm:text-5xl font-bold uppercase tracking-tight text-[#381A0E] leading-tight"
               style={{ fontFamily: "'Cabin Condensed', sans-serif" }}
             >
-              LEADERSHIP & MANAGEMENT
+              OUR QUALITY COMMITMENT
             </h2>
             <p className="mt-3 text-sm sm:text-base text-[#381A0E]/80 font-light">
-              Managed and directed by authorized partners recognized under Government of India GST
-              and Food Safety & Standards Authority of India (FSSAI) regulatory charters.
+              From bean roasting to final micro-conching, every batch of chocolate leaving our Kurod Works is crafted to uncompromising culinary benchmarks.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 max-w-4xl mx-auto">
-            {leadershipTeam.map((leader, idx) => {
-              const initials = leader.name
-                .split(' ')
-                .slice(0, 2)
-                .map((w) => w[0])
-                .join('');
+          {/* 4 Pillars Quality Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7 max-w-6xl mx-auto">
+            {qualityCommitments.map((pillar, idx) => {
+              const Icon = pillar.icon;
               return (
                 <motion.div
-                  key={leader.name}
-                  initial={{ opacity: 0, y: 25 }}
+                  key={pillar.title}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: idx * 0.15 }}
-                  className="group relative overflow-hidden bg-white rounded-3xl p-6 sm:p-8 border border-[#381A0E]/12 shadow-sm hover:shadow-[0_28px_55px_-20px_rgba(140,71,36,0.45)] hover:border-[#F9BD03]/50 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
+                  transition={{ duration: 0.6, delay: idx * 0.12 }}
+                  whileHover={{ y: -6 }}
+                  className="group relative overflow-hidden bg-white rounded-3xl p-6 sm:p-7 border border-[#381A0E]/12 shadow-sm hover:shadow-[0_24px_50px_-16px_rgba(140,71,36,0.25)] hover:border-[#D4AF37] transition-all duration-300 flex flex-col justify-between"
                 >
-                  {/* Top gold accent bar on hover */}
-                  <div className="absolute top-0 left-0 h-1 w-full origin-left scale-x-0 group-hover:scale-x-100 bg-gradient-to-r from-[#8C4724] via-[#F9BD03] to-[#8C4724] transition-transform duration-500" />
+                  {/* Top gold accent line */}
+                  <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                  {/* Soft warm glow on hover */}
-                  <div className="pointer-events-none absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[#F9BD03]/0 group-hover:bg-[#F9BD03]/15 blur-3xl transition-colors duration-500" />
-
-                  <div className="relative">
-                    {/* Monogram Avatar + Partner Chip */}
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#381A0E] to-[#8C4724] text-[#F9BD03] flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-105 group-hover:shadow-lg transition-all duration-300 shrink-0"
-                        style={{ fontFamily: "'Cabin Condensed', sans-serif" }}
-                      >
-                        {initials}
+                  <div>
+                    {/* Header: Icon + Number */}
+                    <div className="flex items-center justify-between mb-5">
+                      <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-[#381A0E] to-[#8C4724] text-[#F9BD03] flex items-center justify-center shadow-md group-hover:scale-105 group-hover:bg-[#F9BD03] group-hover:text-[#1C0E07] transition-all duration-300">
+                        <Icon className="w-6 h-6" />
                       </div>
-                      <span className="text-[10px] font-black uppercase tracking-widest text-[#8C4724] bg-[#FAF0E4] border border-[#EADBCC] px-2.5 py-1 rounded-full">
-                        Authorized Partner
+                      <span className="font-mono text-2xl font-black text-[#381A0E]/20 group-hover:text-[#C8912B]/40 transition-colors">
+                        {pillar.num}
                       </span>
                     </div>
 
+                    {/* Tag */}
+                    <span className="inline-block text-[10px] font-black uppercase tracking-[0.2em] text-[#8C4724] mb-1.5">
+                      {pillar.tag}
+                    </span>
+
+                    {/* Title */}
                     <h3
-                      className="text-2xl font-bold uppercase text-[#381A0E] tracking-tight leading-snug mb-1 group-hover:text-[#8C4724] transition-colors"
+                      className="text-xl font-bold uppercase text-[#381A0E] tracking-tight leading-snug mb-2 group-hover:text-[#8C4724] transition-colors"
                       style={{ fontFamily: "'Cabin Condensed', sans-serif" }}
                     >
-                      {leader.name}
+                      {pillar.title}
                     </h3>
 
-                    <p className="text-xs font-semibold text-[#8C4724] mb-3">
-                      {leader.role}
-                    </p>
-
-                    <p className="text-xs text-[#381A0E]/80 font-light leading-relaxed">
-                      {leader.responsibilities}
+                    {/* Description */}
+                    <p className="text-xs text-[#381A0E]/75 font-light leading-relaxed">
+                      {pillar.description}
                     </p>
                   </div>
 
-                  <div className="relative mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-[11px] text-[#381A0E]/60">
-                    <span>Resident of Chhattisgarh, India</span>
-                    <span className="font-semibold text-emerald-700 flex items-center gap-1">
-                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M12 2l2.39 1.75 2.96-.02 1.08 2.76 2.76 1.08-.02 2.96L23 12l-1.75 2.39.02 2.96-2.76 1.08-1.08 2.76-2.96-.02L12 23l-2.39-1.75-2.96.02-1.08-2.76-2.76-1.08.02-2.96L1 12l1.75-2.39-.02-2.96 2.76-1.08 1.08-2.76 2.96.02L12 2zm-1.2 13.2l5.66-5.66-1.41-1.41-4.25 4.24-2.12-2.12-1.41 1.41 3.53 3.54z" />
-                      </svg>
-                      Verified Partner
+                  {/* Bottom Pill */}
+                  <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAF0E4] border border-[#EADBCC] text-[10px] font-bold text-[#8C4724] group-hover:bg-[#8C4724] group-hover:text-white group-hover:border-[#8C4724] transition-all duration-300">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#C8912B] group-hover:bg-[#F9BD03]" />
+                      <span>{pillar.highlight}</span>
                     </span>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#C8912B] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
                   </div>
                 </motion.div>
               );
             })}
+          </div>
+
+          {/* Trust Banner with 4 Badges */}
+          <div className="mt-12 max-w-4xl mx-auto bg-white rounded-2xl border border-[#381A0E]/12 p-4 sm:p-5 shadow-xs grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+            <div className="flex items-center justify-center gap-2 text-xs font-bold text-[#2A0E04]">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>100% Vegetarian</span>
+            </div>
+            <div className="flex items-center justify-center gap-2 text-xs font-bold text-[#2A0E04]">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>FSSAI Certified</span>
+            </div>
+            <div className="flex items-center justify-center gap-2 text-xs font-bold text-[#2A0E04]">
+              <Award className="w-4 h-4 text-amber-600 shrink-0" />
+              <span>Zero Palm Oil</span>
+            </div>
+            <div className="flex items-center justify-center gap-2 text-xs font-bold text-[#2A0E04]">
+              <Factory className="w-4 h-4 text-[#8C4724] shrink-0" />
+              <span>Direct Works Supply</span>
+            </div>
           </div>
         </div>
       </section>

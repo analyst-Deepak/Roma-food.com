@@ -62,13 +62,18 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
     document.title = `${product.name} | ROMAS Chocolates`;
   }, [product]);
 
-  // Gallery of high-resolution images
-  const galleryImages = [
-    product.image,
-    '/assets/chocolate/romas_slab_cutout.png',
-    '/assets/chocolate/branch_works.jpg',
-    '/assets/chocolate/roma_slab_official.jpg',
-  ];
+  // Gallery of exactly 2 images: Front and Back packaging
+  const backImage = useMemo(() => {
+    if (product.image.includes('_front.png')) {
+      return product.image.replace('_front.png', '_back.png');
+    }
+    if (product.image.includes('/front.png')) {
+      return product.image.replace('/front.png', '/back.png');
+    }
+    return product.image;
+  }, [product.image]);
+
+  const galleryImages = [product.image, backImage];
 
   const discountPercent = Math.round(((product.mrp - product.price) / product.mrp) * 100);
   const unitPrice = couponApplied ? Math.round(product.price * 0.95) : product.price;

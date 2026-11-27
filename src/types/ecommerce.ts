@@ -1,4 +1,4 @@
-export type EcommerceCategory = 'all' | 'slabs' | 'couverture' | 'praline' | 'cocoa' | 'gifting';
+export type EcommerceCategory = 'all' | 'slabs' | 'choco-chips' | 'buttons' | 'paste' | 'butterscotch' | 'tuttifrutti' | 'couverture' | 'praline' | 'cocoa' | 'gifting';
 
 export interface EcommerceProduct {
   id: string;

@@ -27,37 +27,37 @@ export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    }, []);
 
   const navLinks = [
     { label: 'ABOUT', id: 'about' },
-    { label: 'PRODUCT', id: 'menu' },
+    { label: 'PRODUCTS', id: 'product-motion-banner' },
     { label: 'CAREERS', id: 'careers' },
     { label: 'BLOG', id: 'blog' },
     { label: 'CONTACT', id: 'contact' },
   ];
 
-  const handleLinkClick = (e: React.MouseEvent, id: string) => {
-    e.preventDefault();
-    if (onNavigate) {
-      onNavigate(id);
-    } else {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+    const handleLinkClick = (e: React.MouseEvent, id: string) => {
+      e.preventDefault();
+      if (onNavigate) {
+        onNavigate(id);
+      } else {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
 
-  return (
-    <>
-      {/* Floating Dynamic Island Header or Solid Brown Header */}
-      <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 flex justify-center ${
-          variant === 'solid'
-            ? 'bg-[#381A0E] border-b border-[#FEE8B4]/15 px-4 sm:px-8 py-2.5 sm:py-3 shadow-lg'
-            : isScrolled
-            ? 'px-4 sm:px-8 py-2 sm:py-2.5 bg-[#1C0E07]/95 backdrop-blur-xl border-b border-gr8r-yellow/15 shadow-lg'
-            : 'px-4 sm:px-8 pt-3.5 sm:pt-4 pb-2.5 bg-linear-to-b from-[#1C0E07]/80 via-[#1C0E07]/40 to-transparent'
-        }`}
+    return (
+      <>
+        {/* Floating Dynamic Island Header or Solid Brown Header */}
+        <header
+          className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 flex justify-center ${
+            variant === 'solid'
+              ? 'bg-[#381A0E] border-b border-[#FEE8B4]/15 px-4 sm:px-8 py-2.5 sm:py-3 shadow-lg'
+              : isScrolled
+              ? 'px-4 sm:px-8 py-2 sm:py-2.5 bg-[#1C0E07]/95 backdrop-blur-xl border-b border-gr8r-yellow/15 shadow-lg'
+              : 'px-4 sm:px-8 pt-3.5 sm:pt-4 pb-2.5 bg-linear-to-b from-[#1C0E07]/80 via-[#1C0E07]/40 to-transparent'
+          }`}
       >
         <motion.div
           layout

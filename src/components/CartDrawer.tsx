@@ -10,7 +10,7 @@ interface CartDrawerProps {
 }
 
 // Official ROMAS / Roma Foods WhatsApp business number (+91 70008 60127)
-const WHATSAPP_NUMBER = '917000860127';
+const WHATSAPP_NUMBER = '919098229454';
 
 // Official Flipkart-style Empty Cart Illustration
 const FlipkartEmptyCartIllustration: React.FC<{ className?: string }> = ({ className = 'w-44 h-32' }) => (

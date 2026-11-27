@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+  <!-- Botanical Flower 1 (Top Left) -->
+  <g transform="translate(60, 40) scale(0.9) rotate(-15)">
+    <path d="M60,180 C50,130 30,90 80,40 C130,90 110,130 100,180 Z" />
+    <path d="M80,40 C50,20 20,40 10,80 C10,120 40,150 70,170" />
+    <path d="M80,40 C110,20 140,40 150,80 C150,120 120,150 90,170" />
+    <path d="M80,40 C70,10 90,0 100,-20 C110,0 130,10 80,40" />
+    <!-- Petal veins -->
+    <path d="M80,40 C75,80 75,130 80,175" stroke-dasharray="2 3" opacity="0.6" />
+    <path d="M40,70 C55,90 65,120 70,145" stroke-dasharray="2 3" opacity="0.5" />
+    <path d="M120,70 C105,90 95,120 90,145" stroke-dasharray="2 3" opacity="0.5" />
+    <!-- Stem & Leaves -->
+    <path d="M80,180 C85,220 75,270 50,310" />
+    <path d="M78,225 C110,210 140,225 155,245 C130,260 100,255 76,240 Z" />
+    <path d="M78,225 C115,235 145,245 155,245" stroke-dasharray="2 3" opacity="0.5" />
+    <path d="M70,270 C35,260 10,275 0,300 C25,310 50,300 65,285 Z" />
+  </g>
+
+  <!-- Cacao Pod & Leaf Motif (Center Right) -->
+  <g transform="translate(380, 120) scale(0.85) rotate(25)">
+    <!-- Cacao Leaf -->
+    <path d="M10,150 C30,70 110,20 180,10 C160,90 110,170 30,190 Z" />
+    <path d="M10,150 C80,100 130,60 180,10" stroke-width="1.5" />
+    <!-- Leaf lateral veins -->
+    <path d="M45,135 C60,110 90,105 110,110" opacity="0.6" />
+    <path d="M75,115 C95,90 125,85 145,90" opacity="0.6" />
+    <path d="M110,95 C125,75 150,70 165,72" opacity="0.6" />
+    <path d="M45,135 C50,155 70,165 90,165" opacity="0.6" />
+    <path d="M75,115 C85,135 105,145 125,145" opacity="0.6" />
+    <!-- Cacao Pod Outline -->
+    <path d="M140,160 C120,200 130,260 160,300 C180,260 190,200 170,160 C155,145 150,145 140,160 Z" />
+    <path d="M155,150 C145,190 148,250 160,300" opacity="0.7" />
+    <path d="M155,150 C165,190 172,250 160,300" opacity="0.7" />
+  </g>
+
+  <!-- Botanical Blossom & Vines (Bottom Left) -->
+  <g transform="translate(180, 360) scale(0.75) rotate(-35)">
+    <path d="M100,50 C70,20 30,40 20,80 C20,120 60,150 100,180 C140,150 180,120 180,80 C170,40 130,20 100,50 Z" />
+    <path d="M100,50 C80,90 80,140 100,180" stroke-dasharray="2 2" opacity="0.5" />
+    <path d="M100,50 C120,90 120,140 100,180" stroke-dasharray="2 2" opacity="0.5" />
+    <path d="M100,180 C110,230 140,270 180,300" stroke-width="1.4" />
+    <path d="M135,235 C170,225 195,240 205,260 C180,270 155,265 135,250 Z" />
+  </g>
+
+  <!-- Elegant Floral Tendrils (Far Right Bottom) -->
+  <g transform="translate(460, 340) scale(0.8) rotate(10)">
+    <path d="M50,180 C40,120 60,70 110,30 C150,70 160,120 120,180 Z" />
+    <path d="M110,30 C70,10 30,30 20,70 C20,110 50,140 80,165" opacity="0.7" />
+    <path d="M110,30 C150,10 180,40 180,80 C170,120 140,150 110,170" opacity="0.7" />
+    <path d="M100,175 C95,230 115,280 150,320" />
+    <path d="M105,230 C70,220 50,235 40,255 C65,265 88,260 105,245 Z" />
+  </g>
+</svg>

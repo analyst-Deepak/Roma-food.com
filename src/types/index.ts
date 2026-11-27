@@ -5,7 +5,11 @@ export type ProductCategory =
   | 'cocoa'
   | 'decorations'
   | 'coated'
-  | 'retail';
+  | 'retail'
+  | 'tuttifrutti'
+  | 'butterscotch'
+  | 'choco-chips'
+  | 'buttons';
 
 export type AudienceSegment =
   | 'all'

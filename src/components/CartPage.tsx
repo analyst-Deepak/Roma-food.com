@@ -44,7 +44,7 @@ interface CartPageProps {
 }
 
 // Official ROMAS / Roma Foods WhatsApp business contact
-const WHATSAPP_NUMBER = '917000860127';
+const WHATSAPP_NUMBER = '919098229454';
 const OFFICIAL_UPI_VPA = '9098229454@upi';
 const OFFICIAL_PAYEE_NAME = 'Roma Foods Kurud Works';
 const FACTORY_LOCATION = 'Kurud Works, Dhamtari, CG - 493663';

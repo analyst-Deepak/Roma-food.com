@@ -51,19 +51,19 @@ export interface CategoryRange {
 export const CATEGORY_RANGES: CategoryRange[] = [
   {
     id: 'compounds',
-    name: 'COMPOUND SLABS',
-    cutoutImage: '/assets/ecommerce/pinterest_dark_slab_55_cutout.png',
+    name: 'COMPOUND SLAB',
+    cutoutImage: '/assets/products_3d_png/compound_slab_3d.png',
     cardImage: '/assets/categories/clean/card_compounds.jpg',
     bannerImage: '/assets/categories/clean/banner_compounds.jpg',
-    subtitle: 'Effortless melting, enrobing, and mirror gloss for master patisserie.',
+    subtitle: 'Effortless melting, enrobing, and mirror gloss for master patisserie and bakeries.',
     tag: 'Non-Temper Easy Melt',
-    countBadge: '4 Formulations',
-    packSizes: '500gm x 20packs',
+    countBadge: 'Dark · Milk · White · Flavoured',
+    packSizes: '500gm (Centre Sealed, Metallic) · 10kg Carton (0.5kg × 20)',
     variants: [
-      { name: 'Dark Compound', code: 'DC15, DC17, DC35' },
-      { name: 'Milk Compound', code: 'MEC, MPC' },
-      { name: 'White Compound', code: 'WPC' },
-      { name: 'Flavoured Compound (Bulk orders)', code: 'Mango, Orange, Strawberry' },
+      { name: 'Dark / Milk / White Compound Slab', code: 'Dark / Milk / White' },
+      { name: 'Flavoured Compound Slab', code: 'Flavoured' },
+      { name: 'Pouch: 500gm Centre Sealed, Metallic', code: '500gm Pouch' },
+      { name: 'Corrugated Carton: 10kg (0.5kg × 20)', code: '10kg Carton' },
     ],
     applications: [
       { label: 'Assorted Moulded Chocolates', icon: Cookie },
@@ -100,19 +100,19 @@ export const CATEGORY_RANGES: CategoryRange[] = [
   },
   {
     id: 'chocodip',
-    name: 'CHOCODIP',
-    cutoutImage: '/assets/products_3d_png/chocodip_3d_cutout.png',
+    name: 'CHOCO DIP',
+    cutoutImage: '/assets/products_3d_png/chocodip_3d.png',
     cardImage: '/assets/categories/clean/card_chocodip.jpg',
     bannerImage: '/assets/categories/clean/banner_chocodip.jpg',
     subtitle: 'Instant crackling shell and mirror coating for artisan ice creams and popsicles.',
     tag: 'Hardening Ice Cream Dip',
-    countBadge: '4 Formulations',
-    packSizes: '25kg / 13kg',
+    countBadge: 'Dark · Milk · White',
+    packSizes: 'Plastic Bucket: 20kg',
     variants: [
-      { name: 'Dark ChocoDip', code: 'Dark ChocoDip' },
-      { name: 'Milk ChocoDip', code: 'Milk ChocoDip' },
-      { name: 'White ChocoDip', code: 'White ChocoDip' },
-      { name: 'Flavoured ChocoDip (Bulk orders)', code: 'Mango, Orange, Strawberry' },
+      { name: 'Dark Choco Dip', code: '20kg Plastic Bucket' },
+      { name: 'Milk Choco Dip', code: '20kg Plastic Bucket' },
+      { name: 'White Choco Dip', code: '20kg Plastic Bucket' },
+      { name: 'Plastic Bucket: 20kg', code: '20kg Bucket' },
     ],
     applications: [
       { label: 'Ice Cream (Coating & Dipping)', icon: IceCream },
@@ -124,26 +124,55 @@ export const CATEGORY_RANGES: CategoryRange[] = [
     ],
   },
   {
-    id: 'pure-chocolate',
-    name: 'PURE CHOCOLATE SLABS (Upcoming)',
-    cutoutImage: '/assets/ecommerce/pinterest_milk_couverture_cutout.png',
-    cardImage: '/assets/categories/clean/card_couverture.jpg',
-    bannerImage: '/assets/categories/clean/banner_couverture.jpg',
-    subtitle: 'Authentic pure cocoa butter chocolate slabs with exquisite snap, melt, and shine.',
-    tag: 'Pure Cocoa Butter Couverture',
-    countBadge: 'Upcoming Range',
-    packSizes: '500gm x 20packs',
+    id: 'choco-chips',
+    name: 'CHOCO CHIPS',
+    cutoutImage: '/assets/products_3d_png/chocochips_3d.png',
+    cardImage: '/assets/categories/clean/card_chocochips.jpg',
+    bannerImage: '/assets/categories/clean/banner_chocochips.jpg',
+    subtitle: 'Bake-stable glossy chocolate teardrop chips for cookies, muffins, cakes, and toppings.',
+    tag: 'Bake-Stable Inclusions',
+    countBadge: 'Dark · Milk · White',
+    packSizes: '1kg Zipper Metallic Pouch · 10kg Carton (1kg × 10)',
     variants: [
-      { name: 'Dark Chocolate (45%, 55%, 70%)', code: 'Dark Chocolate' },
-      { name: 'Milk Chocolate', code: 'Milk Chocolate' },
+      { name: 'Dark Choco Chips', code: 'Dark' },
+      { name: 'Milk Choco Chips', code: 'Milk' },
+      { name: 'White Choco Chips', code: 'White' },
+      { name: 'Pouch: 1kg Zipper, Metallic', code: '1kg Zipper Pouch' },
+      { name: 'Corrugated Carton: 10kg (1kg × 10)', code: '10kg Carton' },
+    ],
+    applications: [
+      { label: 'Cookies & Biscuits', icon: Cookie },
+      { label: 'Cakes & Muffins (Bake-Stable)', icon: Cake },
+      { label: 'Ice Cream & Sundaes Topping', icon: IceCream },
+      { label: 'Waffles & Pancakes', icon: Layers },
+      { label: 'Pastries & Desserts', icon: Heart },
+      { label: 'Beverages & Frappes', icon: Wine },
+    ],
+  },
+  {
+    id: 'buttons',
+    name: 'BUTTONS',
+    cutoutImage: '/assets/products_3d_png/buttons_3d.png',
+    cardImage: '/assets/categories/clean/card_buttons.jpg',
+    bannerImage: '/assets/categories/clean/banner_buttons.jpg',
+    subtitle: 'Easy-melting chocolate coins & callets for effortless tempering, ganache, and moulding.',
+    tag: 'Callets & Coins',
+    countBadge: 'Dark · Milk · White',
+    packSizes: '1kg Zipper Metallic Pouch · 10kg Carton (1kg × 10)',
+    variants: [
+      { name: 'Dark Buttons / Coins', code: 'Dark' },
+      { name: 'Milk Buttons / Coins', code: 'Milk' },
+      { name: 'White Buttons / Coins', code: 'White' },
+      { name: 'Pouch: 1kg Zipper, Metallic', code: '1kg Zipper Pouch' },
+      { name: 'Corrugated Carton: 10kg (1kg × 10)', code: '10kg Carton' },
     ],
     applications: [
       { label: 'Assorted Moulded Chocolates', icon: Cookie },
-      { label: 'Ice Cream (Coating & Filling)', icon: IceCream },
-      { label: 'Bakery Products', icon: Cake },
-      { label: 'Panning & Enrobing Products', icon: Layers },
       { label: 'Ganache & Truffles', icon: Wine },
-      { label: 'Decorations / Toppings', icon: Heart },
+      { label: 'Enrobing & Dipping', icon: Layers },
+      { label: 'Bakery & Pastry', icon: Cake },
+      { label: 'Glazing & Coating', icon: Droplets },
+      { label: 'Decorations & Garnishes', icon: Heart },
     ],
   },
   {
@@ -167,6 +196,59 @@ export const CATEGORY_RANGES: CategoryRange[] = [
       { label: 'Colouring', icon: Droplets },
       { label: 'Bakery & Pastry', icon: Cake },
       { label: 'Beverages & Milkshakes', icon: Wine },
+    ],
+  },
+  {
+    id: 'tuttifrutti',
+    name: 'TUTTIFRUTTI',
+    cutoutImage: '/assets/products_3d_png/tuttifrutti_cutout.png',
+    cardImage: '/assets/categories/clean/card_tuttifrutti.jpg',
+    bannerImage: '/assets/categories/clean/banner_tuttifrutti.jpg',
+    subtitle: 'Vibrant, succulent candied papaya cubes for plum cakes, cookies, fruit buns, and ice creams.',
+    tag: 'Candied Fruit Inclusions',
+    countBadge: 'Fresh Inclusions',
+    packSizes: 'Bucket: 500gm · Carton: 10kg / 15kg · Pouch: 1000gm',
+    variants: [
+      { name: 'Assorted Multi-Color (Red, Green, Yellow, Orange)', code: 'Multi-Color' },
+      { name: 'Plastic Bucket: 500gm', code: '500g Bucket' },
+      { name: 'Pouch: 1000gm Centre Sealed Non-metallic', code: '1000g Pouch' },
+      { name: 'Corrugated Carton: 15kg (5kg × 3)', code: '15kg Carton' },
+      { name: 'Corrugated Carton: 10kg (0.5kg × 20)', code: '10kg Carton' },
+      { name: 'Corrugated Carton: 15kg (1kg × 15)', code: '15kg (1kg×15)' },
+    ],
+    applications: [
+      { label: 'Bakery Products (Plum & Fruit Cakes)', icon: Cake },
+      { label: 'Ice Cream & Kulfi Topping', icon: IceCream },
+      { label: 'Cookies & Sweet Buns', icon: Cookie },
+      { label: 'Confectionery & Sweets', icon: Layers },
+      { label: 'Decorations & Garnish', icon: Heart },
+      { label: 'Beverages & Milkshakes', icon: Wine },
+    ],
+  },
+  {
+    id: 'butterscotch',
+    name: 'BUTTERSCOTCH',
+    cutoutImage: '/assets/products_3d_png/butterscotch_cutout.png',
+    cardImage: '/assets/categories/clean/card_butterscotch.jpg',
+    bannerImage: '/assets/categories/clean/banner_butterscotch.jpg',
+    subtitle: 'Golden caramelized crunch & crispy inclusions for cakes, ice creams, and chocolates.',
+    tag: 'Caramel Crunch & Inclusions',
+    countBadge: 'Artisan Crunch',
+    packSizes: 'Pouches: 250gm, 1kg · Corrugated Carton: 15kg (5kg × 3 / 1kg × 15)',
+    variants: [
+      { name: 'Butterscotch Crunchy Nuts & Caramel Inclusions', code: 'Crisp Crunch' },
+      { name: 'Pouch: 250gm Centre Sealed Non-metallic', code: '250g Pouch' },
+      { name: 'Pouch: 1kg Centre Sealed Non-metallic', code: '1kg Pouch' },
+      { name: 'Corrugated Carton: 15kg (5kg × 3)', code: '15kg Carton' },
+      { name: 'Corrugated Carton: 15kg (1kg × 15)', code: '15kg (1kg×15)' },
+    ],
+    applications: [
+      { label: 'Ice Cream & Kulfi Crunch', icon: IceCream },
+      { label: 'Butterscotch Cakes & Pastries', icon: Cake },
+      { label: 'Cookies & Brownie Inclusions', icon: Cookie },
+      { label: 'Chocolates & Praline Fillings', icon: Layers },
+      { label: 'Dessert Garnish & Toppings', icon: Heart },
+      { label: 'Shakes & Cold Coffee', icon: Wine },
     ],
   },
 ];
@@ -395,7 +477,7 @@ Please share the catalog.`
           >
             OUR PRODUCT
             <br />
-            RANGE
+            CATEGORY
           </motion.h2>
 
           {/* Luxury gold divider line */}
@@ -606,75 +688,6 @@ Please share the catalog.`
               </span>
             </div>
           </div>
-
-          {/* =========================================================================
-              ACTIVE CATEGORY SPOTLIGHT PANEL (UNBOXED CLEAN PRESENTATION)
-              ========================================================================= */}
-          <motion.div
-            key={activeCategory.id}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-2xl mx-auto mt-6 text-center px-4"
-          >
-            {/* Badges */}
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <span className="px-3.5 py-1 rounded-full bg-white border border-[#381A0E]/15 shadow-sm text-[10px] font-bold uppercase tracking-wider text-[#8C4724] flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#C59B27] animate-pulse" />
-                <span>{activeCategory.tag}</span>
-              </span>
-              <span className="px-3 py-1 rounded-full bg-white border border-[#381A0E]/15 shadow-sm text-[10px] font-semibold text-[#381A0E]/80 font-mono">
-                {activeCategory.countBadge}
-              </span>
-            </div>
-
-            {/* Main Category Title */}
-            <h3
-              className="text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[#381A0E] leading-none mb-3"
-              style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
-            >
-              {activeCategory.name}
-            </h3>
-
-            <p className="text-xs sm:text-sm text-[#381A0E]/80 font-light leading-relaxed max-w-lg mx-auto mb-6">
-              {activeCategory.subtitle}
-            </p>
-
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <button
-                onClick={() => setSelectedCategory(activeCategory)}
-                className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-[#381A0E] hover:bg-[#8C4724] text-[#FEE8B4] text-xs font-black uppercase tracking-wider transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-103 cursor-pointer"
-                style={{ fontFamily: "'Inter', sans-serif" }}
-              >
-                <Maximize2 className="w-4 h-4 text-[#F9BD03]" />
-                <span>Inspect Specifications & Formulations</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-
-              <button
-                onClick={() => handleWhatsAppInquiry(activeCategory)}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md hover:shadow-lg cursor-pointer"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>WhatsApp Inquiry</span>
-              </button>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Explore Full Product Catalog CTA */}
-        <div className="mt-12 sm:mt-14 text-center">
-          <motion.a
-            href="#contact"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-3 px-8 sm:px-9 py-3.5 sm:py-4 rounded-full bg-[#381A0E] hover:bg-[#F9BD03] text-[#FEE8B4] hover:text-[#1C0E07] text-xs font-black uppercase tracking-wider transition-colors shadow-lg cursor-pointer border border-[#F9BD03]/30"
-            style={{ fontFamily: "'Inter', sans-serif" }}
-          >
-            <span>DOWNLOAD B2B PRODUCT CATALOG</span>
-            <ArrowRight className="w-4 h-4" />
-          </motion.a>
         </div>
       </div>
 

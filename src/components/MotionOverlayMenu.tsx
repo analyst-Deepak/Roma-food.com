@@ -32,7 +32,7 @@ interface MotionOverlayMenuProps {
 
 const DEFAULT_LINKS: MenuItem[] = [
   { label: 'ABOUT', id: 'about' },
-  { label: 'PRODUCT', id: 'menu' },
+  { label: 'PRODUCTS', id: 'product-motion-banner' },
   { label: 'CAREERS', id: 'careers' },
   { label: 'BLOG', id: 'blog' },
   { label: 'CONTACT', id: 'contact' },

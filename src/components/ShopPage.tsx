@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { ShopSection } from './ShopSection';
 import { Gr8rFooter } from './Gr8rFooter';
 import { LegalTabType } from './LegalPage';
-import { EcommerceProduct } from '../types/ecommerce';
+import { EcommerceCategory, EcommerceProduct } from '../types/ecommerce';
 
 interface ShopPageProps {
+  initialCategory?: EcommerceCategory;
   onNavigateHome: (sectionId?: string) => void;
   onNavigateAbout?: () => void;
   onSelectProduct?: (product: EcommerceProduct) => void;
@@ -14,6 +15,7 @@ interface ShopPageProps {
 }
 
 export const ShopPage: React.FC<ShopPageProps> = ({
+  initialCategory = 'all',
   onNavigateHome,
   onSelectProduct,
   onOpenReservation,
@@ -22,13 +24,19 @@ export const ShopPage: React.FC<ShopPageProps> = ({
 }) => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    document.title = 'Roma Foods';
+    document.title = 'Products | ROMAS Chocolates';
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-[#2A1308] flex flex-col">
-      <main className="flex-1 w-full bg-white">
-        <ShopSection isStandalonePage={true} onSelectProduct={onSelectProduct} />
+    <div className="min-h-screen bg-[#FAF8F5] text-[#1C0E07] flex flex-col pt-14 sm:pt-16">
+      <main className="flex-1 w-full">
+        {/* Exact Popat Namkeen Style Products Store with 3D Marble Shelves */}
+        <ShopSection
+          isStandalonePage={true}
+          initialCategory={initialCategory}
+          onSelectProduct={onSelectProduct}
+          onNavigateHome={() => onNavigateHome()}
+        />
       </main>
 
       <Gr8rFooter
@@ -40,4 +48,3 @@ export const ShopPage: React.FC<ShopPageProps> = ({
     </div>
   );
 };
-

@@ -1,84 +1,52 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import {
-  Filter,
-  Check,
-  ChevronDown,
-  Star,
-  Search,
-  X,
-  RotateCcw,
-  SlidersHorizontal,
-} from 'lucide-react';
+import { Search, LayoutGrid, List } from 'lucide-react';
 import { ECOMMERCE_PRODUCTS } from '../data/ecommerceProducts';
 import { EcommerceCategory, EcommerceProduct } from '../types/ecommerce';
 import { ProductCard3D } from './ProductCard3D';
+import { EcommerceQuickViewModal } from './EcommerceQuickViewModal';
 
 interface ShopSectionProps {
   id?: string;
   isStandalonePage?: boolean;
+  initialCategory?: EcommerceCategory;
   onSelectProduct?: (product: EcommerceProduct) => void;
+  onNavigateHome?: (sectionId?: string) => void;
 }
 
-type SortOption = 'relevance' | 'price-asc' | 'price-desc' | 'rating' | 'discount';
-type PriceRange = 'all' | 'under-350' | '350-500' | 'above-500';
+type SortOption = 'relevance' | 'price-asc' | 'price-desc' | 'rating';
 
 const CATEGORIES: { id: EcommerceCategory; label: string; count: number }[] = [
-  { id: 'all', label: 'All Creations', count: 9 },
-  { id: 'slabs', label: 'Signature Slabs', count: 2 },
-  { id: 'couverture', label: 'Couvertures', count: 1 },
-  { id: 'praline', label: 'Pralines & Nuts', count: 3 },
-  { id: 'cocoa', label: 'Cocoa & Dragées', count: 2 },
-  { id: 'gifting', label: 'Gifting Boxes', count: 1 },
+  { id: 'all', label: 'All Products', count: 14 },
+  { id: 'slabs', label: 'Compound Slab', count: 3 },
+  { id: 'choco-chips', label: 'Choco Chips', count: 3 },
+  { id: 'buttons', label: 'Buttons (Coins)', count: 3 },
+  { id: 'paste', label: 'Choco Paste', count: 3 },
+  { id: 'butterscotch', label: 'Butterscotch Crunch', count: 1 },
+  { id: 'tuttifrutti', label: 'Tutti Frutti', count: 1 },
 ];
 
 export const ShopSection: React.FC<ShopSectionProps> = ({
   id = 'shop',
-  isStandalonePage = false,
+  initialCategory = 'all',
   onSelectProduct,
+  onNavigateHome,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<EcommerceCategory>('all');
+  const [selectedCategory, setSelectedCategory] = useState<EcommerceCategory>(initialCategory);
   const [searchQuery, setSearchQuery] = useState('');
-  const [priceRange, setPriceRange] = useState<PriceRange>('all');
-  const [minRating, setMinRating] = useState<number>(0);
-  const [onlyVegetarian, setOnlyVegetarian] = useState(true);
-  const [onlyAssured, setOnlyAssured] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>('relevance');
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [quickViewProduct, setQuickViewProduct] = useState<EcommerceProduct | null>(null);
 
-  // Lock background scroll while the mobile filter bottom-sheet is open
   useEffect(() => {
-    if (!isMobileFilterOpen) return;
-    const original = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = original;
-    };
-  }, [isMobileFilterOpen]);
+    if (initialCategory) {
+      setSelectedCategory(initialCategory);
+    }
+  }, [initialCategory]);
 
-  // Clear all filters
-  const handleClearAllFilters = () => {
-    setSelectedCategory('all');
-    setSearchQuery('');
-    setPriceRange('all');
-    setMinRating(0);
-    setOnlyAssured(false);
-    setSortBy('relevance');
-  };
-
-  const isFiltered =
-    selectedCategory !== 'all' ||
-    searchQuery !== '' ||
-    priceRange !== 'all' ||
-    minRating > 0 ||
-    onlyAssured;
-
-  // Count of active filters (for the mobile filter badge)
-  const activeFilterCount =
-    (selectedCategory !== 'all' ? 1 : 0) +
-    (priceRange !== 'all' ? 1 : 0) +
-    (minRating > 0 ? 1 : 0) +
-    (onlyAssured ? 1 : 0);
+  // Featured products for the left sidebar "| Products" list
+  const featuredSidebarProducts = useMemo(() => {
+    return ECOMMERCE_PRODUCTS.slice(0, 4);
+  }, []);
 
   // Filter & Sort Logic
   const filteredProducts = useMemo(() => {
@@ -96,20 +64,6 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
           prod.categoryLabel.toLowerCase().includes(query);
         if (!match) return false;
       }
-      // Price range filter
-      if (priceRange === 'under-350' && prod.price >= 350) return false;
-      if (priceRange === '350-500' && (prod.price < 350 || prod.price > 500)) return false;
-      if (priceRange === 'above-500' && prod.price <= 500) return false;
-
-      // Rating filter
-      if (minRating > 0 && prod.rating < minRating) return false;
-
-      // Vegetarian filter
-      if (onlyVegetarian && !prod.vegetarian) return false;
-
-      // Assured filter
-      if (onlyAssured && !prod.isBestseller) return false;
-
       return true;
     });
 
@@ -120,395 +74,276 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
       result = [...result].sort((a, b) => b.price - a.price);
     } else if (sortBy === 'rating') {
       result = [...result].sort((a, b) => b.rating - a.rating);
-    } else if (sortBy === 'discount') {
-      result = [...result].sort(
-        (a, b) => (b.mrp - b.price) / b.mrp - (a.mrp - a.price) / a.mrp
-      );
     }
 
     return result;
-  }, [selectedCategory, searchQuery, priceRange, minRating, onlyVegetarian, onlyAssured, sortBy]);
+  }, [selectedCategory, searchQuery, sortBy]);
 
   return (
-    <section
-      id={id}
-      className={`relative bg-[#F1F3F6] text-[#212121] overflow-hidden ${
-        isStandalonePage ? 'pt-20 sm:pt-24 pb-20' : 'py-16 sm:py-24 border-t border-gray-200'
-      }`}
-    >
-      <div className="w-full max-w-[1920px] mx-auto px-3 sm:px-6 lg:px-8 xl:px-10">
+    <div id={id} className="relative w-full bg-[#FAF8F5] text-[#1C0E07] overflow-hidden select-none font-sans">
+      
+      {/* Background Subtle Botanical Line-Art Watermark Texture */}
+      <div
+        className="absolute inset-0 opacity-[0.06] pointer-events-none"
+        style={{
+          backgroundImage: "url('/assets/textures/botanical_etching.svg')",
+          backgroundSize: '520px 520px',
+          backgroundRepeat: 'repeat',
+        }}
+      />
 
-        {/* Mobile Filter Toggle Button */}
-        <div className="md:hidden mb-4 flex items-center justify-between bg-white p-3 rounded-xl border border-gray-200 shadow-xs">
-          <button
-            onClick={() => setIsMobileFilterOpen(true)}
-            className="flex items-center gap-2 text-xs font-bold text-[#8C4724] uppercase tracking-wider cursor-pointer active:scale-95 transition-transform"
-          >
-            <span className="w-8 h-8 rounded-full bg-[#FAF0E4] flex items-center justify-center">
-              <SlidersHorizontal className="w-4 h-4" />
-            </span>
-            <span>Filters</span>
-            {activeFilterCount > 0 && (
-              <span className="w-5 h-5 rounded-full bg-[#8C4724] text-white text-[10px] font-black flex items-center justify-center">
-                {activeFilterCount}
-              </span>
-            )}
-          </button>
+      {/* 1. TOP BREADCRUMB & PAGE TITLE (Exact Popat Namkeen Style) */}
+      <div className="w-full bg-[#FAF8F5] border-b border-[#EADBCC]/70 py-8 sm:py-10 px-4 sm:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1C0E07] tracking-tight"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
+              Products
+            </h1>
+            <p className="text-xs sm:text-sm text-[#7A5832] mt-1.5 font-sans">
+              This is where you can browse products in this store.
+            </p>
+            <div className="mt-2.5 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-300/80 text-amber-900 text-xs font-semibold shadow-2xs">
+              <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+              <span>Online Shop: Coming Soon &bull; Display Showcase Only</span>
+            </div>
+          </div>
 
-          <span className="text-xs text-gray-500 font-medium">
-            <strong className="text-[#1C0E07]">{filteredProducts.length}</strong> Items Found
-          </span>
+          <div className="flex items-center gap-2 text-xs text-[#8C6D4C] font-medium font-sans">
+            <button
+              onClick={() => onNavigateHome?.()}
+              className="hover:text-[#1C0E07] transition-colors cursor-pointer"
+            >
+              Home
+            </button>
+            <span className="text-[#B89C7D]">›</span>
+            <span className="text-[#1C0E07] font-bold">Products</span>
+          </div>
         </div>
+      </div>
 
-        {/* Mobile Bottom-Sheet Backdrop */}
-        {isMobileFilterOpen && (
-          <div
-            onClick={() => setIsMobileFilterOpen(false)}
-            className="md:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity"
-            aria-hidden="true"
-          />
-        )}
-
-        {/* 2-Column Flipkart Layout: Left Sidebar Filters + Right Product Grid */}
-        <div className="flex flex-col md:flex-row gap-3 sm:gap-4 items-start">
+      {/* 2. MAIN 2-COLUMN STORE LAYOUT (Exact Popat Namkeen Layout) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 relative z-10">
+        <div className="flex flex-col md:flex-row gap-8 lg:gap-12 items-start">
 
           {/* =========================================================================
-              LEFT COLUMN: Flipkart Style Filters Sidebar
-              (Mobile: slide-up bottom sheet · Desktop: inline sidebar)
+              LEFT SIDEBAR: Search Box + "| Products" List + "| Categories"
               ========================================================================= */}
-          <aside
-            className={`bg-white divide-y divide-gray-100 fixed inset-x-0 bottom-0 z-50 max-h-[88vh] overflow-y-auto rounded-t-2xl shadow-2xl border-t border-gray-200 transition-transform duration-300 ease-out will-change-transform w-full md:w-[260px] lg:w-[270px] shrink-0 md:static md:z-auto md:translate-y-0 md:max-h-none md:overflow-visible md:rounded-lg md:rounded-t-lg md:shadow-xs md:border md:border-gray-200 md:pointer-events-auto md:transition-none ${
-              isMobileFilterOpen ? 'translate-y-0' : 'translate-y-full pointer-events-none'
-            }`}
-          >
-            {/* Mobile Bottom-Sheet Header (drag handle + close) */}
-            <div className="md:hidden sticky top-0 z-10 bg-white px-4 pt-3 pb-3">
-              <div className="w-10 h-1 rounded-full bg-gray-300 mx-auto mb-3" />
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-sm text-[#1C0E07] uppercase tracking-wider flex items-center gap-2">
-                  <Filter className="w-4 h-4 text-[#8C4724]" />
-                  <span>Filters</span>
-                </span>
+          <aside className="w-full md:w-64 lg:w-72 shrink-0 space-y-8">
+            
+            {/* Search Box */}
+            <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#EADBCC]/80 shadow-xs">
+              <label className="text-sm font-bold text-[#1C0E07] block mb-2 font-sans">
+                Search
+              </label>
+              <div className="flex items-center gap-2">
+                <div className="relative flex-1">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search products..."
+                    className="w-full px-3 py-2 rounded-lg border border-[#D5C2AF] text-xs text-[#1C0E07] focus:outline-none focus:border-[#8C4724] bg-white placeholder-[#A08C79]"
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery('')}
+                      className="absolute right-2 top-2 text-[#A08C79] hover:text-[#1C0E07] text-xs cursor-pointer"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
                 <button
-                  onClick={() => setIsMobileFilterOpen(false)}
-                  className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 cursor-pointer active:scale-90 transition-all"
-                  aria-label="Close filters"
+                  onClick={() => {}}
+                  className="px-4 py-2 rounded-lg bg-[#2B2B2B] hover:bg-[#111111] text-white text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer shrink-0 shadow-xs active:scale-95"
                 >
-                  <X className="w-4 h-4" />
+                  SEARCH
                 </button>
               </div>
             </div>
 
-            {/* Sidebar Header (desktop only) */}
-            <div className="hidden md:flex p-4 items-center justify-between bg-white">
-              <span className="font-bold text-sm text-[#212121] uppercase tracking-wider flex items-center gap-2">
-                <Filter className="w-4 h-4 text-gray-600" />
-                <span>Filters</span>
-              </span>
-
-              {isFiltered && (
-                <button
-                  onClick={handleClearAllFilters}
-                  className="text-xs font-bold text-[#8C4724] hover:underline cursor-pointer"
-                >
-                  CLEAR ALL
-                </button>
-              )}
-            </div>
-
-            {/* CATEGORIES Section (Flipkart Tree Style on the Left) */}
-            <div className="p-4 space-y-3">
-              <span className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
-                Categories
-              </span>
-
-              <div className="text-xs text-gray-700 font-semibold mb-1 flex items-center gap-1 text-[#8C4724]">
-                <span>‹</span>
-                <span>ROMAS Chocolates</span>
+            {/* | Products (Featured Miniature List matching Popat Namkeen screenshot) */}
+            <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#EADBCC]/80 shadow-xs">
+              <div className="flex items-center gap-2 mb-4 border-b border-[#EADBCC]/60 pb-2.5">
+                <span className="w-1 h-4 bg-[#8C4724] rounded-full" />
+                <h3 className="text-sm font-bold text-[#1C0E07] tracking-wider uppercase font-sans">
+                  Products
+                </h3>
               </div>
 
-              <div className="space-y-1 pl-2">
+              <div className="space-y-4">
+                {featuredSidebarProducts.map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={() => onSelectProduct?.(item)}
+                    className="flex items-center gap-3 group cursor-pointer border-b border-[#F0E6DC] pb-3 last:border-b-0 last:pb-0"
+                  >
+                    {/* Miniature Packet on Mini Marble Shelf */}
+                    <div className="w-12 h-14 shrink-0 flex flex-col items-center justify-center relative">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="max-h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-110 filter drop-shadow-xs"
+                      />
+                      <div className="w-10 h-1 bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300 rounded-full shadow-2xs mt-[-2px]" />
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-xs font-bold text-[#1C0E07] group-hover:text-[#8C4724] line-clamp-1 transition-colors leading-snug">
+                        {item.name}
+                      </h4>
+                      <span className="text-[11px] text-[#8C6D4C] block mt-0.5 font-sans italic">
+                        {item.categoryLabel}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* | Categories List */}
+            <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#EADBCC]/80 shadow-xs">
+              <div className="flex items-center gap-2 mb-3.5 border-b border-[#EADBCC]/60 pb-2.5">
+                <span className="w-1 h-4 bg-[#8C4724] rounded-full" />
+                <h3 className="text-sm font-bold text-[#1C0E07] tracking-wider uppercase font-sans">
+                  Categories
+                </h3>
+              </div>
+
+              <div className="space-y-1">
                 {CATEGORIES.map((cat) => {
                   const isActive = selectedCategory === cat.id;
                   return (
                     <button
                       key={cat.id}
-                      onClick={() => {
-                        setSelectedCategory(cat.id);
-                        setIsMobileFilterOpen(false);
-                      }}
-                      className={`w-full text-left py-1.5 px-2.5 rounded text-xs transition-colors flex items-center justify-between cursor-pointer ${
+                      onClick={() => setSelectedCategory(cat.id)}
+                      className={`w-full text-left py-1.5 px-2.5 rounded-lg text-xs transition-colors flex items-center justify-between cursor-pointer ${
                         isActive
-                          ? 'bg-[#FAF0E4] text-[#8C4724] font-bold border-l-3 border-[#8C4724]'
-                          : 'text-gray-700 hover:bg-gray-50 hover:text-black font-medium'
+                          ? 'font-bold text-[#8C4724] bg-[#FAF0E4]'
+                          : 'text-[#6C5543] hover:text-[#1C0E07] hover:bg-[#FAF8F5]'
                       }`}
                     >
-                      <span className="truncate">{cat.label}</span>
-                      <span
-                        className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                          isActive
-                            ? 'bg-[#8C4724] text-white'
-                            : 'bg-gray-100 text-gray-500'
-                        }`}
-                      >
-                        {cat.count}
-                      </span>
+                      <span>{cat.label}</span>
+                      <span className="text-[10px] text-[#A08C79]">({cat.count})</span>
                     </button>
                   );
                 })}
               </div>
             </div>
 
-            {/* PRICE RANGE Section */}
-            <div className="p-4 space-y-2.5">
-              <span className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
-                Price Range
-              </span>
-
-              <div className="space-y-1.5 text-xs">
-                {[
-                  { id: 'all', label: 'All Prices' },
-                  { id: 'under-350', label: 'Under ₹350' },
-                  { id: '350-500', label: '₹350 - ₹500' },
-                  { id: 'above-500', label: 'Over ₹500' },
-                ].map((p) => (
-                  <label
-                    key={p.id}
-                    className="flex items-center gap-2 cursor-pointer hover:text-black select-none text-gray-700"
-                  >
-                    <input
-                      type="radio"
-                      name="priceRange"
-                      checked={priceRange === p.id}
-                      onChange={() => setPriceRange(p.id as PriceRange)}
-                      className="w-3.5 h-3.5 text-[#8C4724] cursor-pointer"
-                    />
-                    <span>{p.label}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* CUSTOMER RATINGS Section */}
-            <div className="p-4 space-y-2.5">
-              <span className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
-                Customer Ratings
-              </span>
-
-              <div className="space-y-1.5 text-xs text-gray-700">
-                {[
-                  { rating: 4.8, label: '4.8★ & above' },
-                  { rating: 4.5, label: '4.5★ & above' },
-                  { rating: 0, label: 'All Ratings' },
-                ].map((r) => (
-                  <label
-                    key={r.rating}
-                    className="flex items-center gap-2 cursor-pointer hover:text-black select-none"
-                  >
-                    <input
-                      type="radio"
-                      name="minRating"
-                      checked={minRating === r.rating}
-                      onChange={() => setMinRating(r.rating)}
-                      className="w-3.5 h-3.5 text-[#8C4724] cursor-pointer"
-                    />
-                    <div className="flex items-center gap-1 font-medium">
-                      <span>{r.label}</span>
-                      {r.rating > 0 && <Star className="w-3 h-3 fill-amber-400 text-amber-400" />}
-                    </div>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* DIETARY PREFERENCE Section */}
-            <div className="p-4 space-y-2.5">
-              <span className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
-                Dietary Preference
-              </span>
-
-              <label className="flex items-center gap-2 text-xs text-gray-800 cursor-pointer select-none">
-                <input
-                  type="checkbox"
-                  checked={onlyVegetarian}
-                  onChange={(e) => setOnlyVegetarian(e.target.checked)}
-                  className="w-4 h-4 text-[#388E3C] rounded cursor-pointer"
-                />
-                <span className="w-3 h-3 rounded border border-emerald-600 flex items-center justify-center p-0.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
-                </span>
-                <span className="font-semibold text-emerald-800">100% Vegetarian Only</span>
-              </label>
-            </div>
-
-            {/* ROMAS ASSURED Section */}
-            <div className="p-4 space-y-2.5">
-              <span className="text-[11px] font-bold text-gray-500 uppercase tracking-widest block">
-                Assurance
-              </span>
-
-              <label className="flex items-center gap-2 text-xs text-gray-800 cursor-pointer select-none">
-                <input
-                  type="checkbox"
-                  checked={onlyAssured}
-                  onChange={(e) => setOnlyAssured(e.target.checked)}
-                  className="w-4 h-4 text-[#8C4724] rounded cursor-pointer"
-                />
-                <span className="bg-[#FAF0E4] text-[#8C4724] border border-[#8C4724]/30 px-1.5 py-0.5 rounded text-[10px] font-black italic">
-                  ✦ ROMAS Assured
-                </span>
-              </label>
-            </div>
-
-            {/* Factory Trust Note */}
-            <div className="p-4 bg-[#FAF8F5] text-[11px] text-gray-600 space-y-1">
-              <strong className="text-gray-900 block font-bold">Factory Guarantee:</strong>
-              <p>Direct temperature-controlled dispatch from Kurod works, Dhamtari (493663).</p>
-            </div>
-
-            {/* Mobile Bottom-Sheet Sticky Action Footer */}
-            <div className="md:hidden sticky bottom-0 z-10 bg-white border-t border-gray-200 p-3 flex items-center gap-3 shadow-[0_-4px_16px_rgba(0,0,0,0.06)]">
-              <button
-                onClick={handleClearAllFilters}
-                disabled={!isFiltered}
-                className="flex-1 py-2.5 rounded-full border border-gray-300 text-xs font-bold uppercase tracking-wider text-gray-700 disabled:opacity-40 active:scale-95 transition-all cursor-pointer"
-              >
-                Clear All
-              </button>
-              <button
-                onClick={() => setIsMobileFilterOpen(false)}
-                className="flex-[1.6] py-2.5 rounded-full bg-[#8C4724] text-white text-xs font-bold uppercase tracking-wider active:scale-95 transition-all cursor-pointer shadow-sm"
-              >
-                Show {filteredProducts.length} Results
-              </button>
-            </div>
           </aside>
 
           {/* =========================================================================
-              RIGHT COLUMN: Top Sorting Bar & Enhanced Product Cards Grid
+              RIGHT MAIN AREA: Top Toolbar + Marble Shelf Products Grid
               ========================================================================= */}
-          <main className="flex-1 min-w-0 space-y-3.5">
+          <main className="flex-1 min-w-0">
             
-            {/* Flipkart Style Top Bar: Breadcrumb & Sort Tabs */}
-            <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4 shadow-xs">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 pb-3">
-                {/* Search Bar inside Catalog */}
-                <div className="relative w-full sm:max-w-md">
-                  <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-3" />
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search dark slab, milk couverture, hazelnut praline, cocoa..."
-                    className="w-full pl-9 pr-8 py-2 rounded-lg bg-gray-50 border border-gray-200 text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#8C4724] focus:bg-white"
-                  />
-                  {searchQuery && (
-                    <button
-                      onClick={() => setSearchQuery('')}
-                      className="absolute right-2.5 top-2.5 text-gray-400 hover:text-black cursor-pointer text-xs"
-                    >
-                      <X className="w-3.5 h-3.5" />
-                    </button>
-                  )}
-                </div>
-
-                {/* Items Counter */}
-                <div className="text-xs text-gray-500 shrink-0">
-                  Showing <strong>{filteredProducts.length}</strong> of <strong>{ECOMMERCE_PRODUCTS.length}</strong> items
-                </div>
+            {/* Top Toolbar (Grid/List Toggle, Default Sorting, View Count) */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#EADBCC]/80 pb-4 mb-8">
+              
+              {/* Left: View Mode Toggles */}
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`p-1.5 rounded-md border transition-colors cursor-pointer ${
+                    viewMode === 'grid'
+                      ? 'border-[#1C0E07] bg-[#FAF8F5] text-[#1C0E07]'
+                      : 'border-gray-200 text-gray-400 hover:text-black'
+                  }`}
+                  title="Grid View"
+                >
+                  <LayoutGrid className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`p-1.5 rounded-md border transition-colors cursor-pointer ${
+                    viewMode === 'list'
+                      ? 'border-[#1C0E07] bg-[#FAF8F5] text-[#1C0E07]'
+                      : 'border-gray-200 text-gray-400 hover:text-black'
+                  }`}
+                  title="List View"
+                >
+                  <List className="w-4 h-4" />
+                </button>
               </div>
 
-              {/* Flipkart Sort By Bar */}
-              <div className="flex items-center gap-2 sm:gap-4 pt-3 overflow-x-auto no-scrollbar text-xs text-gray-600">
-                <span className="font-bold text-gray-800 shrink-0">Sort By:</span>
-                {[
-                  { id: 'relevance', label: 'Relevance' },
-                  { id: 'price-asc', label: 'Price -- Low to High' },
-                  { id: 'price-desc', label: 'Price -- High to Low' },
-                  { id: 'rating', label: 'Rating' },
-                  { id: 'discount', label: 'Discount' },
-                ].map((s) => (
-                  <button
-                    key={s.id}
-                    onClick={() => setSortBy(s.id as SortOption)}
-                    className={`shrink-0 py-1 transition-colors cursor-pointer ${
-                      sortBy === s.id
-                        ? 'text-[#8C4724] font-bold border-b-2 border-[#8C4724]'
-                        : 'text-gray-600 hover:text-[#8C4724] font-medium'
-                    }`}
-                  >
-                    {s.label}
-                  </button>
-                ))}
+              {/* Center: Sorting Dropdown */}
+              <div className="flex items-center gap-2">
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as SortOption)}
+                  className="px-3 py-1.5 rounded-lg border border-[#D5C2AF] text-xs text-[#1C0E07] bg-white cursor-pointer focus:outline-none focus:border-[#8C4724]"
+                >
+                  <option value="relevance">Default sorting</option>
+                  <option value="rating">Sort by popularity</option>
+                  <option value="price-asc">Sort by price: low to high</option>
+                  <option value="price-desc">Sort by price: high to low</option>
+                </select>
+              </div>
+
+              {/* Right: View Count */}
+              <div className="text-xs text-[#8C6D4C] font-semibold font-sans">
+                VIEW: <span className="text-[#1C0E07] font-bold">12</span> / <span>24</span> / <span>ALL</span>
               </div>
             </div>
 
-            {/* Enhanced 3D Product Cards Grid */}
+            {/* Product Cards Container (Grid / List with 3D Marble Shelves) */}
             {filteredProducts.length === 0 ? (
-              <div className="bg-white rounded-lg border border-gray-200 p-12 text-center shadow-xs">
-                <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center text-3xl mx-auto mb-3">
+              <div className="bg-white rounded-2xl border border-[#EADBCC] p-12 text-center shadow-xs">
+                <div className="w-16 h-16 rounded-full bg-[#FAF0E4] flex items-center justify-center text-3xl mx-auto mb-3">
                   🍫
                 </div>
-                <h3 className="text-base font-bold text-gray-800 mb-1">
-                  No chocolates match your active filters
+                <h3 className="text-base font-bold text-[#1C0E07] mb-1">
+                  No products found
                 </h3>
-                <p className="text-xs text-gray-500 mb-4">
-                  Try clearing your search query or selecting "All Prices".
+                <p className="text-xs text-gray-500 mb-4 font-sans">
+                  Try clearing your search query or choosing another category.
                 </p>
                 <button
-                  onClick={handleClearAllFilters}
-                  className="px-5 py-2 rounded-full bg-[#8C4724] text-white text-xs font-bold uppercase tracking-wider shadow-sm cursor-pointer hover:bg-[#6E371B] transition-colors"
+                  onClick={() => {
+                    setSearchQuery('');
+                    setSelectedCategory('all');
+                  }}
+                  className="px-5 py-2 rounded-full bg-[#1C0E07] hover:bg-[#8C4724] text-[#FEE8B4] text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer shadow-xs"
                 >
-                  Clear All Filters
+                  View All Products
                 </button>
               </div>
             ) : (
-              <motion.div
-                layout
-                className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 sm:gap-2.5 lg:gap-3"
+              <div
+                className={
+                  viewMode === 'grid'
+                    ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 items-stretch'
+                    : 'space-y-6'
+                }
               >
                 {filteredProducts.map((product) => (
                   <ProductCard3D
                     key={product.id}
                     product={product}
+                    viewMode={viewMode}
                     onQuickView={(p) => {
-                      if (onSelectProduct) {
-                        onSelectProduct(p);
-                      }
+                      setQuickViewProduct(p);
+                      if (onSelectProduct) onSelectProduct(p);
                     }}
                   />
                 ))}
-              </motion.div>
+              </div>
             )}
-
-            {/* Bottom Flipkart Trust Banner */}
-            <div className="bg-white rounded-lg border border-gray-200 p-5 shadow-xs grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-              <div>
-                <span className="text-xl block mb-1">🧊</span>
-                <strong className="text-xs text-gray-800 block font-bold">Insulated Packaging</strong>
-                <span className="text-[10px] text-gray-500">Melt-free pan-India transit</span>
-              </div>
-              <div>
-                <span className="text-xl block mb-1">🏭</span>
-                <strong className="text-xs text-gray-800 block font-bold">Kurud Works Fresh</strong>
-                <span className="text-[10px] text-gray-500">Direct factory tempering</span>
-              </div>
-              <div>
-                <span className="text-xl block mb-1">🍫</span>
-                <strong className="text-xs text-gray-800 block font-bold">100% Pure Cocoa</strong>
-                <span className="text-[10px] text-gray-500">No palm oil or substitutes</span>
-              </div>
-              <div>
-                <span className="text-xl block mb-1">⚡</span>
-                <strong className="text-xs text-gray-800 block font-bold">WhatsApp Direct</strong>
-                <span className="text-[10px] text-gray-500">+91-9098229454</span>
-              </div>
-            </div>
 
           </main>
         </div>
-
       </div>
-    </section>
+
+      {/* Quick View Display Showcase Modal (Online Shop Coming Soon) */}
+      <EcommerceQuickViewModal
+        product={quickViewProduct}
+        isOpen={!!quickViewProduct}
+        onClose={() => setQuickViewProduct(null)}
+      />
+    </div>
   );
 };
