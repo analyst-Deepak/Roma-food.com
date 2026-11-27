@@ -121,7 +121,7 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
         </div>
 
         {/* Botanical Sketch Watermark (Faint floral botanical etching exactly like Popat Namkeen) */}
-        <div className="absolute top-2 left-2 sm:left-4 w-44 h-44 sm:w-52 sm:h-52 pointer-events-none select-none opacity-25 filter grayscale z-0">
+        <div className="absolute top-1 left-1 sm:top-2 sm:left-4 w-32 h-32 sm:w-44 sm:h-44 md:w-52 md:h-52 pointer-events-none select-none opacity-20 filter grayscale z-0">
           <img
             src="/assets/textures/botanical_etching.svg"
             alt=""
@@ -130,32 +130,32 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
         </div>
 
         {/* Product Packet Image Stage (Standing directly on shelf) */}
-        <div className="relative w-full h-48 sm:h-56 flex items-center justify-center p-1 sm:p-2 z-10">
+        <div className="relative w-full h-36 sm:h-48 md:h-56 flex items-center justify-center p-1 sm:p-2 z-10">
           <img
             src={product.image}
             alt={product.name}
-            className="max-h-[175px] sm:max-h-[210px] w-auto h-auto object-contain transition-transform duration-500 ease-out group-hover:scale-108 group-hover:-translate-y-2 filter drop-shadow-[0_12px_22px_rgba(0,0,0,0.32)]"
+            className="max-h-[125px] sm:max-h-[175px] md:max-h-[210px] w-auto h-auto object-contain transition-transform duration-500 ease-out group-hover:scale-108 group-hover:-translate-y-2 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)]"
             loading="lazy"
           />
         </div>
 
         {/* The Signature 3D Marble / Granite Shelf Pedestal */}
-        <div className="relative w-full max-w-[210px] sm:max-w-[250px] mx-auto mt-[-14px] pointer-events-none select-none z-10">
+        <div className="relative w-full max-w-[145px] sm:max-w-[210px] md:max-w-[250px] mx-auto mt-[-10px] sm:mt-[-14px] pointer-events-none select-none z-10">
           {/* Shelf Top Surface with Marble Sheen */}
-          <div className="h-2 sm:h-2.5 w-full bg-gradient-to-r from-[#DCDCDC] via-[#F6F6F6] to-[#D5D5D5] rounded-t-xs border-t border-[#E5E5E5] shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)]" />
+          <div className="h-1.5 sm:h-2 md:h-2.5 w-full bg-gradient-to-r from-[#DCDCDC] via-[#F6F6F6] to-[#D5D5D5] rounded-t-xs border-t border-[#E5E5E5] shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)]" />
           {/* Shelf Front Bevel Edge */}
-          <div className="h-2.5 sm:h-3 w-full bg-gradient-to-b from-[#C8C8C8] via-[#BFBFBF] to-[#AEAEAE] rounded-b-xs border-b border-[#9E9E9E]" />
+          <div className="h-2 sm:h-2.5 md:h-3 w-full bg-gradient-to-b from-[#C8C8C8] via-[#BFBFBF] to-[#AEAEAE] rounded-b-xs border-b border-[#9E9E9E]" />
           {/* Deep Ambient Cast Shadow under Shelf */}
-          <div className="h-4 sm:h-5 w-[94%] mx-auto bg-black/25 blur-md rounded-full mt-[-2px]" />
+          <div className="h-3 sm:h-4 md:h-5 w-[94%] mx-auto bg-black/25 blur-xs sm:blur-md rounded-full mt-[-2px]" />
         </div>
 
         {/* Category in Italics */}
-        <span className="text-xs sm:text-sm font-normal italic text-[#7D6B58] block mt-4 sm:mt-5 tracking-wide z-10">
+        <span className="text-[10px] sm:text-xs md:text-sm font-normal italic text-[#7D6B58] block mt-2 sm:mt-4 tracking-wide z-10">
           {product.categoryLabel}
         </span>
 
         {/* Product Title in Bold */}
-        <h3 className="text-sm sm:text-base font-bold text-[#1C0E07] group-hover:text-[#8C4724] transition-colors line-clamp-2 mt-1 leading-snug z-10">
+        <h3 className="text-xs sm:text-sm md:text-base font-bold text-[#1C0E07] group-hover:text-[#8C4724] transition-colors line-clamp-2 mt-0.5 sm:mt-1 leading-snug z-10 px-1">
           {product.name}
         </h3>
 
