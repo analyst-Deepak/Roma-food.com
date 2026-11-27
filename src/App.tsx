@@ -17,7 +17,7 @@ import type { LegalTabType } from './components/LegalPage';
 
 
 import { ECOMMERCE_PRODUCTS } from './data/ecommerceProducts';
-import { EcommerceProduct } from './types/ecommerce';
+import { EcommerceProduct, EcommerceCategory } from './types/ecommerce';
 import { WishlistDrawer } from './components/WishlistDrawer';
 import { CartProvider } from './context/CartContext';
 
