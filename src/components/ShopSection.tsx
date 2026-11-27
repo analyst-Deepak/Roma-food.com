@@ -241,27 +241,6 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
               ========================================================================= */}
           <main className="flex-1 min-w-0">
             
-            {/* Top Category Filter Pills Bar */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-5 no-scrollbar">
-              {CATEGORIES.map((cat) => {
-                const isActive = selectedCategory === cat.id;
-                return (
-                  <button
-                    key={cat.id}
-                    onClick={() => setSelectedCategory(cat.id)}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer border ${
-                      isActive
-                        ? 'bg-[#1C0E07] text-[#F9BD03] border-[#1C0E07] shadow-sm scale-102'
-                        : 'bg-white text-[#7A5832] border-[#EADBCC] hover:border-[#8C4724] hover:text-[#1C0E07]'
-                    }`}
-                  >
-                    <span>{cat.label}</span>
-                    <span className="ml-1 opacity-70 text-[10px]">({cat.count})</span>
-                  </button>
-                );
-              })}
-            </div>
-            
             {/* Top Toolbar (Grid/List Toggle, Default Sorting, View Count) */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#EADBCC]/80 pb-4 mb-8">
               
