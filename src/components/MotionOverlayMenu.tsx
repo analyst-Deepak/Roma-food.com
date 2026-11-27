@@ -39,12 +39,13 @@ const DEFAULT_LINKS: MenuItem[] = [
 ];
 
 const DEFAULT_SECONDARY: SecondaryLink[] = [
-  { label: 'Instagram', href: 'https://instagram.com' },
+  { label: 'Instagram', href: 'https://www.instagram.com/romasfoods/' },
+  { label: 'Facebook', href: 'https://www.facebook.com/romasfoods/' },
   {
     label: 'WhatsApp Concierge',
     href: 'https://wa.me/919098229454?text=Hello%20Roma%20Foods%20Concierge,%20I%20am%20interested%20in%20ROMAS%20chocolates.',
   },
-  { label: 'LinkedIn', href: 'https://linkedin.com' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/145512501/' },
   { label: 'Terms & Conditions', href: '/terms-and-conditions' },
   { label: 'Privacy Policy', href: '/privacy-policy' },
 ];

@@ -73,7 +73,7 @@ export const Gr8rFooter: React.FC<Gr8rFooterProps> = ({
     {
       id: 'instagram',
       label: 'Instagram',
-      href: 'https://instagram.com',
+      href: 'https://www.instagram.com/romasfoods/',
       icon: <Instagram className="w-5 h-5 transition-transform group-hover:scale-110" />,
       hoverBg: 'hover:bg-gradient-to-tr hover:from-[#F58529] hover:via-[#DD2A7B] hover:to-[#8134AF] hover:text-white hover:border-transparent',
       hoverGlow: 'hover:shadow-[0_0_20px_rgba(221,42,123,0.45)]',
@@ -93,7 +93,7 @@ export const Gr8rFooter: React.FC<Gr8rFooterProps> = ({
     {
       id: 'linkedin',
       label: 'LinkedIn',
-      href: 'https://linkedin.com',
+      href: 'https://www.linkedin.com/company/145512501/',
       icon: <Linkedin className="w-5 h-5 transition-transform group-hover:scale-110" />,
       hoverBg: 'hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]',
       hoverGlow: 'hover:shadow-[0_0_20px_rgba(10,102,194,0.45)]',
@@ -101,7 +101,7 @@ export const Gr8rFooter: React.FC<Gr8rFooterProps> = ({
     {
       id: 'facebook',
       label: 'Facebook',
-      href: 'https://facebook.com',
+      href: 'https://www.facebook.com/romasfoods/',
       icon: <Facebook className="w-5 h-5 transition-transform group-hover:scale-110" />,
       hoverBg: 'hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2]',
       hoverGlow: 'hover:shadow-[0_0_20px_rgba(24,119,242,0.45)]',
