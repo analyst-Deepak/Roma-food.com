@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, HelpCircle } from 'lucide-react';
 
 export const Gr8rFaq: React.FC = () => {
+  const [isSectionExpanded, setIsSectionExpanded] = useState<boolean>(false);
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#faq') {
+        setIsSectionExpanded(true);
+      }
+    };
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const faqs = [
     {
@@ -33,86 +45,122 @@ export const Gr8rFaq: React.FC = () => {
   ];
 
   return (
-    <section className="py-24 sm:py-36 bg-[#F8F5F1] text-[#381A0E] border-t border-[#381A0E]/10 select-none">
-      <div className="max-w-4xl mx-auto px-6 sm:px-10">
+    <section id="faq" className="bg-[#F8F5F1] text-[#381A0E] border-t border-[#381A0E]/10 select-none transition-all duration-500">
+      <div className="max-w-4xl mx-auto px-6 sm:px-10 py-12 sm:py-16">
         
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
+        {/* Clickable Header Trigger to Expand / Collapse */}
+        <div
+          onClick={() => setIsSectionExpanded((prev) => !prev)}
+          className="group cursor-pointer text-center max-w-2xl mx-auto flex flex-col items-center"
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              setIsSectionExpanded((prev) => !prev);
+            }
+          }}
+          aria-expanded={isSectionExpanded}
+        >
           <span
-            className="text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] block mb-2"
+            className="text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] block mb-2 transition-colors group-hover:text-[#F9BD03]"
             style={{ fontFamily: "'Inter', sans-serif" }}
           >
             FAQS
           </span>
 
           <h2
-            className="text-4xl sm:text-7xl lg:text-8xl font-bold uppercase tracking-tight text-[#381A0E] leading-[0.9]"
+            className="text-4xl sm:text-7xl lg:text-8xl font-bold uppercase tracking-tight text-[#381A0E] leading-[0.9] group-hover:text-[#2A0E04] transition-colors"
             style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
           >
             EVERYTHING YOU
             <br />
             NEED TO KNOW
           </h2>
+
+          {/* Interactive Expand / Collapse Pill Button */}
+          <div className="mt-6 sm:mt-8 inline-flex items-center gap-2.5 px-6 sm:px-8 py-3 rounded-full bg-white hover:bg-[#FAF8F5] text-[#381A0E] border-2 border-[#381A0E]/15 hover:border-[#F9BD03] shadow-md hover:shadow-xl transition-all duration-300 group-hover:scale-105 active:scale-95">
+            <HelpCircle className="w-4 h-4 text-[#8C4724]" />
+            <span className="text-xs sm:text-sm font-black uppercase tracking-wider">
+              {isSectionExpanded ? 'Click To Collapse FAQs' : 'Click To Expand FAQs (6 Questions)'}
+            </span>
+            <motion.div
+              animate={{ rotate: isSectionExpanded ? 180 : 0 }}
+              transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+              className="w-6 h-6 rounded-full bg-[#381A0E] text-[#F9BD03] flex items-center justify-center shrink-0 ml-1"
+            >
+              <ChevronDown className="w-3.5 h-3.5" />
+            </motion.div>
+          </div>
         </div>
 
-        {/* Accordion List */}
-        <div className="space-y-4">
-          {faqs.map((faq, idx) => {
-            const isOpen = openIndex === idx;
-            return (
-              <motion.div
-                key={faq.q}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.06 }}
-                className="rounded-3xl border border-[#381A0E]/10 bg-white overflow-hidden shadow-sm hover:border-[#F9BD03] transition-colors"
-              >
-                <button
-                  onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className="w-full p-6 sm:p-7 text-left flex items-center justify-between gap-4 cursor-pointer"
-                >
-                  <span
-                    className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-[#381A0E]"
-                    style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
-                  >
-                    {faq.q}
-                  </span>
-                  <motion.div
-                    animate={{ rotate: isOpen ? 180 : 0 }}
-                    transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-                    className={`w-9 h-9 rounded-full border border-[#381A0E]/10 flex items-center justify-center shrink-0 transition-colors ${
-                      isOpen ? 'bg-[#381A0E] text-[#F9BD03]' : 'bg-[#FAF8F5] text-[#381A0E]'
-                    }`}
-                  >
-                    <ChevronDown className="w-4 h-4" />
-                  </motion.div>
-                </button>
-
-                <AnimatePresence initial={false}>
-                  {isOpen && (
+        {/* Expandable Accordion List */}
+        <AnimatePresence initial={false}>
+          {isSectionExpanded && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="pt-10 sm:pt-14 space-y-4">
+                {faqs.map((faq, idx) => {
+                  const isOpen = openIndex === idx;
+                  return (
                     <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                      className="overflow-hidden"
+                      key={faq.q}
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.35, delay: idx * 0.05 }}
+                      className="rounded-3xl border border-[#381A0E]/10 bg-white overflow-hidden shadow-sm hover:border-[#F9BD03] transition-colors"
                     >
-                      <div className="px-6 pb-6 sm:px-7 sm:pb-7 text-xs sm:text-sm text-[#381A0E]/75 font-light leading-relaxed">
-                        <p className="pt-2 border-t border-[#381A0E]/10">
-                          {faq.a}
-                        </p>
-                      </div>
+                      <button
+                        onClick={() => setOpenIndex(isOpen ? null : idx)}
+                        className="w-full p-6 sm:p-7 text-left flex items-center justify-between gap-4 cursor-pointer"
+                      >
+                        <span
+                          className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-[#381A0E]"
+                          style={{ fontFamily: "'Cabin Condensed', 'Bayon', Impact, sans-serif" }}
+                        >
+                          {faq.q}
+                        </span>
+                        <motion.div
+                          animate={{ rotate: isOpen ? 180 : 0 }}
+                          transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+                          className={`w-9 h-9 rounded-full border border-[#381A0E]/10 flex items-center justify-center shrink-0 transition-colors ${
+                            isOpen ? 'bg-[#381A0E] text-[#F9BD03]' : 'bg-[#FAF8F5] text-[#381A0E]'
+                          }`}
+                        >
+                          <ChevronDown className="w-4 h-4" />
+                        </motion.div>
+                      </button>
+
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                            className="overflow-hidden"
+                          >
+                            <div className="px-6 pb-6 sm:px-7 sm:pb-7 text-xs sm:text-sm text-[#381A0E]/75 font-light leading-relaxed">
+                              <p className="pt-2 border-t border-[#381A0E]/10">
+                                {faq.a}
+                              </p>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            );
-          })}
-        </div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
       </div>
     </section>
   );
 };
-

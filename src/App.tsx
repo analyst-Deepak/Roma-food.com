@@ -398,8 +398,8 @@ export default function App() {
 
                 <Gr8rFeatures />
                 <Gr8rTestimonials />
-                <Gr8rFaq />
                 <Gr8rBlog />
+                <Gr8rFaq />
 
                 {/* Grand ROMAS Footer on Home Page */}
                 <Gr8rFooter
