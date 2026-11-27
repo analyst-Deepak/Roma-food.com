@@ -354,12 +354,19 @@ export const EcommerceQuickViewModal: React.FC<EcommerceQuickViewModalProps> = (
                           </div>
                         )}
 
-                        {/* Main Product Visual (Active Front or Back) */}
-                        <img
-                          src={currentDisplayImage}
-                          alt={`${product.name} - ${selectedSide === 'front' ? 'Front Side' : 'Back Side'}`}
-                          className="max-h-full max-w-full object-contain filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.25)] transition-transform duration-300 group-hover:scale-105"
-                        />
+                        {/* Main Product Visual (Active Front or Back with Smooth Crossfade) */}
+                        <AnimatePresence mode="wait">
+                          <motion.img
+                            key={currentDisplayImage}
+                            src={currentDisplayImage}
+                            alt={`${product.name} - ${selectedSide === 'front' ? 'Front Side' : 'Back Side'}`}
+                            initial={{ opacity: 0, scale: 0.96 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.96 }}
+                            transition={{ duration: 0.25, ease: 'easeInOut' }}
+                            className="max-h-full max-w-full object-contain filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.25)] transition-transform duration-300 group-hover:scale-105"
+                          />
+                        </AnimatePresence>
                       </div>
                     </div>
                   </div>

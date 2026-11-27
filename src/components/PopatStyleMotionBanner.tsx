@@ -261,6 +261,7 @@ export const PopatStyleMotionBanner: React.FC<PopatStyleMotionBannerProps> = ({
   });
   const [isFlipped, setIsFlipped] = useState(false);
   const [direction, setDirection] = useState<'next' | 'prev'>('next');
+  const [transitionType, setTransitionType] = useState<'slide' | 'variant' | 'flip'>('slide');
   const [isHovered, setIsHovered] = useState(false);
 
   const activeSlide = PACK_SLIDES[currentIndex];
@@ -284,6 +285,7 @@ export const PopatStyleMotionBanner: React.FC<PopatStyleMotionBannerProps> = ({
       handleManualAction();
     }
     lastSlideChangeTimeRef.current = Date.now();
+    setTransitionType('slide');
     setDirection('next');
     setIsFlipped(false);
     setCurrentIndex((prev) => (prev + 1) % PACK_SLIDES.length);
@@ -294,6 +296,7 @@ export const PopatStyleMotionBanner: React.FC<PopatStyleMotionBannerProps> = ({
       handleManualAction();
     }
     lastSlideChangeTimeRef.current = Date.now();
+    setTransitionType('slide');
     setDirection('prev');
     setIsFlipped(false);
     setCurrentIndex((prev) => (prev - 1 + PACK_SLIDES.length) % PACK_SLIDES.length);
@@ -383,6 +386,7 @@ Please share wholesale pricing & catalog.`
                 key={slide.id}
                 onClick={() => {
                   handleManualAction();
+                  setTransitionType('slide');
                   setDirection(idx > currentIndex ? 'next' : 'prev');
                   setIsFlipped(false);
                   setCurrentIndex(idx);
@@ -487,17 +491,32 @@ Please share wholesale pricing & catalog.`
               {/* Pedestal Glow Shadow on Floor */}
               <div className="absolute bottom-1 sm:bottom-2 inset-x-4 sm:inset-x-6 h-6 sm:h-12 bg-black/45 rounded-full blur-md sm:blur-2xl transform scale-95 pointer-events-none" />
 
-              {/* Rotating Packet with 3D Spin-in Animation ("ghumke aye") */}
+              {/* Rotating Packet with 3D Spin-in Animation ("ghumke aye") or Smooth Variant Crossfade */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`${activeSlide.id}-${activeVariant.id}-${isFlipped ? 'back' : 'front'}`}
-                  initial={{
-                    opacity: 0,
-                    scale: 0.75,
-                    rotate: direction === 'next' ? -22 : 22,
-                    rotateY: isFlipped ? 180 : 0,
-                    x: direction === 'next' ? -70 : 70,
-                  }}
+                  initial={
+                    transitionType === 'variant'
+                      ? {
+                          opacity: 0,
+                          scale: 0.95,
+                          rotate: 0,
+                          x: 0,
+                          rotateY: isFlipped ? 180 : 0,
+                        }
+                      : transitionType === 'flip'
+                      ? {
+                          opacity: 0.8,
+                          rotateY: isFlipped ? 180 : 0,
+                        }
+                      : {
+                          opacity: 0,
+                          scale: 0.75,
+                          rotate: direction === 'next' ? -22 : 22,
+                          rotateY: isFlipped ? 180 : 0,
+                          x: direction === 'next' ? -70 : 70,
+                        }
+                  }
                   animate={{
                     opacity: 1,
                     scale: 1,
@@ -505,18 +524,44 @@ Please share wholesale pricing & catalog.`
                     rotateY: isFlipped ? 180 : 0,
                     x: 0,
                   }}
-                  exit={{
-                    opacity: 0,
-                    scale: 0.75,
-                    rotate: direction === 'next' ? 22 : -22,
-                    x: direction === 'next' ? 70 : -70,
-                  }}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 260,
-                    damping: 22,
-                    mass: 0.8,
-                  }}
+                  exit={
+                    transitionType === 'variant'
+                      ? {
+                          opacity: 0,
+                          scale: 0.95,
+                          rotate: 0,
+                          x: 0,
+                          rotateY: isFlipped ? 180 : 0,
+                        }
+                      : transitionType === 'flip'
+                      ? {
+                          opacity: 0.8,
+                        }
+                      : {
+                          opacity: 0,
+                          scale: 0.75,
+                          rotate: direction === 'next' ? 22 : -22,
+                          x: direction === 'next' ? 70 : -70,
+                        }
+                  }
+                  transition={
+                    transitionType === 'variant'
+                      ? {
+                          duration: 0.28,
+                          ease: [0.25, 1, 0.5, 1],
+                        }
+                      : transitionType === 'flip'
+                      ? {
+                          duration: 0.35,
+                          ease: 'easeOut',
+                        }
+                      : {
+                          type: 'spring',
+                          stiffness: 260,
+                          damping: 22,
+                          mass: 0.8,
+                        }
+                  }
                   className="relative w-full flex items-center justify-center select-none"
                 >
                   {/* Subtle Floating / Levitation Physics */}
@@ -538,6 +583,7 @@ Please share wholesale pricing & catalog.`
                       className="max-h-[230px] min-[360px]:max-h-[260px] min-[400px]:max-h-[290px] sm:max-h-[400px] md:max-h-[450px] lg:max-h-[490px] w-auto object-contain filter drop-shadow-[0_16px_30px_rgba(0,0,0,0.5)] cursor-pointer"
                       onClick={() => {
                         handleManualAction();
+                        setTransitionType('flip');
                         setIsFlipped((prev) => !prev);
                       }}
                       title="Click to flip front / back"
@@ -552,6 +598,7 @@ Please share wholesale pricing & catalog.`
               <button
                 onClick={() => {
                   handleManualAction();
+                  setTransitionType('flip');
                   setIsFlipped((prev) => !prev);
                 }}
                 className="flex items-center gap-1.5 px-3 py-1 sm:py-1 rounded-full bg-black/60 hover:bg-black/90 text-white border border-white/20 backdrop-blur-md text-[10px] sm:text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer shadow-md active:scale-95"
@@ -581,6 +628,7 @@ Please share wholesale pricing & catalog.`
                         key={v.id}
                         onClick={() => {
                           handleManualAction();
+                          setTransitionType('variant');
                           setIsFlipped(false);
                           setActiveVariants((prev) => ({ ...prev, [activeSlide.id]: v.id }));
                         }}
