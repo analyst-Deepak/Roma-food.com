@@ -129,9 +129,9 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
         <div className="flex flex-col md:flex-row gap-8 lg:gap-12 items-start">
 
           {/* =========================================================================
-              LEFT SIDEBAR: Search Box + "| Products" List + "| Categories"
+              LEFT SIDEBAR: Search Box + "| Categories" (ON TOP) + "| Products" List
               ========================================================================= */}
-          <aside className="w-full md:w-64 lg:w-72 shrink-0 space-y-8">
+          <aside className="w-full md:w-64 lg:w-72 shrink-0 space-y-6">
             
             {/* Search Box */}
             <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#EADBCC]/80 shadow-xs">
@@ -165,7 +165,37 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
               </div>
             </div>
 
-            {/* | Products (Featured Miniature List matching Popat Namkeen screenshot) */}
+            {/* | Categories List (PLACED ON TOP) */}
+            <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#EADBCC]/80 shadow-xs">
+              <div className="flex items-center gap-2 mb-3.5 border-b border-[#EADBCC]/60 pb-2.5">
+                <span className="w-1 h-4 bg-[#8C4724] rounded-full" />
+                <h3 className="text-sm font-bold text-[#1C0E07] tracking-wider uppercase font-sans">
+                  Categories
+                </h3>
+              </div>
+
+              <div className="space-y-1">
+                {CATEGORIES.map((cat) => {
+                  const isActive = selectedCategory === cat.id;
+                  return (
+                    <button
+                      key={cat.id}
+                      onClick={() => setSelectedCategory(cat.id)}
+                      className={`w-full text-left py-2 px-3 rounded-lg text-xs transition-colors flex items-center justify-between cursor-pointer ${
+                        isActive
+                          ? 'font-bold text-[#8C4724] bg-[#FAF0E4] shadow-xs'
+                          : 'text-[#6C5543] hover:text-[#1C0E07] hover:bg-[#FAF8F5]'
+                      }`}
+                    >
+                      <span>{cat.label}</span>
+                      <span className="text-[11px] font-bold text-[#A08C79]">({cat.count})</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* | Products (Featured Miniature List) */}
             <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#EADBCC]/80 shadow-xs">
               <div className="flex items-center gap-2 mb-4 border-b border-[#EADBCC]/60 pb-2.5">
                 <span className="w-1 h-4 bg-[#8C4724] rounded-full" />
@@ -204,42 +234,33 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
               </div>
             </div>
 
-            {/* | Categories List */}
-            <div className="bg-white p-4 sm:p-5 rounded-xl border border-[#EADBCC]/80 shadow-xs">
-              <div className="flex items-center gap-2 mb-3.5 border-b border-[#EADBCC]/60 pb-2.5">
-                <span className="w-1 h-4 bg-[#8C4724] rounded-full" />
-                <h3 className="text-sm font-bold text-[#1C0E07] tracking-wider uppercase font-sans">
-                  Categories
-                </h3>
-              </div>
-
-              <div className="space-y-1">
-                {CATEGORIES.map((cat) => {
-                  const isActive = selectedCategory === cat.id;
-                  return (
-                    <button
-                      key={cat.id}
-                      onClick={() => setSelectedCategory(cat.id)}
-                      className={`w-full text-left py-1.5 px-2.5 rounded-lg text-xs transition-colors flex items-center justify-between cursor-pointer ${
-                        isActive
-                          ? 'font-bold text-[#8C4724] bg-[#FAF0E4]'
-                          : 'text-[#6C5543] hover:text-[#1C0E07] hover:bg-[#FAF8F5]'
-                      }`}
-                    >
-                      <span>{cat.label}</span>
-                      <span className="text-[10px] text-[#A08C79]">({cat.count})</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
           </aside>
 
           {/* =========================================================================
               RIGHT MAIN AREA: Top Toolbar + Marble Shelf Products Grid
               ========================================================================= */}
           <main className="flex-1 min-w-0">
+            
+            {/* Top Category Filter Pills Bar */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-5 no-scrollbar">
+              {CATEGORIES.map((cat) => {
+                const isActive = selectedCategory === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => setSelectedCategory(cat.id)}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer border ${
+                      isActive
+                        ? 'bg-[#1C0E07] text-[#F9BD03] border-[#1C0E07] shadow-sm scale-102'
+                        : 'bg-white text-[#7A5832] border-[#EADBCC] hover:border-[#8C4724] hover:text-[#1C0E07]'
+                    }`}
+                  >
+                    <span>{cat.label}</span>
+                    <span className="ml-1 opacity-70 text-[10px]">({cat.count})</span>
+                  </button>
+                );
+              })}
+            </div>
             
             {/* Top Toolbar (Grid/List Toggle, Default Sorting, View Count) */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#EADBCC]/80 pb-4 mb-8">
