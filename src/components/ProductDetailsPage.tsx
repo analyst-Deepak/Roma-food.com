@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import {
   Star,
@@ -64,11 +64,11 @@ export const ProductDetailsPage: React.FC<ProductDetailsPageProps> = ({
 
   // Gallery of exactly 2 images: Front and Back packaging
   const backImage = useMemo(() => {
-    if (product.image.includes('_front.png')) {
-      return product.image.replace('_front.png', '_back.png');
+    if (product.image.includes('_front.')) {
+      return product.image.replace('_front.', '_back.');
     }
-    if (product.image.includes('/front.png')) {
-      return product.image.replace('/front.png', '/back.png');
+    if (product.image.includes('/front.')) {
+      return product.image.replace('/front.', '/back.');
     }
     return product.image;
   }, [product.image]);
