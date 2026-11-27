@@ -356,137 +356,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       </section>
 
       {/* =========================================================================
-          POINT 1: COMPANY OVERVIEW
-          ========================================================================= */}
-      <section className="py-20 sm:py-28 bg-[#FFFFFF] border-b border-[#381A0E]/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-3xl mb-12"
-          >
-            <span className="text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] block mb-2">
-              VERIFIED ENTITY
-            </span>
-            <h2
-              className="text-3xl sm:text-5xl font-bold uppercase tracking-tight text-[#381A0E] leading-tight"
-              style={{ fontFamily: "'Cabin Condensed', sans-serif" }}
-            >
-              COMPANY OVERVIEW
-            </h2>
-            <p className="mt-3 text-sm sm:text-base text-[#381A0E]/80 font-light leading-relaxed">
-              ROMA FOODS is an officially licensed confectionery and chocolate manufacturing partnership firm
-              operating from the heart of Chhattisgarh, dedicated to industrial-scale chocolate production and
-              artisanal formulation excellence.
-            </p>
-          </motion.div>
-
-          {/* Statutory Credentials Bento Grid with Official Badges & Icons */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-            {statutoryCredentials.map((c, i) => {
-              const BadgeComp = c.badge;
-              const IconComp = c.icon;
-              return (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 35, scale: 0.94 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true, margin: '-40px' }}
-                  transition={{
-                    duration: 0.65,
-                    delay: i * 0.1,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.25 } }}
-                  className={`p-6 rounded-2xl border ${c.color} shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between relative group cursor-default`}
-                >
-                  <div className="flex items-start justify-between gap-3 mb-4">
-                    <div>
-                      <span className="text-[10px] font-black uppercase tracking-wider text-[#8C4724] block mb-1">
-                        {c.tag}
-                      </span>
-                      <span className="text-xs font-bold uppercase tracking-wider opacity-90 block text-[#2A0E04]">
-                        {c.label}
-                      </span>
-                    </div>
-                    {/* Official Certificate Icon / Badge */}
-                    <div className="shrink-0 p-1.5 rounded-xl bg-white border border-black/10 shadow-xs group-hover:scale-105 transition-transform">
-                      <BadgeComp className="h-8 w-auto max-w-[95px]" />
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="text-xl sm:text-2xl font-bold font-mono tracking-tight mb-1 text-[#2A0E04]">
-                      {c.value}
-                    </div>
-                    <div className="text-xs opacity-80 font-medium flex items-center gap-1.5 text-[#381A0E]">
-                      <IconComp className="w-3.5 h-3.5 inline shrink-0 text-[#8C4724]" />
-                      <span>{c.sub}</span>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Official Certifications & Compliance Badges Showcase */}
-          <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-[#FAF7F2] via-white to-[#FAF7F2] border border-[#EADBCC] shadow-sm"
-          >
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 pb-4 border-b border-[#EADBCC]">
-              <div>
-                <span className="text-[11px] font-black tracking-[0.25em] uppercase text-[#8C4724] block mb-1">
-                  OFFICIAL RECOGNITION & ACCREDITATIONS
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-[#381A0E]" style={{ fontFamily: "'Cabin Condensed', sans-serif" }}>
-                  Certifications & Quality Standards
-                </h3>
-              </div>
-              <p className="text-xs text-[#381A0E]/70 max-w-sm font-light">
-                Every chocolate formulation manufactured at our Kurud works adheres to rigorous national and international food standards.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-              {qualityCertificates.map((cert, idx) => (
-                <motion.div
-                  key={cert.name}
-                  initial={{ opacity: 0, y: 25, scale: 0.94 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true, margin: '-40px' }}
-                  transition={{
-                    duration: 0.6,
-                    delay: 0.15 + idx * 0.12,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  whileHover={{ y: -6, scale: 1.025, transition: { duration: 0.22 } }}
-                  className={`p-4 sm:p-5 rounded-2xl border ${cert.color} shadow-2xs hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center justify-between group cursor-default`}
-                >
-                  <div className="w-14 h-14 rounded-xl bg-white p-1.5 flex items-center justify-center mb-2.5 shadow-2xs group-hover:scale-110 transition-transform">
-                    {cert.badge}
-                  </div>
-                  <div>
-                    <p className="text-xs sm:text-sm font-bold leading-tight text-[#2A0E04]">{cert.name}</p>
-                    <p className="text-[10px] sm:text-xs text-[#8C4724] font-medium mt-1">{cert.number}</p>
-                  </div>
-                  <span className="mt-3 text-[10px] px-3 py-0.5 rounded-full bg-white text-emerald-800 border border-emerald-300 font-bold inline-flex items-center gap-1 shadow-2xs">
-                    ✓ Verified
-                  </span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          POINT 2: OUR STORY
+          POINT 1: OUR STORY
           ========================================================================= */}
       <section className="py-20 sm:py-28 bg-[#FAF8F5] border-b border-[#381A0E]/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -567,7 +437,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       </section>
 
       {/* =========================================================================
-          POINT 3: VISION & MISSION
+          POINT 2: VISION & MISSION
           ========================================================================= */}
       <section className="relative overflow-hidden py-20 sm:py-28 bg-[#FFFFFF] border-b border-[#381A0E]/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -731,7 +601,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       </section>
 
       {/* =========================================================================
-          POINT 4: QUALITY COMMITMENT & CULINARY STANDARDS
+          POINT 3: QUALITY COMMITMENT & CULINARY STANDARDS
           ========================================================================= */}
       <section className="relative overflow-hidden py-20 sm:py-28 bg-[#FAF8F5] border-b border-[#381A0E]/10">
         {/* Decorative floating chocolate — right side */}
@@ -853,6 +723,136 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               <span>Direct Works Supply</span>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          POINT 4: COMPANY OVERVIEW & OFFICIAL ACCREDITATIONS
+          ========================================================================= */}
+      <section className="py-20 sm:py-28 bg-[#FFFFFF] border-b border-[#381A0E]/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-3xl mb-12"
+          >
+            <span className="text-xs font-black tracking-[0.25em] uppercase text-[#8C4724] block mb-2">
+              VERIFIED ENTITY
+            </span>
+            <h2
+              className="text-3xl sm:text-5xl font-bold uppercase tracking-tight text-[#381A0E] leading-tight"
+              style={{ fontFamily: "'Cabin Condensed', sans-serif" }}
+            >
+              COMPANY OVERVIEW
+            </h2>
+            <p className="mt-3 text-sm sm:text-base text-[#381A0E]/80 font-light leading-relaxed">
+              ROMA FOODS is an officially licensed confectionery and chocolate manufacturing partnership firm
+              operating from the heart of Chhattisgarh, dedicated to industrial-scale chocolate production and
+              artisanal formulation excellence.
+            </p>
+          </motion.div>
+
+          {/* Statutory Credentials Bento Grid with Official Badges & Icons */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+            {statutoryCredentials.map((c, i) => {
+              const BadgeComp = c.badge;
+              const IconComp = c.icon;
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 35, scale: 0.94 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{
+                    duration: 0.65,
+                    delay: i * 0.1,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.25 } }}
+                  className={`p-6 rounded-2xl border ${c.color} shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between relative group cursor-default`}
+                >
+                  <div className="flex items-start justify-between gap-3 mb-4">
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-wider text-[#8C4724] block mb-1">
+                        {c.tag}
+                      </span>
+                      <span className="text-xs font-bold uppercase tracking-wider opacity-90 block text-[#2A0E04]">
+                        {c.label}
+                      </span>
+                    </div>
+                    {/* Official Certificate Icon / Badge */}
+                    <div className="shrink-0 p-1.5 rounded-xl bg-white border border-black/10 shadow-xs group-hover:scale-105 transition-transform">
+                      <BadgeComp className="h-8 w-auto max-w-[95px]" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="text-xl sm:text-2xl font-bold font-mono tracking-tight mb-1 text-[#2A0E04]">
+                      {c.value}
+                    </div>
+                    <div className="text-xs opacity-80 font-medium flex items-center gap-1.5 text-[#381A0E]">
+                      <IconComp className="w-3.5 h-3.5 inline shrink-0 text-[#8C4724]" />
+                      <span>{c.sub}</span>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Official Certifications & Compliance Badges Showcase */}
+          <motion.div
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-[#FAF7F2] via-white to-[#FAF7F2] border border-[#EADBCC] shadow-sm"
+          >
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 pb-4 border-b border-[#EADBCC]">
+              <div>
+                <span className="text-[11px] font-black tracking-[0.25em] uppercase text-[#8C4724] block mb-1">
+                  OFFICIAL RECOGNITION & ACCREDITATIONS
+                </span>
+                <h3 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-[#381A0E]" style={{ fontFamily: "'Cabin Condensed', sans-serif" }}>
+                  Certifications & Quality Standards
+                </h3>
+              </div>
+              <p className="text-xs text-[#381A0E]/70 max-w-sm font-light">
+                Every chocolate formulation manufactured at our Kurud works adheres to rigorous national and international food standards.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+              {qualityCertificates.map((cert, idx) => (
+                <motion.div
+                  key={cert.name}
+                  initial={{ opacity: 0, y: 25, scale: 0.94 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.15 + idx * 0.12,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  whileHover={{ y: -6, scale: 1.025, transition: { duration: 0.22 } }}
+                  className={`p-4 sm:p-5 rounded-2xl border ${cert.color} shadow-2xs hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center justify-between group cursor-default`}
+                >
+                  <div className="w-14 h-14 rounded-xl bg-white p-1.5 flex items-center justify-center mb-2.5 shadow-2xs group-hover:scale-110 transition-transform">
+                    {cert.badge}
+                  </div>
+                  <div>
+                    <p className="text-xs sm:text-sm font-bold leading-tight text-[#2A0E04]">{cert.name}</p>
+                    <p className="text-[10px] sm:text-xs text-[#8C4724] font-medium mt-1">{cert.number}</p>
+                  </div>
+                  <span className="mt-3 text-[10px] px-3 py-0.5 rounded-full bg-white text-emerald-800 border border-emerald-300 font-bold inline-flex items-center gap-1 shadow-2xs">
+                    ✓ Verified
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
