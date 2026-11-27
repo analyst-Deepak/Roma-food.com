@@ -133,14 +133,17 @@ export default function App() {
     const syncRoute = () => {
       const { route, section } = getRouteFromUrl();
       setCurrentRoute(route);
-      if (route === 'home' && section) {
-        // Validate section ID to prevent DOM-based XSS
-        const validSectionPattern = /^[a-z0-9\-_]+$/i;
-        if (validSectionPattern.test(section)) {
-          setTimeout(() => {
-            const el = document.getElementById(section);
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-          }, 100);
+      if (route === 'home') {
+        const storedOrigin = sessionStorage.getItem('last_shop_origin');
+        const targetSection = section || storedOrigin || 'product-motion-banner';
+        if (targetSection) {
+          const validSectionPattern = /^[a-z0-9\-_]+$/i;
+          if (validSectionPattern.test(targetSection)) {
+            setTimeout(() => {
+              const el = document.getElementById(targetSection);
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }, 120);
+          }
         }
       }
     };
@@ -190,6 +193,7 @@ export default function App() {
   const [shopCategory, setShopCategory] = useState<EcommerceCategory>('all');
 
   const handleNavigateShop = (categoryId?: string) => {
+    sessionStorage.setItem('last_shop_origin', 'product-motion-banner');
     const categoryMap: Record<string, EcommerceCategory> = {
       choco_chips: 'choco-chips',
       'choco-chips': 'choco-chips',
@@ -218,6 +222,9 @@ export default function App() {
   };
 
   const handleNavigateHome = (sectionId?: string) => {
+    if (!sectionId && currentRoute === 'shop') {
+      sectionId = 'product-motion-banner';
+    }
     if (sectionId === 'shop' || sectionId === 'product' || sectionId === 'products') {
       sectionId = 'product-motion-banner';
     }

@@ -112,15 +112,26 @@ export const ShopSection: React.FC<ShopSectionProps> = ({
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-[#8C6D4C] font-medium font-sans">
+          <div className="flex items-center gap-2 sm:gap-3 text-xs font-sans">
             <button
-              onClick={() => onNavigateHome?.()}
-              className="hover:text-[#1C0E07] transition-colors cursor-pointer"
+              type="button"
+              onClick={() => onNavigateHome?.('product-motion-banner')}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1C0E07] text-[#F9BD03] hover:bg-[#381A0E] text-xs font-bold transition-all cursor-pointer shadow-xs active:scale-95"
+              title="Return to Motion Showcase on Home page"
             >
-              Home
+              <span>← Back</span>
             </button>
-            <span className="text-[#B89C7D]">›</span>
-            <span className="text-[#1C0E07] font-bold">Products</span>
+            <div className="flex items-center gap-1.5 text-xs text-[#8C6D4C] font-medium">
+              <button
+                type="button"
+                onClick={() => onNavigateHome?.('product-motion-banner')}
+                className="hover:text-[#1C0E07] transition-colors cursor-pointer"
+              >
+                Home
+              </button>
+              <span className="text-[#B89C7D]">›</span>
+              <span className="text-[#1C0E07] font-bold">Products</span>
+            </div>
           </div>
         </div>
       </div>

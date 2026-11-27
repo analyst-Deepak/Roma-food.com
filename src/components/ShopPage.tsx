@@ -35,7 +35,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({
           isStandalonePage={true}
           initialCategory={initialCategory}
           onSelectProduct={onSelectProduct}
-          onNavigateHome={() => onNavigateHome()}
+          onNavigateHome={(id) => onNavigateHome(id || 'product-motion-banner')}
         />
       </main>
 
