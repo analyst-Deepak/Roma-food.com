@@ -6,6 +6,7 @@ import { useCart } from '../context/CartContext';
 
 interface Gr8rNavbarProps {
   onOpenReservation?: () => void;
+  onOpenAuth?: () => void;
   onNavigate?: (id: string) => void;
   onNavigateCart?: () => void;
   currentPage?: string;
@@ -13,6 +14,8 @@ interface Gr8rNavbarProps {
 }
 
 export const Gr8rNavbar: React.FC<Gr8rNavbarProps> = ({
+  onOpenReservation,
+  onOpenAuth,
   onNavigate,
   onNavigateCart,
   currentPage = 'home',
