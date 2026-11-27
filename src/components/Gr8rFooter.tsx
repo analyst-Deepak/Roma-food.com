@@ -266,20 +266,6 @@ export const Gr8rFooter: React.FC<Gr8rFooterProps> = ({
                 </a>
               </li>
             </ul>
-
-            {/* Quick WhatsApp Inquiry Pill Button */}
-            <div className="mt-5 pt-4 border-t border-[#FEE8B4]/10">
-              <a
-                href={`https://wa.me/919098229454?text=Hello%20Roma%20Foods%20Concierge,%20I%20am%20interested%20in%20ROMAS%20chocolates.`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00A859]/20 hover:bg-[#00A859] border border-[#00A859]/50 text-white text-xs font-bold transition-all shadow-md group"
-              >
-                <span className="w-2 h-2 rounded-full bg-[#86EFAC] animate-ping" />
-                <span>Chat On WhatsApp</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </div>
           </div>
 
           {/* Col 4: LEGAL & BRAND POLICIES */}
