@@ -58,20 +58,20 @@ const PACK_SLIDES: PackSlide[] = [
       {
         id: 'milk',
         label: 'Milk',
-        frontImage: '/assets/official_products_png/choco_chips/milk_front.png',
-        backImage: '/assets/official_products_png/choco_chips/milk_back.png',
+        frontImage: '/assets/official_products_png/choco_chips/milk_front.webp',
+        backImage: '/assets/official_products_png/choco_chips/milk_back.webp',
       },
       {
         id: 'dark',
         label: 'Dark',
-        frontImage: '/assets/official_products_png/choco_chips/dark_front.png',
-        backImage: '/assets/official_products_png/choco_chips/dark_back.png',
+        frontImage: '/assets/official_products_png/choco_chips/dark_front.webp',
+        backImage: '/assets/official_products_png/choco_chips/dark_back.webp',
       },
       {
         id: 'white',
         label: 'White',
-        frontImage: '/assets/official_products_png/choco_chips/white_front.png',
-        backImage: '/assets/official_products_png/choco_chips/white_back.png',
+        frontImage: '/assets/official_products_png/choco_chips/white_front.webp',
+        backImage: '/assets/official_products_png/choco_chips/white_back.webp',
       },
     ],
   },
@@ -96,20 +96,20 @@ const PACK_SLIDES: PackSlide[] = [
       {
         id: 'dark',
         label: 'Dark',
-        frontImage: '/assets/official_products_png/slabs/dark_front.png',
-        backImage: '/assets/official_products_png/slabs/dark_back.png',
+        frontImage: '/assets/official_products_png/slabs/dark_front.webp',
+        backImage: '/assets/official_products_png/slabs/dark_back.webp',
       },
       {
         id: 'milk',
         label: 'Milk',
-        frontImage: '/assets/official_products_png/slabs/milk_front.png',
-        backImage: '/assets/official_products_png/slabs/milk_back.png',
+        frontImage: '/assets/official_products_png/slabs/milk_front.webp',
+        backImage: '/assets/official_products_png/slabs/milk_back.webp',
       },
       {
         id: 'white',
         label: 'White',
-        frontImage: '/assets/official_products_png/slabs/white_front.png',
-        backImage: '/assets/official_products_png/slabs/white_back.png',
+        frontImage: '/assets/official_products_png/slabs/white_front.webp',
+        backImage: '/assets/official_products_png/slabs/white_back.webp',
       },
     ],
   },
@@ -134,20 +134,20 @@ const PACK_SLIDES: PackSlide[] = [
       {
         id: 'dark',
         label: 'Dark',
-        frontImage: '/assets/official_products_png/buttons/dark_front.png',
-        backImage: '/assets/official_products_png/buttons/dark_back.png',
+        frontImage: '/assets/official_products_png/buttons/dark_front.webp',
+        backImage: '/assets/official_products_png/buttons/dark_back.webp',
       },
       {
         id: 'milk',
         label: 'Milk',
-        frontImage: '/assets/official_products_png/buttons/milk_front.png',
-        backImage: '/assets/official_products_png/buttons/milk_back.png',
+        frontImage: '/assets/official_products_png/buttons/milk_front.webp',
+        backImage: '/assets/official_products_png/buttons/milk_back.webp',
       },
       {
         id: 'white',
         label: 'White',
-        frontImage: '/assets/official_products_png/buttons/white_front.png',
-        backImage: '/assets/official_products_png/buttons/white_back.png',
+        frontImage: '/assets/official_products_png/buttons/white_front.webp',
+        backImage: '/assets/official_products_png/buttons/white_back.webp',
       },
     ],
   },
@@ -172,8 +172,8 @@ const PACK_SLIDES: PackSlide[] = [
       {
         id: 'classic',
         label: 'Classic',
-        frontImage: '/assets/official_products_png/butterscotch/front.png',
-        backImage: '/assets/official_products_png/butterscotch/back.png',
+        frontImage: '/assets/official_products_png/butterscotch/front.webp',
+        backImage: '/assets/official_products_png/butterscotch/back.webp',
       },
     ],
   },
@@ -198,20 +198,20 @@ const PACK_SLIDES: PackSlide[] = [
       {
         id: 'dark',
         label: 'Dark',
-        frontImage: '/assets/official_products_png/paste/dark_front.png',
-        backImage: '/assets/official_products_png/paste/dark_back.png',
+        frontImage: '/assets/official_products_png/paste/dark_front.webp',
+        backImage: '/assets/official_products_png/paste/dark_back.webp',
       },
       {
         id: 'milk',
         label: 'Milk',
-        frontImage: '/assets/official_products_png/paste/milk_front.png',
-        backImage: '/assets/official_products_png/paste/milk_back.png',
+        frontImage: '/assets/official_products_png/paste/milk_front.webp',
+        backImage: '/assets/official_products_png/paste/milk_back.webp',
       },
       {
         id: 'white',
         label: 'White',
-        frontImage: '/assets/official_products_png/paste/white_front.png',
-        backImage: '/assets/official_products_png/paste/white_back.png',
+        frontImage: '/assets/official_products_png/paste/white_front.webp',
+        backImage: '/assets/official_products_png/paste/white_back.webp',
       },
     ],
   },
@@ -236,8 +236,8 @@ const PACK_SLIDES: PackSlide[] = [
       {
         id: 'multi',
         label: 'Multi-Color',
-        frontImage: '/assets/official_products_png/tutti_frutti/front.png',
-        backImage: '/assets/official_products_png/tutti_frutti/back.png',
+        frontImage: '/assets/official_products_png/tutti_frutti/front.webp',
+        backImage: '/assets/official_products_png/tutti_frutti/back.webp',
       },
     ],
   },
@@ -587,6 +587,8 @@ Please share wholesale pricing & catalog.`
                         setIsFlipped((prev) => !prev);
                       }}
                       title="Click to flip front / back"
+                      loading="eager"
+                      decoding="sync"
                     />
                   </motion.div>
                 </motion.div>

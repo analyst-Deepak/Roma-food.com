@@ -59,7 +59,8 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
               src={product.image}
               alt={product.name}
               className="max-h-24 sm:max-h-28 w-auto object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.3)] transition-transform duration-300 group-hover:scale-105 z-10"
-              loading="lazy"
+              loading="eager"
+              decoding="async"
             />
           </div>
           {/* Mini 3D Marble Shelf */}
@@ -139,7 +140,8 @@ export const ProductCard3D: React.FC<ProductCard3DProps> = ({
             src={product.image}
             alt={product.name}
             className="max-h-[125px] sm:max-h-[175px] md:max-h-[210px] w-auto h-auto object-contain transition-transform duration-500 ease-out group-hover:scale-108 group-hover:-translate-y-2 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)] z-10"
-            loading="lazy"
+            loading="eager"
+            decoding="async"
           />
         </div>
 
