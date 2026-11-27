@@ -441,7 +441,7 @@ Please share wholesale pricing & catalog.`
 
       {/* 2. DYNAMIC FULL-WIDTH HERO STAGE WITH COLOR-ADAPTING BACKGROUND & ARTISAN TEXTURE */}
       <div
-        className={`relative w-full min-h-[340px] min-[360px]:min-h-[360px] sm:min-h-[500px] lg:min-h-[560px] bg-gradient-to-br ${activeSlide.bgGradient} transition-colors duration-700 flex items-center justify-center px-2 sm:px-12 lg:px-20 py-3 sm:py-9 lg:py-12 overflow-hidden`}
+        className={`relative w-full min-h-[440px] min-[360px]:min-h-[480px] min-[400px]:min-h-[520px] sm:min-h-[500px] lg:min-h-[560px] bg-gradient-to-br ${activeSlide.bgGradient} transition-colors duration-700 flex items-center justify-center px-3 sm:px-12 lg:px-20 py-5 sm:py-9 lg:py-12 overflow-hidden`}
       >
         {/* Ambient Radial Luxury Glow */}
         <div
@@ -476,13 +476,13 @@ Please share wholesale pricing & catalog.`
         {/* 3. Subtle Paper Grain / Micro Texture */}
         <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#000000_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
 
-        <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-2 sm:gap-6 lg:gap-12 items-center relative z-10 pb-5 sm:pb-0">
+        <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-6 lg:gap-12 items-center relative z-10 pb-6 sm:pb-0">
           
           {/* =========================================================================
               LEFT: PRODUCT PACKET (PROMINENT PREMIUM SIZING)
              ========================================================================= */}
           <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
-            <div className="relative w-full max-w-[210px] min-[360px]:max-w-[230px] sm:max-w-[380px] md:max-w-[430px] lg:max-w-[480px] flex items-center justify-center">
+            <div className="relative w-full max-w-[270px] min-[360px]:max-w-[300px] min-[400px]:max-w-[340px] sm:max-w-[380px] md:max-w-[430px] lg:max-w-[480px] flex items-center justify-center">
               
               {/* Pedestal Glow Shadow on Floor */}
               <div className="absolute bottom-1 sm:bottom-2 inset-x-4 sm:inset-x-6 h-6 sm:h-12 bg-black/45 rounded-full blur-md sm:blur-2xl transform scale-95 pointer-events-none" />
@@ -535,7 +535,7 @@ Please share wholesale pricing & catalog.`
                     <img
                       src={currentImage}
                       alt={`${activeSlide.categoryName} ${activeVariant.label}`}
-                      className="max-h-[170px] min-[360px]:max-h-[190px] min-[400px]:max-h-[210px] sm:max-h-[400px] md:max-h-[450px] lg:max-h-[490px] w-auto object-contain filter drop-shadow-[0_16px_30px_rgba(0,0,0,0.5)] cursor-pointer"
+                      className="max-h-[230px] min-[360px]:max-h-[260px] min-[400px]:max-h-[290px] sm:max-h-[400px] md:max-h-[450px] lg:max-h-[490px] w-auto object-contain filter drop-shadow-[0_16px_30px_rgba(0,0,0,0.5)] cursor-pointer"
                       onClick={() => {
                         handleManualAction();
                         setIsFlipped((prev) => !prev);
@@ -548,15 +548,15 @@ Please share wholesale pricing & catalog.`
             </div>
 
             {/* Clean Controls below packet: Flip Button, Full Details Button & Flavour Switcher */}
-            <div className="mt-1.5 sm:mt-3 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 z-20">
+            <div className="mt-2.5 sm:mt-3 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 z-20">
               <button
                 onClick={() => {
                   handleManualAction();
                   setIsFlipped((prev) => !prev);
                 }}
-                className="flex items-center gap-1 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-black/60 hover:bg-black/90 text-white border border-white/20 backdrop-blur-md text-[9px] sm:text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer shadow-md active:scale-95"
+                className="flex items-center gap-1.5 px-3 py-1 sm:py-1 rounded-full bg-black/60 hover:bg-black/90 text-white border border-white/20 backdrop-blur-md text-[10px] sm:text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer shadow-md active:scale-95"
               >
-                <RotateCcw className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#F9BD03]" />
+                <RotateCcw className="w-3 h-3 text-[#F9BD03]" />
                 <span>{isFlipped ? 'Front' : 'Reverse'}</span>
               </button>
 
@@ -566,14 +566,14 @@ Please share wholesale pricing & catalog.`
                   handleManualAction();
                   if (onExploreAllProducts) onExploreAllProducts(activeSlide.id);
                 }}
-                className="flex items-center gap-1 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#F9BD03] hover:bg-[#E5AA00] text-[#1C0E07] text-[9px] sm:text-[11px] font-black uppercase tracking-wider transition-all cursor-pointer shadow-md active:scale-95"
+                className="flex items-center gap-1.5 px-3 py-1 sm:py-1 rounded-full bg-[#F9BD03] hover:bg-[#E5AA00] text-[#1C0E07] text-[10px] sm:text-[11px] font-black uppercase tracking-wider transition-all cursor-pointer shadow-md active:scale-95"
               >
-                <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#1C0E07]" />
+                <ExternalLink className="w-3 h-3 text-[#1C0E07]" />
                 <span>Full Details</span>
               </button>
 
               {activeSlide.variants.length > 1 && (
-                <div className="flex items-center gap-0.5 sm:gap-1 bg-black/40 backdrop-blur-md px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full border border-white/20">
+                <div className="flex items-center gap-1 bg-black/40 backdrop-blur-md px-2 py-1 rounded-full border border-white/20">
                   {activeSlide.variants.map((v) => {
                     const isSelected = activeVariant.id === v.id;
                     return (
@@ -584,7 +584,7 @@ Please share wholesale pricing & catalog.`
                           setIsFlipped(false);
                           setActiveVariants((prev) => ({ ...prev, [activeSlide.id]: v.id }));
                         }}
-                        className={`text-[8px] sm:text-[10px] font-black uppercase px-2 sm:px-2.5 py-0.5 rounded-full transition-all cursor-pointer ${
+                        className={`text-[9px] sm:text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full transition-all cursor-pointer ${
                           isSelected
                             ? 'bg-[#F9BD03] text-[#1C0E07] shadow-sm font-black'
                             : 'text-white/80 hover:text-white'
@@ -602,7 +602,7 @@ Please share wholesale pricing & catalog.`
           {/* =========================================================================
               RIGHT: BIG BOLD SLOGAN & "VIEW ALL PRODUCTS" ACTION BUTTON
              ========================================================================= */}
-          <div className="lg:col-span-7 flex flex-col justify-center items-center lg:items-start text-center lg:text-left mt-0.5 sm:mt-0">
+          <div className="lg:col-span-7 flex flex-col justify-center items-center lg:items-start text-center lg:text-left mt-1 sm:mt-0">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeSlide.id}
@@ -614,7 +614,7 @@ Please share wholesale pricing & catalog.`
               >
                 {/* Giant Bold Slogan matching "CHAI KA BEST FRIEND" */}
                 <h2
-                  className="text-lg min-[360px]:text-xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight leading-tight sm:leading-[1.05] drop-shadow-sm select-none"
+                  className="text-xl min-[360px]:text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight leading-tight sm:leading-[1.05] drop-shadow-sm select-none"
                   style={{
                     color: activeSlide.textColor,
                     fontFamily: "'Playfair Display', 'Inter', sans-serif",
@@ -624,13 +624,13 @@ Please share wholesale pricing & catalog.`
                 </h2>
 
                 {/* Direct Action: View Full Details & All Products */}
-                <div className="mt-2.5 sm:mt-5 flex items-center gap-3">
+                <div className="mt-3 sm:mt-5 flex items-center gap-3">
                   <button
                     onClick={() => {
                       handleManualAction();
                       if (onExploreAllProducts) onExploreAllProducts(activeSlide.id);
                     }}
-                    className="inline-flex items-center gap-2 px-4 sm:px-6 py-1.5 sm:py-2.5 rounded-full text-[11px] sm:text-xs font-black uppercase tracking-wider bg-[#1C0E07] hover:bg-black text-[#FEE8B4] border border-[#F9BD03]/40 hover:border-[#F9BD03] transition-all shadow-md hover:shadow-lg active:scale-95 cursor-pointer"
+                    className="inline-flex items-center gap-2 px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs font-black uppercase tracking-wider bg-[#1C0E07] hover:bg-black text-[#FEE8B4] border border-[#F9BD03]/40 hover:border-[#F9BD03] transition-all shadow-md hover:shadow-lg active:scale-95 cursor-pointer"
                   >
                     <span>View All Products & Full Details</span>
                     <ArrowRight className="w-3.5 h-3.5 text-[#F9BD03]" />
@@ -645,17 +645,17 @@ Please share wholesale pricing & catalog.`
         <button
           onClick={() => prevSlide(true)}
           aria-label="Previous Product"
-          className="absolute left-1 sm:left-6 top-1/2 -translate-y-1/2 w-7 h-7 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition-all backdrop-blur-md cursor-pointer z-20 shadow-md active:scale-90"
+          className="absolute left-1.5 sm:left-6 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition-all backdrop-blur-md cursor-pointer z-20 shadow-md active:scale-90"
         >
-          <ChevronLeft className="w-3.5 h-3.5 sm:w-6 sm:h-6" />
+          <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
         </button>
 
         <button
           onClick={() => nextSlide(true)}
           aria-label="Next Product"
-          className="absolute right-1 sm:right-6 top-1/2 -translate-y-1/2 w-7 h-7 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition-all backdrop-blur-md cursor-pointer z-20 shadow-md active:scale-90"
+          className="absolute right-1.5 sm:right-6 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition-all backdrop-blur-md cursor-pointer z-20 shadow-md active:scale-90"
         >
-          <ChevronRight className="w-3.5 h-3.5 sm:w-6 sm:h-6" />
+          <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
         </button>
 
         {/* 4. SLIDE DOTS / PROGRESS INDICATOR */}
